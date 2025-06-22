@@ -12,43 +12,39 @@
 </head>
 <body>
 
-    <header>
-        <nav>
-            <div class="logo">Polish + Bloom</div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#journey">Your Journey</a></li>
-                <li><a href="#services">Programs</a></li>
-                <li><a href="#testimonials">Stories</a></li>
-                <li><a href="#start">Join</a></li>
-            </ul>
-        </nav>
+    <header class="site-header">
+        <div class="container">
+            <nav class="main-nav">
+                <a href="#home" class="logo">Polish + Bloom</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#journey">Your Journey</a></li>
+                    <li><a href="#services">Programs</a></li>
+                    <li><a href="#testimonials">Stories</a></li>
+                    <li><a href="#start" class="button">Join Now</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section id="home">
-            <div class="hero">
-                <h1>Polish Your Finances. Bloom Your Confidence. Build a Life You Love.</h1>
-                <p class="subheadline">At Polish + Bloom, we believe true success starts from within. We help you take control of your money, stand up for yourself, and step boldly into the future you deserve.</p>
-                <div class="hero-cta">
-                    <div class="cta-buttons">
-                        <a href="#start" class="cta-button">Start Your Journey</a>
-                    </div>
+        <section id="home" class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">Polish Your Finances. Bloom Your Confidence. Build a Life You Love.</h1>
+                <p class="hero-subtitle">Our mission is to help you take control of your money, stand up for yourself, and step boldly into the future you deserve. Your journey to clarity, confidence, and financial freedom begins here.</p>
+                <div class="hero-actions">
+                    <a href="#start" class="button button-primary">Start with a Free Clarity Call</a>
+                    <button id="start-quiz-btn" class="button">Take the Self-Discovery Quiz</button>
                 </div>
             </div>
         </section>
 
         <section id="about">
-            <h2>Our Story</h2>
+            <h2>The Story Behind Polish + Bloom</h2>
             <div class="about-content">
-                 <p>A few years ago, I found myself at a crossroads. I had worked hard, achieved success, and checked all the right boxes. But deep inside, something felt off. I was playing by the rules of others—seeking approval, avoiding conflict, and holding back when I should have stood tall. I was being 'nice,' thinking it would open doors, but in reality, it sometimes invited people to take advantage of my kindness. I saw how those who prioritized their own interests, those who spoke louder—not always smarter—often got ahead, while I was left questioning myself.</p>
-                 <p>One day, after being overlooked in a situation I had worked hard for, I had a realization: If I didn't take ownership of my space, my voice, and my power, no one else would hand it to me. Strength isn't about being aggressive, but it's also not about shrinking to keep the peace. It's about standing firm, being clear, and knowing that value speaks louder than volume. I made a choice—to stop waiting for permission to shine and start owning my place at the table.</p>
-                 <p>That shift changed everything. I no longer sought validation—I built credibility. I didn't compete for attention—I created undeniable value. I stopped playing small, and as a result, I grew into the leader I was meant to be. That's why I founded Polish + Bloom—to help others step into their strongest, most confident selves.</p>
-                 <div class="about-closing">
-                    <p>To all the kind-hearted, modest, and caring people out there—keep being who you are. The world needs more people like you. But kindness doesn't mean weakness. Caring doesn't mean letting others take advantage of you. And modesty doesn't mean staying silent when you deserve to be heard.</p>
-                    <p><strong>Be strong. Stand firm. Protect yourself and the people you care about. Polish yourself, let yourself bloom, and step into your power with confidence.</strong></p>
-                </div>
+                <p>Polish + Bloom was created to support people on a whole-self transformation journey—financially, emotionally, and professionally. We're not just about budgets and spreadsheets—we help you align money with meaning.</p>
+                <h3>Our Approach</h3>
+                <p>Through financial wellness programs, personal coaching, counseling, and business startup support, we guide our clients to spend wisely, invest intentionally, and build both personal and financial confidence. Whether you're refining your financial habits, launching a business, or cultivating unshakable self-belief, Polish + Bloom is here to help you elevate your life, empower your choices, and thrive on your own terms.</p>
             </div>
         </section>
 
@@ -108,46 +104,35 @@
         </section>
 
         <section id="start">
-            <h2>Start Your Transformation Today</h2>
-            <p class="subheadline">Ready to feel empowered by your finances and life? Choose your first step below.</p>
-            <div class="start-container">
-                <div class="start-box quiz-box">
-                    <h3>Take the "Cashflow Color" Quiz</h3>
-                    <p>Discover your dominant money personality and get a personalized plan to start your journey.</p>
-                    <button id="start-quiz-btn" class="cta-button">Start The Quiz</button>
-                    <div id="quiz-container" class="hidden">
-                         <div id="quiz-question-screen" class="hidden"></div>
-                         <div id="quiz-results-screen" class="hidden">
-                            <div id="quiz-result-display"></div>
-                         </div>
-                    </div>
-                </div>
-                <div class="start-box call-box">
-                    <h3>Schedule a Discovery Call</h3>
-                    <p>Book a complimentary call for tailored advice on spending, saving, investing, and more.</p>
-                    <a href="/book-a-call" class="cta-button cta-secondary">Book a Free Call</a>
-                </div>
-                <div class="start-box newsletter-box">
-                    <h3>Join Our Newsletter</h3>
-                    <p>Get tips, insights, and community updates delivered straight to your inbox.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Enter your email">
-                        <button type="submit" class="cta-button">Subscribe</button>
-                    </form>
-                </div>
-            </div>
+            <!-- This section can be built out later -->
         </section>
     </main>
 
-    <div id="reflection-popup">
-        <button id="close-popup-btn">&times;</button>
-        <p class="popup-title">A Moment for Reflection</p>
-        <p id="reflection-prompt-text"></p>
+    <div id="quiz-modal" class="quiz-modal-overlay hidden">
+        <div class="quiz-modal-content">
+            <button id="close-quiz-btn" class="quiz-close-button">&times;</button>
+            <div id="quiz-start-screen">
+                <h2 class="quiz-title">What Color Is Your Cashflow?</h2>
+                <p class="quiz-subtitle">Discover your dominant money personality and how it shapes your life. Ready to bloom?</p>
+                <button id="begin-quiz-btn" class="button button-primary">Begin Quiz</button>
+            </div>
+            <div id="quiz-question-screen" class="hidden">
+                <p id="quiz-progress"></p>
+                <h3 id="quiz-question-text"></h3>
+                <div id="quiz-answers" class="quiz-answers-grid"></div>
+            </div>
+            <div id="quiz-results-screen" class="hidden">
+                <h2 class="quiz-title">Your Result:</h2>
+                <div id="quiz-result-display">
+                    <!-- Results will be injected by JS -->
+                </div>
+                <div class="quiz-cta">
+                    <p>Join the Polish + Bloom community to get personalized coaching, tools, and support tailored to your money personality.</p>
+                    <a href="#" class="button button-primary">Join Now & Discover Your Full Profile</a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <footer>
-        <p>&copy; 2024 Polish + Bloom. All rights reserved.</p>
-    </footer>
 
     <script src="assets/js/script.js"></script>
 </body>
