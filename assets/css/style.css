@@ -233,6 +233,64 @@ section h2 {
     background: var(--color-gray-100);
 }
 
+#journey .journey-steps {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+#journey .step {
+    background: #fff;
+    padding: 2.5rem 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    text-align: center;
+    width: 30%;
+    max-width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#journey .step:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+#journey .step-icon {
+    width: 70px;
+    height: 70px;
+    background-color: #eef2ff; /* Lighter primary color */
+    color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    transition: background-color 0.3s ease;
+}
+
+#journey .step:hover .step-icon {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+#journey .step-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+#journey .step h3 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    color: var(--color-gray-900);
+}
+
+#journey .step p {
+    color: var(--color-text-light);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
 /* Service Section */
 #services {
     display: flex;
@@ -491,9 +549,9 @@ section h2 {
     color: var(--color-text-light);
 }
 .testimonial-footer {
-    text-align: center;
-    margin-top: 2rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-top: 1rem;
 }
 
 /* Quiz Section */
@@ -672,6 +730,16 @@ footer {
     
     .benefits-list {
         width: 100%;
+    }
+    #journey .journey-steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    #journey .step {
+        width: 100%;
+        max-width: 400px;
     }
 }
 
