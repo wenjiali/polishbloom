@@ -7,16 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const contactModalTitle = document.getElementById('contact-modal-title');
         const closeContactBtn = document.getElementById('close-contact-btn');
         const contactForm = document.getElementById('contact-form');
-        const moneyPersonalityInput = document.getElementById('money-personality');
+        const moneyPersonalityDropdown = document.getElementById('money-personality');
         const formSuccessMessage = document.getElementById('form-success-message');
 
-        function openContactModal(title) {
+        function openContactModal(title, circle) {
             contactModalTitle.textContent = title;
-            const personality = localStorage.getItem('moneyPersonality');
-            if (personality) {
-                moneyPersonalityInput.value = personality;
+
+            // Pre-fill dropdown if circle is passed
+            if (circle && moneyPersonalityDropdown) {
+                moneyPersonalityDropdown.value = circle;
             } else {
-                moneyPersonalityInput.value = "Take the quiz to discover yours!";
+                // Otherwise, use value from localStorage (from quiz) or clear it
+                const personality = localStorage.getItem('moneyPersonality');
+                if (personality && moneyPersonalityDropdown) {
+                    // This logic might need adjustment if personality title differs from dropdown value
+                    // For now, we find the option whose text includes the personality title
+                    let matchingOption = Array.from(moneyPersonalityDropdown.options).find(opt => opt.text.includes(personality));
+                    if (matchingOption) {
+                        moneyPersonalityDropdown.value = matchingOption.value;
+                    }
+                }
             }
             contactModal.classList.remove('hidden');
         }
@@ -27,14 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactForm.classList.remove('hidden');
                 formSuccessMessage.classList.add('hidden');
                 contactForm.reset();
-                moneyPersonalityInput.value = '';
+                 if (moneyPersonalityDropdown) {
+                    moneyPersonalityDropdown.value = ""; // Reset dropdown
+                }
             }, 300); // Wait for transition
         }
 
         function handleOpenContactModal(e) {
             e.preventDefault();
-            const title = e.currentTarget.dataset.title;
-            openContactModal(title);
+            const title = e.currentTarget.dataset.title || 'Get In Touch';
+            const circle = e.currentTarget.dataset.circle || null;
+            openContactModal(title, circle);
         }
 
         function handleContactFormSubmit(e) {
@@ -154,15 +167,14 @@ document.addEventListener('DOMContentLoaded', () => {
             personalizedCta.innerHTML = `
                 <h4>Your Recommended Bloom Circle</h4>
                 <p>${result.cta}</p>
-                <a href="#" class="button button-primary js-open-contact-modal" data-title="Join ${result.circle}">${result.circle}</a>
+                <a href="#" class="button button-primary js-open-contact-modal" data-title="Join ${result.circle}" data-circle="${result.circle}">${result.circle}</a>
             `;
-            document.querySelectorAll('.js-open-contact-modal').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const title = e.currentTarget.dataset.title;
-                    openContactModal(title);
-                });
-            });
+            
+            // This is the crucial part: find the new button and add the listener
+            const newCtaButton = personalizedCta.querySelector('.js-open-contact-modal');
+            if (newCtaButton) {
+                newCtaButton.addEventListener('click', handleOpenContactModal);
+            }
         }
 
         function resetQuiz() {

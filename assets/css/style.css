@@ -696,50 +696,46 @@ section h2 {
 
 /* Testimonials Section */
 #testimonials {
-    background-color: var(--color-background);
+    background-color: var(--color-champagne-beige);
 }
 
 .testimonial-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
+    margin-top: 4rem;
 }
 
 .testimonial-item {
-    background: transparent;
+    background: var(--color-ivory-white);
     padding: 2.5rem;
     border-radius: var(--border-radius);
-    border: 1px solid var(--color-border);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    z-index: 1;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
     transition: var(--transition);
 }
 
 .testimonial-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
     border-color: var(--color-petal-rose);
 }
 
-.testimonial-item::before {
-    content: '';
+.testimonial-item::after {
+    content: '“';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, var(--color-blush-pink), var(--color-sky-mist-blue));
-    opacity: 0.1;
-    z-index: -1;
-    border-radius: var(--border-radius);
-    transition: opacity 0.3s ease;
-}
-
-.testimonial-item:hover::before {
-    opacity: 0.2;
+    top: 1.5rem;
+    left: 2rem;
+    font-size: 5rem;
+    color: var(--color-blush-pink);
+    opacity: 0.8;
+    line-height: 1;
+    z-index: 1;
 }
 
 .testimonial-avatar {
@@ -747,21 +743,34 @@ section h2 {
     height: 80px;
     border-radius: 50%;
     margin-bottom: 1.5rem;
-    box-shadow: 0 0 0 4px var(--color-background);
+    border: 4px solid var(--color-ivory-white);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 2;
 }
 
 .testimonial-item blockquote {
     margin: 0 0 1.5rem 0;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-style: italic;
-    color: var(--color-text);
+    color: var(--color-text-light);
     flex-grow: 1;
+    position: relative;
+    z-index: 2;
 }
 
 .testimonial-author {
     font-weight: 700;
-    color: var(--color-muted-gold);
+    color: var(--color-text);
     font-style: normal;
+}
+
+.testimonial-author span {
+    display: block;
+    font-weight: 400;
+    font-size: 0.9em;
+    color: var(--color-text-light);
+    margin-top: 0.25rem;
 }
 
 /* Quiz Section */
@@ -1235,9 +1244,16 @@ footer {
     border-color: var(--color-ivory-white);
 }
 
-#start .button.button-primary:hover {
-    background-color: var(--color-ivory-white);
+#start .button.button-exclusive {
+    background-image: linear-gradient(135deg, var(--color-ivory-white), #f9f2e9);
     color: var(--color-primary);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+#start .button.button-exclusive:hover {
+    background-image: linear-gradient(135deg, #f9f2e9, var(--color-ivory-white));
+    color: var(--color-primary-hover);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
 /* Interior Page Styles */
@@ -1349,16 +1365,18 @@ footer {
 }
 
 .contact-modal-content {
-    background: var(--color-background);
-    padding: var(--space-8);
+    background: var(--color-ivory-white);
+    padding: var(--space-12);
     border-radius: var(--border-radius);
-    max-width: 500px;
+    max-width: 650px;
     width: 90%;
     position: relative;
     transform: scale(1);
     transition: transform 0.3s ease;
     max-height: 90vh;
     overflow-y: auto;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
 }
 
 .contact-modal-overlay.hidden .contact-modal-content {
@@ -1371,7 +1389,7 @@ footer {
     right: var(--space-4);
     background: transparent;
     border: none;
-    font-size: 2rem;
+    font-size: 2.2rem;
     line-height: 1;
     cursor: pointer;
     color: var(--color-text-light);
@@ -1379,21 +1397,24 @@ footer {
 }
 
 .contact-close-button:hover {
-    color: var(--color-text);
+    color: var(--color-primary);
+    transform: rotate(90deg);
 }
 
 .form-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 .form-header h2 {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
+    font-size: 2.2rem;
 }
 .form-header p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--color-text-light);
-    max-width: 350px;
+    max-width: 400px;
     margin: 0 auto;
+    line-height: 1.6;
 }
 
 #contact-modal-title {
@@ -1402,31 +1423,46 @@ footer {
 }
 
 .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
     display: block;
     font-weight: 700;
-    margin-bottom: var(--space-2);
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--color-text);
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
-    padding: var(--space-3); /* smaller padding */
+    padding: var(--space-4);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     font-size: 1rem;
     font-family: var(--font-family-sans);
     transition: var(--transition);
-    background-color: var(--color-ivory-white);
+    background-color: #fff;
+    box-shadow: var(--shadow-sm);
 }
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+.form-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%233A3A3A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-4) center;
+    background-size: 1.2em;
 }
 
 .form-group input::placeholder,
@@ -1760,4 +1796,84 @@ footer {
 
 #contact-modal .fade-in {
     transition-delay: 0.3s;
+}
+
+.button:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Exclusive CTA Button Style */
+.button.button-exclusive {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-image: linear-gradient(135deg, var(--color-petal-rose), var(--color-petal-rose-dark));
+    color: var(--color-ivory-white);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    border-radius: 50px;
+    box-shadow: 0 8px 15px rgba(235, 166, 169, 0.3);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.button.button-exclusive::after {
+    content: '›';
+    font-size: 1.8em;
+    line-height: 0;
+    font-weight: 300;
+    transform: translateX(0);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.button.button-exclusive:hover {
+    background-image: linear-gradient(135deg, var(--color-petal-rose-dark), var(--color-petal-rose));
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(235, 166, 169, 0.45);
+    color: #fff;
+}
+
+.button.button-exclusive:hover::after {
+    transform: translateX(5px);
+}
+
+#start .button.button-exclusive {
+    background-image: linear-gradient(135deg, var(--color-ivory-white), #f9f2e9);
+    color: var(--color-primary);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+#start .button.button-exclusive:hover {
+    background-image: linear-gradient(135deg, #f9f2e9, var(--color-ivory-white));
+    color: var(--color-primary-hover);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* ==========================================================================
+   Rainbow Cashflow Page Specifics
+   ========================================================================== */
+
+#rainbow-how-it-works {
+    padding: 5rem 0;
+    background: var(--color-ivory-white);
+}
+
+#rainbow-how-it-works .journey-timeline {
+    margin-top: 4rem;
+}
+
+/* Give the timeline on the rainbow page a unique accent color */
+#rainbow-how-it-works .timeline-icon {
+    border-color: var(--color-sage-green);
+    color: var(--color-sage-green);
+}
+
+#rainbow-how-it-works .timeline-item:hover .timeline-icon {
+    background-color: var(--color-sage-green);
+    border-color: var(--color-sage-green);
+    color: var(--color-ivory-white);
 }
