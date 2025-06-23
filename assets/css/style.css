@@ -1382,13 +1382,27 @@ footer {
     color: var(--color-text);
 }
 
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.form-header h2 {
+    margin: 0 0 0.5rem 0;
+}
+.form-header p {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    max-width: 350px;
+    margin: 0 auto;
+}
+
 #contact-modal-title {
     margin: 0 0 var(--space-6) 0;
     text-align: center;
 }
 
 .form-group {
-    margin-bottom: var(--space-6);
+    margin-bottom: 1.25rem;
 }
 
 .form-group label {
@@ -1406,6 +1420,7 @@ footer {
     font-size: 1rem;
     font-family: var(--font-family-sans);
     transition: var(--transition);
+    background-color: var(--color-ivory-white);
 }
 .form-group input:focus,
 .form-group textarea:focus {
@@ -1414,9 +1429,16 @@ footer {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
 
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--color-text-light);
+    opacity: 0.6;
+}
+
 .form-group input[readonly] {
     background-color: var(--color-champagne-beige);
     font-style: italic;
+    font-size: 0.9rem;
 }
 
 .form-group small {
@@ -1429,11 +1451,12 @@ footer {
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
+    gap: 1.25rem;
 }
 
 #contact-form button {
     width: 100%;
+    margin-top: 1rem;
 }
 
 #form-success-message {
