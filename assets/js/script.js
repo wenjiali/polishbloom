@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const questionText = document.getElementById('quiz-question-text');
     const answersGrid = document.getElementById('quiz-answers');
     const resultDisplay = document.getElementById('quiz-result-display');
+    const seeAllProgramsBtn = document.getElementById('see-all-programs-btn');
 
     if (!startQuizBtn) return;
 
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startQuizBtn.addEventListener('click', openModal);
     closeQuizBtn.addEventListener('click', closeModal);
     beginQuizBtn.addEventListener('click', startQuiz);
+    seeAllProgramsBtn.addEventListener('click', closeModal);
     quizModal.addEventListener('click', (e) => {
         if (e.target === quizModal) {
             closeModal();
