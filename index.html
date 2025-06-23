@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Polish & Bloom is a space for everyone—women and beyond—seeking financial wellness and self-care. Discover coaching, resources, and a community to help you find clarity, confidence, and cashflow.">
-    <title>Polish & Bloom | Self-Help & Financial Wellness for Women</title>
+    <title>Polish & Bloom | Financial Wellness & Empowerment Coaching</title>
+    <meta name="description" content="Take control of your finances and build confidence with Polish & Bloom. We offer financial wellness programs, coaching, and a supportive community to help you thrive.">
+    <meta name="keywords" content="financial wellness, financial coaching, money mindset, women's finance, financial empowerment, business startup support, financial confidence">
+    <meta property="og:title" content="Polish & Bloom | Financial Wellness & Empowerment Coaching">
+    <meta property="og:description" content="From managing money with joy to launching a business with confidence, Polish & Bloom is your partner in personal and financial growth.">
+    <meta property="og:image" content="https://www.polishandbloom.com/assets/img/og-image.jpg">
+    <meta property="og:url" content="https://www.polishandbloom.com">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -39,11 +47,20 @@
         </section>
 
         <section id="about">
-            <h2 class="fade-in">The Story Behind Polish + Bloom</h2>
-            <div class="about-content fade-in" style="transition-delay: 0.1s;">
-                <p>Polish + Bloom was created to support people on a whole-self transformation journey—financially, emotionally, and professionally. We're not just about budgets and spreadsheets—we help you align money with meaning.</p>
-                <h3>Our Approach</h3>
-                <p>Through financial wellness programs, personal coaching, counseling, and business startup support, we guide our clients to spend wisely, invest intentionally, and build both personal and financial confidence. Whether you're refining your financial habits, launching a business, or cultivating unshakable self-belief, Polish + Bloom is here to help you elevate your life, empower your choices, and thrive on your own terms.</p>
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-illustration fade-in">
+                        <img src="assets/img/bloom-illustration.svg" alt="An elegant floral illustration representing personal and financial growth.">
+                    </div>
+                    <div class="about-text-content">
+                        <h2 class="fade-in">The Story Behind Polish + Bloom</h2>
+                        <div class="about-content fade-in" style="transition-delay: 0.1s;">
+                            <p>Polish + Bloom was created to support people on a whole-self transformation journey—financially, emotionally, and professionally. We're not just about budgets and spreadsheets—we help you align money with meaning.</p>
+                            <h3>Our Approach</h3>
+                            <p>Through financial wellness programs, personal coaching, counseling, and business startup support, we guide our clients to spend wisely, invest intentionally, and build both personal and financial confidence. Whether you're refining your financial habits, launching a business, or cultivating unshakable self-belief, Polish + Bloom is here to help you elevate your life, empower your choices, and thrive on your own terms.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -250,5 +267,40 @@
     </footer>
 
     <script src="assets/js/script.js"></script>
+
+    <!-- SEO Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Polish & Bloom",
+      "image": "https://www.polishandbloom.com/assets/img/logo-for-schema.png",
+      "description": "Financial wellness and empowerment coaching offering programs, workshops, and personal support to help you align your money with your values and build a life you love.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "CA"
+      },
+      "providesService": [
+        {
+          "@type": "Service",
+          "serviceType": "Financial Wellness Programs",
+          "name": "Rainbow Cashflow™",
+          "description": "A signature 7-color system that brings clarity and joy to your finances—making space for survival, dreams, and generosity."
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Community Workshops",
+          "name": "Bloom Circles",
+          "description": "A cozy, curated space where people come together to recharge, reflect, and rise through live conversations and themed workshops."
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Personal Coaching",
+          "name": "Clarity Sessions & Business Startup Support",
+          "description": "One-on-one guidance to help you refine your financial habits, launch a business, or cultivate unshakable self-belief."
+        }
+      ]
+    }
+    </script>
 </body>
 </html>
