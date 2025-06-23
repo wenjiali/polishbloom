@@ -990,3 +990,51 @@ footer {
     background-color: #fff;
     color: var(--color-primary);
 }
+
+/* Interior Page Styles */
+.page-header {
+    background-color: var(--color-gray-100);
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+}
+
+.page-content {
+    padding: 5rem 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.page-content h2 {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.page-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.page-content ul li {
+    font-size: 1.1rem;
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+}
+
+.page-content ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.page-content .cta-actions {
+    text-align: center;
+    margin-top: 3rem;
+}
