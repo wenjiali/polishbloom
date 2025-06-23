@@ -27,6 +27,7 @@
 
     /* Typography */
     --font-family-sans: 'Lato', sans-serif;
+    --font-family-serif: 'Lora', serif;
     --font-size-base: 17px;
     --line-height-base: 1.7;
 
@@ -67,6 +68,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
+    font-family: var(--font-family-serif);
     font-weight: 700;
     line-height: 1.2;
 }
@@ -209,6 +211,7 @@ a {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    font-weight: 400;
 }
 
 .hero-subtitle {
@@ -216,6 +219,7 @@ a {
     color: var(--color-text-light);
     max-width: 700px;
     margin: var(--space-6) auto 0 auto;
+    font-weight: 400;
 }
 
 .hero-actions {
@@ -251,7 +255,8 @@ section {
 section h2 {
     text-align: center;
     margin-bottom: 1rem;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
+    font-weight: 400;
 }
 
 .subheadline {
@@ -260,12 +265,15 @@ section h2 {
     margin: 0 auto 2.5rem auto;
     font-size: 1.2rem;
     color: var(--color-text-light);
+    font-weight: 400;
 }
 
 /* About Section */
 #about {
-    background: #fff;
+    background: var(--color-background-alt);
+    padding: 5rem 0;
 }
+
 .about-content {
     max-width: 800px;
     margin: 0 auto;
@@ -275,12 +283,14 @@ section h2 {
 }
 .about-content p {
     margin-bottom: 1em;
+    color: var(--color-text-light);
 }
 .about-content h3 {
     font-size: 1.6rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    color: var(--color-text);
+    color: var(--color-deep-charcoal);
+    font-family: var(--font-family-serif);
 }
 
 /* Your Journey Section */
@@ -1177,6 +1187,21 @@ footer {
     background-color: var(--color-primary);
     color: var(--color-ivory-white);
     text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+#start::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(var(--color-ivory-white) 0.5px, transparent 0.5px);
+    background-size: 15px 15px;
+    opacity: 0.1;
+    z-index: -1;
 }
 
 #start h2 {
@@ -1218,12 +1243,29 @@ footer {
 /* Interior Page Styles */
 .page-header {
     background-color: var(--color-champagne-beige);
-    padding: 4rem 0;
+    padding: 5rem 0;
     text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(var(--color-blush-pink) 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+    opacity: 0.2;
+    z-index: -1;
 }
 
 .page-header h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: var(--color-text-light);
 }
 
 .page-content {
@@ -1401,7 +1443,8 @@ footer {
 
 .section-title {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
+    font-weight: 400;
     margin-bottom: 3rem;
 }
 
@@ -1678,4 +1721,20 @@ footer {
 
 .circle-card.highlighted h3 {
     color: var(--color-muted-gold);
+}
+
+/* Animation Styles */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#contact-modal .fade-in {
+    transition-delay: 0.3s;
 }
