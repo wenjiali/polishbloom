@@ -37,22 +37,98 @@
 
         <section class="page-content">
             <div class="container">
-                <h2>Align Your Money With Your Values</h2>
-                <p>The Rainbow Cashflow™ system is designed to transform your relationship with money from one of stress and confusion to one of empowerment and joy. We move beyond restrictive budgets to create a personalized financial plan that reflects what truly matters to you.</p>
+
+                <div style="text-align: center; max-width: 700px; margin: 0 auto 4rem auto;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 700; line-height: 1.2;">Align Your Money With Your Values</h2>
+                    <p style="font-size: 1.2rem; line-height: 1.7; color: var(--color-text-light);">The Rainbow Cashflow™ system is designed to transform your relationship with money from one of stress and confusion to one of empowerment and joy. We move beyond restrictive budgets to create a personalized financial plan that reflects what truly matters to you.</p>
+                </div>
                 
-                <h3>How It Works</h3>
-                <ul>
-                    <li><strong>Discover Your Colors:</strong> Identify your core values and map them to our seven financial categories.</li>
-                    <li><strong>Create Your Flow:</strong> We'll help you design a spending and saving plan that feels natural and motivating.</li>
-                    <li><strong>Build Confidence:</strong> Gain the skills to manage your money effectively, invest wisely, and build long-term financial security.</li>
-                </ul>
+                <div class="color-system-grid" style="margin-bottom: 5rem;">
+                    <div class="color-item" style="--color: var(--color-red);">
+                        <h3>Survival</h3>
+                        <p>Covering your essential needs with confidence.</p>
+                    </div>
+                    <div class="color-item" style="--color: var(--color-orange);">
+                        <h3>Lifestyle</h3>
+                        <p>Funding your day-to-day comforts and joys.</p>
+                    </div>
+                    <div class="color-item" style="--color: var(--color-yellow);">
+                        <h3>Dreams</h3>
+                        <p>Saving for your biggest, most exciting goals.</p>
+                    </div>
+                    <div class="color-item" style="--color: var(--color-green);">
+                        <h3>Growth</h3>
+                        <p>Investing in your personal and professional development.</p>
+                    </div>
+                    <div class="color-item" style="--color: var(--color-blue);">
+                        <h3>Security</h3>
+                        <p>Building your long-term safety net and peace of mind.</p>
+                    </div>
+                    <div class="color-item" style="--color: var(--color-purple);">
+                        <h3>Education</h3>
+                        <p>Putting money towards learning and new skills.</p>
+                    </div>
+                    <div class="color-item" style="--color: var(--color-pink);">
+                        <h3>Generosity</h3>
+                        <p>Sharing with others and supporting causes you love.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title">How It Works</h2>
+                <div class="step-cards">
+                    <div class="step-card">
+                        <h3>1. Discover Your Colors</h3>
+                        <p>Identify your core values and map them to our seven financial categories, creating a budget that's a true reflection of you.</p>
+                    </div>
+                    <div class="step-card">
+                        <h3>2. Create Your Flow</h3>
+                        <p>We'll help you design a spending and saving plan that feels natural and motivating, not restrictive.</p>
+                    </div>
+                    <div class="step-card">
+                        <h3>3. Build Confidence</h3>
+                        <p>Gain the skills to manage your money effectively, invest wisely, and build long-term financial security.</p>
+                    </div>
+                </div>
+
+                <div class="page-testimonial">
+                    <img src="https://xsgames.co/randomusers/assets/avatars/female/34.jpg" alt="Photo of Hana K.">
+                    <blockquote>"I always thought of budgeting as restrictive, but the Rainbow Cashflow method completely changed my perspective. Now, I feel empowered and aligned with my spending, not guilty."
+                        <cite>Hana K.</cite>
+                    </blockquote>
+                </div>
 
                 <div class="cta-actions">
-                    <a href="#" class="button button-primary">Book a Free Consultation</a>
+                    <a href="#" class="button button-primary js-open-contact-modal" data-title="Book a Free Consultation">Start Your Journey</a>
                 </div>
             </div>
         </section>
     </main>
+
+    <div id="contact-modal" class="contact-modal-overlay hidden">
+        <div class="contact-modal-content">
+            <button id="close-contact-btn" class="contact-close-button">&times;</button>
+            <h2 id="contact-modal-title">Get in Touch</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="money-personality">Your Money Personality (Optional)</label>
+                    <input type="text" id="money-personality" name="money-personality" readonly>
+                    <small>Take our quiz to discover yours!</small>
+                </div>
+                <button type="submit" class="button button-primary">Submit</button>
+            </form>
+            <div id="form-success-message" class="hidden">
+                <p>Thank you! We've received your information and will be in touch shortly.</p>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">

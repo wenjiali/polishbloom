@@ -37,22 +37,108 @@
 
         <section class="page-content">
             <div class="container">
-                <h2>A Space to Connect and Grow</h2>
-                <p>Bloom Circles are cozy, curated spaces designed for meaningful conversation and shared growth. In a world that often feels isolating, our circles provide a supportive community where you can show up as you are, be heard, and gain new perspectives.</p>
+                <div id="personalized-welcome" class="hidden"></div>
+
+                <div class="feature-grid">
+                    <div class="feature-text">
+                        <h2>A Space to Connect and Grow</h2>
+                        <p>Bloom Circles are cozy, curated spaces designed for meaningful conversation and shared growth. In a world that often feels isolating, our circles provide a supportive community where you can show up as you are, be heard, and gain new perspectives.</p>
+                    </div>
+                    <div class="feature-visual">
+                        <img src="assets/img/bloom-illustration.svg" alt="Illustration of diverse people connecting" class="feature-illustration">
+                    </div>
+                </div>
+
+                <h2 class="section-title">What to Expect</h2>
+                <div class="expect-grid">
+                    <div class="expect-item">
+                        <div class="expect-icon">...</div>
+                        <h3>Themed Workshops</h3>
+                        <p>Each circle revolves around a specific theme, from mindful finances to career transitions.</p>
+                    </div>
+                    <div class="expect-item">
+                        <div class="expect-icon">...</div>
+                        <h3>Guided Conversations</h3>
+                        <p>Our expert facilitators guide discussions to ensure a safe and inclusive environment.</p>
+                    </div>
+                    <div class="expect-item">
+                        <div class="expect-icon">...</div>
+                        <h3>Supportive Community</h3>
+                        <p>Connect with like-minded individuals who are also on a journey of personal and financial growth.</p>
+                    </div>
+                </div>
                 
-                <h3>What to Expect</h3>
-                <ul>
-                    <li><strong>Themed Workshops:</strong> Each circle revolves around a specific theme, from mindful finances to career transitions.</li>
-                    <li><strong>Guided Conversations:</strong> Our expert facilitators guide discussions to ensure a safe and inclusive environment.</li>
-                    <li><strong>Supportive Community:</strong> Connect with like-minded individuals who are also on a journey of personal and financial growth.</li>
-                </ul>
+                <h2 class="section-title">Explore Our Circles</h2>
+                <div class="circle-cards">
+                    <div class="circle-card" id="The-Legacy-Circle">
+                        <h3>The Legacy Circle</h3>
+                        <p>For the Secure Planner. Build a lasting financial foundation with those who value stability and careful planning.</p>
+                    </div>
+                    <div class="circle-card" id="The-Horizon-Circle">
+                        <h3>The Horizon Circle</h3>
+                        <p>For the Free Spirit. Fund your dreams and adventures with fellow optimists who see money as a tool for freedom.</p>
+                    </div>
+                    <div class="circle-card" id="The-Blueprint-Circle">
+                        <h3>The Blueprint Circle</h3>
+                        <p>For the Strategist. Master your financial plan with logical thinkers who love to be in control of the details.</p>
+                    </div>
+                    <div class="circle-card" id="The-Heartwood-Circle">
+                        <h3>The Heartwood Circle</h3>
+                        <p>For the Nurturer. Align your money with your heart alongside a community driven by generosity and care.</p>
+                    </div>
+                    <div class="circle-card" id="The-Catalyst-Circle">
+                        <h3>The Catalyst Circle</h3>
+                        <p>For the Creator. Spark your financial creativity with innovators who aren't afraid to take risks on new ideas.</p>
+                    </div>
+                    <div class="circle-card" id="The-Sanctuary-Circle">
+                        <h3>The Sanctuary Circle</h3>
+                        <p>For the Peacekeeper. Find financial peace of mind with a mindful group that seeks calm and balance.</p>
+                    </div>
+                    <div class="circle-card" id="The-Summit-Circle">
+                        <h3>The Summit Circle</h3>
+                        <p>For the Achiever. Reach your financial peak with ambitious, goal-oriented individuals motivated by success.</p>
+                    </div>
+                </div>
+
+                <div class="page-testimonial">
+                    <img src="https://xsgames.co/randomusers/assets/avatars/female/44.jpg" alt="Photo of Jasmine W.">
+                    <blockquote>"It's more than just self-care; it's a practice in mindfulness that has calmed my anxiety significantly."
+                        <cite>Jasmine W.</cite>
+                    </blockquote>
+                </div>
 
                 <div class="cta-actions">
-                    <a href="#" class="button button-primary">Join a Bloom Circle</a>
+                    <a href="#" class="button button-primary js-open-contact-modal" data-title="Join a Bloom Circle">Join a Bloom Circle Today</a>
                 </div>
             </div>
         </section>
     </main>
+
+    <div id="contact-modal" class="contact-modal-overlay hidden">
+        <div class="contact-modal-content">
+            <button id="close-contact-btn" class="contact-close-button">&times;</button>
+            <h2 id="contact-modal-title">Get in Touch</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="money-personality">Your Money Personality (Optional)</label>
+                    <input type="text" id="money-personality" name="money-personality" readonly>
+                    <small>Take our quiz to discover yours!</small>
+                </div>
+                <button type="submit" class="button button-primary">Submit</button>
+            </form>
+            <div id="form-success-message" class="hidden">
+                <p>Thank you! We've received your information and will be in touch shortly.</p>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -60,6 +146,25 @@
         </div>
     </footer>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const circle = urlParams.get('circle');
+
+        if (circle) {
+            const welcomeBox = document.getElementById('personalized-welcome');
+            const circleName = circle.replace(/-/g, ' ');
+            welcomeBox.innerHTML = `<p>Welcome! Based on your quiz results, <strong>${circleName}</strong> is the perfect fit for you. Explore below or join today!</p>`;
+            welcomeBox.classList.remove('hidden');
+
+            const circleElement = document.getElementById(circle);
+            if(circleElement) {
+                circleElement.classList.add('highlighted');
+                circleElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    });
+    </script>
     <script src="assets/js/script.js"></script>
 </body>
 </html> 

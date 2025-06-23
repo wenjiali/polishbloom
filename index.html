@@ -82,13 +82,13 @@
                     <h3>Rainbow Cashflow™</h3>
                     <p class="service-subtitle">Personal Finance That Feels Empowering</p>
                     <p>This signature 7-color system brings clarity and joy to your finances—making space for survival, dreams, and generosity.</p>
-                    <a href="rainbow-cashflow.html" class="cta-button cta-secondary">Learn More</a>
+                    <a href="rainbow-cashflow.html?v=2" class="cta-button cta-secondary">Learn More</a>
                 </div>
                 <div class="service-item">
                     <h3>Bloom Circles</h3>
                     <p class="service-subtitle">Soulful Gatherings for Growth & Connection</p>
                     <p>A cozy, curated space where people come together to recharge, reflect, and rise through live conversations and themed workshops.</p>
-                     <a href="bloom-circles.html" class="cta-button cta-secondary">Explore Circles</a>
+                     <a href="bloom-circles.html?v=2" class="cta-button cta-secondary">Explore Circles</a>
                 </div>
             </div>
         </section>
@@ -98,19 +98,19 @@
             <p class="subheadline">Here's how Polish & Bloom is helping people find clarity, confidence, and joyful financial alignment:</p>
             <div class="testimonial-container">
                 <div class="testimonial-item">
-                    <img src="https://i.pravatar.cc/100?u=a" alt="Photo of Sarah L." class="testimonial-avatar">
+                    <img src="https://xsgames.co/randomusers/assets/avatars/female/4.jpg" alt="Photo of Priya K." class="testimonial-avatar">
                     <blockquote>"The Rainbow Cashflow system helped me finally get a handle on my finances in a way that felt joyful, not restrictive."</blockquote>
-                    <cite class="testimonial-author">Sarah L.</cite>
+                    <cite class="testimonial-author">Priya K.</cite>
                 </div>
                 <div class="testimonial-item">
-                    <img src="https://i.pravatar.cc/100?u=b" alt="Photo of Maria G." class="testimonial-avatar">
+                    <img src="https://xsgames.co/randomusers/assets/avatars/female/10.jpg" alt="Photo of Aisha J." class="testimonial-avatar">
                     <blockquote>"It's more than just self-care; it's a practice in mindfulness that has calmed my anxiety significantly."</blockquote>
-                    <cite class="testimonial-author">Maria G.</cite>
+                    <cite class="testimonial-author">Aisha J.</cite>
                 </div>
                 <div class="testimonial-item">
-                    <img src="https://i.pravatar.cc/100?u=c" alt="Photo of David Chen" class="testimonial-avatar">
+                    <img src="https://xsgames.co/randomusers/assets/avatars/female/22.jpg" alt="Photo of Sofia R." class="testimonial-avatar">
                     <blockquote>"I went from a vague idea to a clear, actionable business plan. I feel so much more confident and prepared."</blockquote>
-                    <cite class="testimonial-author">David Chen</cite>
+                    <cite class="testimonial-author">Sofia R.</cite>
                 </div>
             </div>
         </section>
@@ -120,8 +120,8 @@
                 <h2>Ready to Bloom?</h2>
                 <p class="subheadline">Join a supportive community and get expert guidance to transform your financial life.</p>
                 <div class="cta-actions">
-                    <a href="#" class="button button-primary">Join a Bloom Circle</a>
-                    <a href="#" class="button">Book a Free Consultation</a>
+                    <a href="#" class="button button-primary js-open-contact-modal" data-title="Join a Bloom Circle">Join a Bloom Circle</a>
+                    <a href="#" class="button js-open-contact-modal" data-title="Book a Free Consultation">Book a Free Consultation</a>
                 </div>
             </div>
         </section>
@@ -152,6 +152,32 @@
                     <p>Ready to learn more? Explore our full range of programs and services.</p>
                     <a href="index.html#services" class="button" id="see-all-programs-btn">See All Programs</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact-modal" class="contact-modal-overlay hidden">
+        <div class="contact-modal-content">
+            <button id="close-contact-btn" class="contact-close-button">&times;</button>
+            <h2 id="contact-modal-title">Get in Touch</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="money-personality">Your Money Personality (Optional)</label>
+                    <input type="text" id="money-personality" name="money-personality" readonly>
+                    <small>Take our quiz to discover yours!</small>
+                </div>
+                <button type="submit" class="button button-primary">Submit</button>
+            </form>
+            <div id="form-success-message" class="hidden">
+                <p>Thank you! We've received your information and will be in touch shortly.</p>
             </div>
         </div>
     </div>
