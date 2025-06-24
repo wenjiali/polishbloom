@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Polish + Bloom | Exclusive Membership</title>
+    <meta name="description" content="Apply to join our exclusive, curated circles for personal and professional growth. Membership is by referral or application.">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <nav class="main-nav">
+                <a href="index.html" class="logo">Polish + Bloom</a>
+                <ul class="nav-links">
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#journey">Your Journey</a></li>
+                    <li><a href="index.html#services">Programs</a></li>
+                    <li><a href="index.html#testimonials">Stories</a></li>
+                    <li><a href="join.html" class="button">Join Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container fade-in">
+                <h1>✨ Join Polish + Bloom</h1>
+                <p class="subheadline">Become Your Personal Best</p>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container" style="max-width: 700px; text-align: center;">
+
+                <div class="join-content fade-in">
+                    <p class="large-paragraph">Step into an exclusive, curated circle designed for your growth—financially, emotionally, and professionally.</p>
+                    
+                    <div class="invite-only-box">
+                        <h2>Polish + Bloom is invite-only.</h2>
+                        <p>To join, you'll need a referral from a current member or partner and complete our vetting process.</p>
+                        <p class="emphasis">Because your time, energy, and transformation deserve to be surrounded by the right people.</p>
+                    </div>
+
+                    <h3>🌸 Ready to elevate?</h3>
+                    <p>Apply for membership or request an introduction today.</p>
+
+                    <div class="cta-actions" style="margin-top: 2rem;">
+                        <a href="#" class="button button-primary js-open-contact-modal" data-title="Apply for Membership">Apply Now</a>
+                        <a href="#" class="button js-open-contact-modal" data-title="Request an Introduction">Request a Referral</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div id="contact-modal" class="contact-modal-overlay hidden">
+        <div class="contact-modal-content">
+            <button id="close-contact-btn" class="contact-close-button">&times;</button>
+            <div class="form-header">
+                <h2 id="contact-modal-title">Get in Touch</h2>
+                <p>We're so glad you're here. Please share a few details so we can connect personally.</p>
+            </div>
+            <form id="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first-name" placeholder="e.g., Jane" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" placeholder="e.g., Doe" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="e.g., jane.doe@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="interest">I'm interested in...</label>
+                    <input type="text" id="interest" name="interest" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes (Optional)</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="Feel free to share a bit about yourself or who referred you."></textarea>
+                </div>
+                <button type="submit" class="button button-primary">Submit Application</button>
+            </form>
+            <div id="form-success-message" class="hidden">
+                <p>Thank you! We've received your information and will be in touch shortly.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-connect">
+                    <h4>Stay Connected</h4>
+                    <p>Meaningful conversations, delivered monthly.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; <span id="current-year"></span> Polish + Bloom. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js?v=2"></script>
+</body>
+</html> 
