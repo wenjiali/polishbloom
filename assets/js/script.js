@@ -198,6 +198,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     }
 
+    // FAQ Accordion functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        if (question && answer) {
+            question.addEventListener('click', () => {
+                const isOpen = question.getAttribute('aria-expanded') === 'true';
+                
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    const otherQuestion = otherItem.querySelector('.faq-question');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    if (otherItem !== item && otherQuestion && otherAnswer) {
+                        otherQuestion.setAttribute('aria-expanded', 'false');
+                        otherAnswer.classList.remove('open');
+                    }
+                });
+                
+                // Toggle current item
+                if (isOpen) {
+                    question.setAttribute('aria-expanded', 'false');
+                    answer.classList.remove('open');
+                } else {
+                    question.setAttribute('aria-expanded', 'true');
+                    answer.classList.add('open');
+                }
+            });
+        }
+    });
+
     // Fade-in animations on scroll
     const fadeInElements = document.querySelectorAll('.fade-in');
     const fadeInObserver = new IntersectionObserver((entries) => {
