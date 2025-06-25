@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Polish + Bloom | Exclusive Membership</title>
-    <meta name="description" content="Apply to join our exclusive, curated circles for personal and professional growth. Membership is by referral or application.">
+    <meta name="description" content="Learn about our invite-only membership and the vetting process designed to cultivate a trusted, aligned community for personal and professional growth.">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,30 +32,56 @@
     <main>
         <section class="page-header">
             <div class="container fade-in">
-                <h1>✨ Join Polish + Bloom</h1>
-                <p class="subheadline">Become Your Personal Best</p>
+                <h1>Become a Member</h1>
+                <p class="subheadline">An invitation to intentional community and growth.</p>
             </div>
         </section>
 
         <section class="page-content">
-            <div class="container" style="max-width: 700px; text-align: center;">
+            <div class="container" style="max-width: 800px;">
 
-                <div class="join-content fade-in">
-                    <p class="large-paragraph">Step into an exclusive, curated circle designed for your growth—financially, emotionally, and professionally.</p>
+                <div class="join-intro-text fade-in">
+                    <h2>Why is Polish + Bloom invite-only?</h2>
+                    <p>At Polish + Bloom, we value alignment, trust, and intentional community. That's why membership is by invitation only—referred by a current member or a trusted partner. This ensures our circle remains a safe, inspiring space for meaningful growth.</p>
+                    <p>Once referred, you'll complete a brief vetting process so we can understand your goals and how we can best support your journey.</p>
+                    <p class="emphasis">This isn't about exclusivity for appearance—it's about curating the right environment for transformation to truly take root.</p>
+                </div>
+
+                <div class="vetting-process-section fade-in" style="transition-delay: 0.2s;">
+                    <h2>Our Vetting Process</h2>
+                    <p class="subheadline">Simple, personal, and designed to honor your journey.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Intro Questionnaire</h3>
+                                <p>You'll complete a short form sharing your interests, goals, and what brought you to Polish + Bloom. This helps us understand how we can best support your growth—financially, emotionally, and professionally.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Discovery Conversation (15–20 mins)</h3>
+                                <p>We'll invite you to a casual video or voice chat with a member of our team. This is a chance for mutual alignment—to hear your story, answer your questions, and explore what you're looking for in this season of life.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Match & Welcome</h3>
+                                <p>If it's a great fit, you'll be matched with the right program, circle, or resource to begin your journey. You'll receive a warm welcome, access to our private member space, and introductions to other aligned members.</p>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <div class="invite-only-box">
-                        <h2>Polish + Bloom is invite-only.</h2>
-                        <p>To join, you'll need a referral from a current member or partner and complete our vetting process.</p>
-                        <p class="emphasis">Because your time, energy, and transformation deserve to be surrounded by the right people.</p>
+                    <div class="process-closing">
+                        <p>Our goal is not to judge, but to connect. We're here to ensure you land in a space that feels safe, empowering, and aligned with your personal values and vision for growth.</p>
                     </div>
-
-                    <h3>🌸 Ready to elevate?</h3>
-                    <p>Apply for membership or request an introduction today.</p>
-
-                    <div class="cta-actions" style="margin-top: 2rem;">
-                        <a href="#" class="button button-primary js-open-contact-modal" data-title="Apply for Membership">Apply Now</a>
-                        <a href="#" class="button js-open-contact-modal" data-title="Request an Introduction">Request a Referral</a>
-                    </div>
+                </div>
+                
+                <div class="cta-actions fade-in" style="margin-top: 4rem; text-align: center;">
+                    <a href="#" class="button button-primary js-open-contact-modal" data-title="Begin the Application Process">I've Been Referred</a>
                 </div>
 
             </div>
@@ -66,8 +92,8 @@
         <div class="contact-modal-content">
             <button id="close-contact-btn" class="contact-close-button">&times;</button>
             <div class="form-header">
-                <h2 id="contact-modal-title">Get in Touch</h2>
-                <p>We're so glad you're here. Please share a few details so we can connect personally.</p>
+                <h2 id="contact-modal-title">Membership Application</h2>
+                <p>We're honored you're here. Please share a few details to begin.</p>
             </div>
             <form id="contact-form">
                 <div class="form-row">
@@ -85,17 +111,17 @@
                     <input type="email" id="email" name="email" placeholder="e.g., jane.doe@email.com" required>
                 </div>
                 <div class="form-group">
-                    <label for="interest">I'm interested in...</label>
-                    <input type="text" id="interest" name="interest" readonly>
+                    <label for="referrer">Referred By (Optional)</label>
+                    <input type="text" id="referrer" name="referrer" placeholder="Name of member or partner who referred you">
                 </div>
                 <div class="form-group">
-                    <label for="notes">Notes (Optional)</label>
-                    <textarea id="notes" name="notes" rows="4" placeholder="Feel free to share a bit about yourself or who referred you."></textarea>
+                    <label for="notes">A little about you...</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="What are you hoping to cultivate in this season of your life?"></textarea>
                 </div>
                 <button type="submit" class="button button-primary">Submit Application</button>
             </form>
             <div id="form-success-message" class="hidden">
-                <p>Thank you! We've received your information and will be in touch shortly.</p>
+                <p>Thank you for your application! We've received your information and will be in touch with the next steps shortly.</p>
             </div>
         </div>
     </div>

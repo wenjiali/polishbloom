@@ -2023,3 +2023,109 @@ footer {
     border-color: var(--color-sage-green);
     color: var(--color-ivory-white);
 }
+
+/* Join Page Styles */
+.join-intro-text {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto var(--space-16) auto;
+}
+
+.join-intro-text h2 {
+    margin-bottom: var(--space-4);
+}
+
+.join-intro-text p {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-4);
+}
+
+.join-intro-text .emphasis {
+    font-family: var(--font-family-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--color-text);
+    margin-top: var(--space-6);
+}
+
+.vetting-process-section {
+    background-color: var(--color-ivory-white);
+    border-radius: var(--border-radius);
+    padding: var(--space-12) var(--space-8);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+}
+
+.vetting-process-section h2 {
+    text-align: center;
+}
+
+.vetting-process-section .subheadline {
+    text-align: center;
+    margin-bottom: var(--space-12);
+}
+
+.process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.process-steps::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 1rem;
+    bottom: 1rem;
+    width: 2px;
+    background-color: var(--color-blush-pink);
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-6);
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--color-petal-rose);
+    color: var(--color-ivory-white);
+    font-weight: 700;
+    font-size: 1.25rem;
+    border: 3px solid var(--color-ivory-white);
+    outline: 2px solid var(--color-petal-rose);
+    z-index: 1;
+}
+
+.step-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-2);
+}
+
+.step-content p {
+    color: var(--color-text-light);
+    line-height: 1.6;
+}
+
+.process-closing {
+    text-align: center;
+    margin-top: var(--space-12);
+    font-family: var(--font-family-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--color-text);
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
