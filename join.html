@@ -92,36 +92,141 @@
         <div class="contact-modal-content">
             <button id="close-contact-btn" class="contact-close-button">&times;</button>
             <div class="form-header">
-                <h2 id="contact-modal-title">Membership Application</h2>
-                <p>We're honored you're here. Please share a few details to begin.</p>
+                <h2 id="contact-modal-title">Polish + Bloom Onboarding Questionnaire</h2>
+                <p>Thank you for your interest in joining our curated community. We'd love to get to know you better—your journey, your dreams, and how we can best support you.</p>
             </div>
             <form id="contact-form">
+                <!-- 1. Name -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" placeholder="e.g., Jane" required>
+                        <input type="text" id="first-name" name="first-name" required>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" placeholder="e.g., Doe" required>
+                        <input type="text" id="last-name" name="last-name" required>
                     </div>
                 </div>
+                <!-- 2. Email -->
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="e.g., jane.doe@email.com" required>
+                    <input type="email" id="email" name="email" required>
                 </div>
-                <div class="form-group">
-                    <label for="referrer">Referred By (Optional)</label>
-                    <input type="text" id="referrer" name="referrer" placeholder="Name of member or partner who referred you">
+                <!-- 3. Location -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country">
+                    </div>
                 </div>
+                 <!-- 4. Pronouns & 5. Occupation -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pronouns">Preferred Pronouns</label>
+                        <input type="text" id="pronouns" name="pronouns">
+                    </div>
+                    <div class="form-group">
+                        <label for="occupation">Occupation / Career Field</label>
+                        <input type="text" id="occupation" name="occupation">
+                    </div>
+                </div>
+                <!-- 6. Referrer -->
                 <div class="form-group">
-                    <label for="notes">A little about you...</label>
-                    <textarea id="notes" name="notes" rows="4" placeholder="What are you hoping to cultivate in this season of your life?"></textarea>
+                    <label for="referrer">Who referred you to Polish + Bloom? (Name + brief context)</label>
+                    <textarea id="referrer" name="referrer" rows="2"></textarea>
+                </div>
+                <!-- 7. What drew you... -->
+                <div class="form-group">
+                    <label>What drew you to Polish + Bloom? (Please select, or describe below)</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="drawn_to[]" value="financial_growth"> Financial growth</label>
+                        <label><input type="checkbox" name="drawn_to[]" value="confidence_building"> Confidence building</label>
+                        <label><input type="checkbox" name="drawn_to[]" value="career_clarity"> Career clarity</label>
+                        <label><input type="checkbox" name="drawn_to[]" value="community"> Community</label>
+                        <label><input type="checkbox" name="drawn_to[]" value="emotional_support"> Emotional support</label>
+                    </div>
+                     <textarea id="drawn_to_other" name="drawn_to_other" rows="2" placeholder="You can also describe what drew you here in your own words..."></textarea>
+                </div>
+                <!-- 8. Seeking support in -->
+                <div class="form-group">
+                    <label>Which area(s) are you currently seeking the most support in? (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="support_areas[]" value="financial"> Financial wellness & mindset</label>
+                        <label><input type="checkbox" name="support_areas[]" value="career"> Career clarity or transitions</label>
+                        <label><input type="checkbox" name="support_areas[]" value="business"> Business startup guidance</label>
+                        <label><input type="checkbox" name="support_areas[]" value="self_worth"> Self-worth & confidence building</label>
+                        <label><input type="checkbox" name="support_areas[]" value="creative"> Creative direction</label>
+                        <label><input type="checkbox" name="support_areas[]" value="community"> Community & connection</label>
+                    </div>
+                    <label for="support_other" class="sr-only">Other support area</label>
+                    <input type="text" id="support_other" name="support_other" placeholder="Other (please specify)">
+                </div>
+                <!-- 9. Success -->
+                <div class="form-group">
+                    <label for="success_definition">What does success look like to you right now—in this season of your life?</label>
+                    <textarea id="success_definition" name="success_definition" rows="3"></textarea>
+                </div>
+                <!-- 10. Challenge -->
+                <div class="form-group">
+                    <label for="challenge_transform">What is one challenge or pattern you're ready to transform?</label>
+                    <textarea id="challenge_transform" name="challenge_transform" rows="3"></textarea>
+                </div>
+                <!-- 11. Previous experience -->
+                <div class="form-group">
+                    <label>Have you worked with a coach, therapist, or personal development community before?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="experience" value="yes"> Yes</label>
+                        <label><input type="radio" name="experience" value="no"> No</label>
+                    </div>
+                    <label for="experience_details" class="sr-only">Elaborate on previous experience</label>
+                    <input type="text" id="experience_details" name="experience_details" placeholder="Optional: care to elaborate?">
+                </div>
+                <!-- 12. Values -->
+                <div class="form-group">
+                    <label for="values">What values are most important to you in a community or group experience?</label>
+                    <input type="text" id="values" name="values" placeholder="e.g., trust, inclusivity, depth, creativity, etc.">
+                </div>
+                <!-- 13. Give and receive support -->
+                <div class="form-group">
+                    <label>Are you open to giving and receiving support from others in the community?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="give_receive" value="yes"> Yes</label>
+                        <label><input type="radio" name="give_receive" value="no"> No</label>
+                        <label><input type="radio" name="give_receive" value="more_info"> I'd like to know more</label>
+                    </div>
+                </div>
+                <!-- 14. Learning style -->
+                <div class="form-group">
+                    <label>Do you prefer more structured programs or open-ended, flow-based learning?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="learning_style" value="structured"> Structured</label>
+                        <label><input type="radio" name="learning_style" value="open"> Open</label>
+                        <label><input type="radio" name="learning_style" value="blend"> Blend of both</label>
+                    </div>
+                </div>
+                <!-- 15. Anything else -->
+                <div class="form-group">
+                    <label for="anything_else">Is there anything else you'd like us to know before we connect? (Optional)</label>
+                    <textarea id="anything_else" name="anything_else" rows="3"></textarea>
+                </div>
+                <!-- 16. Contact preference -->
+                <div class="form-group">
+                    <label>How would you prefer we contact you for next steps?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="contact_method" value="email"> Email</label>
+                        <label><input type="radio" name="contact_method" value="call"> Call</label>
+                        <label><input type="radio" name="contact_method" value="text"> Text</label>
+                        <label><input type="radio" name="contact_method" value="video"> Video intro session</label>
+                    </div>
                 </div>
                 <button type="submit" class="button button-primary">Submit Application</button>
             </form>
             <div id="form-success-message" class="hidden">
-                <p>Thank you for your application! We've received your information and will be in touch with the next steps shortly.</p>
+                <p>Thank you for your time, let's bloom</p>
             </div>
         </div>
     </div>
@@ -144,6 +249,6 @@
         </div>
     </footer>
 
-    <script src="assets/js/script.js?v=2"></script>
+    <script src="assets/js/script.js?v=3"></script>
 </body>
 </html> 

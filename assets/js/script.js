@@ -7,19 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const contactModalTitle = document.getElementById('contact-modal-title');
         const closeContactBtn = document.getElementById('close-contact-btn');
         const contactForm = document.getElementById('contact-form');
-        const moneyPersonalityDropdown = document.getElementById('money-personality');
         const formSuccessMessage = document.getElementById('form-success-message');
 
         function openContactModal(title, circle) {
             contactModalTitle.textContent = title;
+            const moneyPersonalityDropdown = document.getElementById('money-personality');
 
-            // Pre-fill dropdown if circle is passed
+            // Pre-fill dropdown if circle is passed and dropdown exists
             if (circle && moneyPersonalityDropdown) {
                 moneyPersonalityDropdown.value = circle;
-            } else {
+            } else if (moneyPersonalityDropdown) {
                 // Otherwise, use value from localStorage (from quiz) or clear it
                 const personality = localStorage.getItem('moneyPersonality');
-                if (personality && moneyPersonalityDropdown) {
+                if (personality) {
                     // This logic might need adjustment if personality title differs from dropdown value
                     // For now, we find the option whose text includes the personality title
                     let matchingOption = Array.from(moneyPersonalityDropdown.options).find(opt => opt.text.includes(personality));
@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactForm.classList.remove('hidden');
                 formSuccessMessage.classList.add('hidden');
                 contactForm.reset();
+                const moneyPersonalityDropdown = document.getElementById('money-personality');
                  if (moneyPersonalityDropdown) {
                     moneyPersonalityDropdown.value = ""; // Reset dropdown
                 }

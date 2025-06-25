@@ -40,3 +40,4 @@ This project uses [Biome](https://biomejs.dev/) for linting and formatting. To c
 
 To apply formatting and fixes:
 `npx @biomejs/biome check --apply ./` 
+
