@@ -339,12 +339,13 @@ section h2 {
 .journey-timeline::after {
     content: '';
     position: absolute;
-    width: 2px;
-    background: var(--color-border);
-    top: 0;
-    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--color-blush-pink), var(--color-sage-green));
+    top: 20px;
+    bottom: 20px;
     left: 20px;
-    margin-left: -1px;
+    margin-left: -1.5px;
+    border-radius: 3px;
 }
 
 .timeline-item {
@@ -359,7 +360,7 @@ section h2 {
     left: 20px;
     transform: translateX(-50%);
     top: 10px;
-    background-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-sage-green));
     color: white;
     width: 40px;
     height: 40px;
@@ -369,20 +370,21 @@ section h2 {
     justify-content: center;
     z-index: 1;
     transition: var(--transition);
+    box-shadow: var(--shadow-md);
 }
 
 .timeline-icon svg {
     width: 20px;
     height: 20px;
-    stroke-width: 2.5;
+    stroke-width: 2;
 }
 
 .timeline-item:hover .timeline-icon {
-    transform: translateX(-50%) scale(1.1);
-    box-shadow: var(--shadow-xl);
+    transform: translateX(-50%) scale(1.15);
+    box-shadow: 0 10px 20px rgba(167, 198, 161, 0.4);
 }
 .timeline-item:hover .timeline-icon svg {
-    transform: rotate(-10deg);
+    transform: rotate(-15deg);
 }
 
 .timeline-content {
@@ -408,7 +410,6 @@ section h2 {
     color: var(--color-text-light);
     line-height: 1.6;
 }
-
 #services {
     background-color: var(--color-background-alt);
 }
