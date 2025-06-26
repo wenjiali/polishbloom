@@ -25,6 +25,15 @@
     --color-primary-hover: var(--color-petal-rose-dark);
     --color-border: var(--color-blush-pink);
 
+    /* Rainbow Palette */
+    --color-red: #E8A09A;      /* Soft Terracotta */
+    --color-orange: #F2C4A2;   /* Peach */
+    --color-yellow: #F5DDAA;  /* Goldenrod */
+    --color-green: #A7C6A1;    /* Sage Green */
+    --color-blue: #A9D6E5;     /* Sky Blue */
+    --color-purple: #C8B9D6;  /* Dusty Lavender */
+    --color-pink: #EBA6A9;     /* Petal Rose */
+
     /* Typography */
     --font-family-sans: 'Lato', sans-serif;
     --font-family-serif: 'Cormorant Garamond', serif;
@@ -972,21 +981,32 @@ section h2 {
     margin-top: var(--space-12);
 }
 
-.color-item {
+.content-feature-block {
     background-color: var(--color-background-alt);
+    padding: var(--space-12);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: var(--space-16);
+}
+
+.color-item {
+    background-color: color-mix(in srgb, var(--color, var(--color-blush-pink)) 15%, var(--color-background-alt));
     padding: var(--space-8);
     border-radius: var(--border-radius);
     text-align: center;
     box-shadow: var(--shadow-md);
     transition: var(--transition);
+    border: 1px solid color-mix(in srgb, var(--color, var(--color-blush-pink)) 40%, transparent);
 }
 
 .color-item:hover {
     transform: translateY(-10px);
     box-shadow: var(--shadow-xl);
+    border-color: var(--color);
 }
 
 .color-item-icon {
+    background-color: var(--color, var(--color-blush-pink));
     width: 80px;
     height: 80px;
     border-radius: 50%;
