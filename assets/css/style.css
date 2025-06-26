@@ -281,7 +281,7 @@ section h2 {
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 1fr 1.7fr;
     align-items: center;
     gap: var(--space-12);
 }
@@ -802,6 +802,34 @@ section h2 {
     margin-bottom: var(--space-4);
 }
 
+/* MINI PLAN MODAL SPECIFIC STYLES */
+#mini-plan-content {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+#mini-plan-description {
+    line-height: var(--line-height-base);
+    font-size: 1rem;
+    color: var(--color-text-light);
+}
+
+#mini-plan-cta-container {
+    padding: 1.5rem 2rem 2rem;
+}
+
+#mini-plan-cta-btn {
+    text-align: center;
+    width: 100%;
+    color: var(--color-deep-charcoal);
+    text-shadow: none;
+}
+
+#mini-plan-cta-btn:hover {
+    color: var(--color-ivory-white);
+    box-shadow: var(--shadow-md);
+}
+
 /* CONTACT MODAL */
 .contact-modal-overlay {
     position: fixed;
@@ -991,27 +1019,116 @@ section h2 {
 }
 
 .color-item {
-    background-color: color-mix(in srgb, var(--color, var(--color-blush-pink)) 15%, var(--color-background-alt));
-    padding: var(--space-8);
+    background-color: var(--color-background-alt);
     border-radius: var(--border-radius);
     text-align: center;
-    box-shadow: var(--shadow-md);
     transition: var(--transition);
-    border: 1px solid color-mix(in srgb, var(--color, var(--color-blush-pink)) 40%, transparent);
+    border-left: 5px solid var(--color);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
 }
 
 .color-item:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.color-item-content,
+.color-item-details {
+    padding: var(--space-8);
+    height: 100%;
+    width: 100%;
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-item-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    background-color: var(--color-ivory-white);
+    text-align: left;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.color-item[style*="background-color: #f0f0f0;"] {
+    border-left-color: #ccc;
+}
+
+.color-item:hover .color-item-content {
+    opacity: 0;
+    transform: translateY(-20px);
+    visibility: hidden;
+}
+
+.color-item:hover .color-item-details {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.color-item-details .question {
+    font-family: var(--font-family-serif);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--color-text);
+    font-size: 1.2rem;
+    margin-bottom: var(--space-2);
+}
+
+.color-item-details p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+    color: var(--color-text-light);
+    text-align: left;
+    flex-grow: 1;
+}
+
+.color-item-details .button.button-small {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    width: 100%;
+    background-color: var(--color); /* Use the item's specific color */
+    color: var(--color-deep-charcoal);
     border-color: var(--color);
+    margin-top: auto;
+    text-shadow: none;
+    font-weight: 700;
+}
+
+.color-item-details .button.button-small:hover {
+    background-color: color-mix(in srgb, var(--color) 85%, #000);
+    color: var(--color-ivory-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.color-item[style*="background-color: #f0f0f0;"] .color-item-details {
+    background-color: #f9f9f9;
+}
+
+.color-item[style*="background-color: #f0f0f0;"] .color-item-details .button.button-small {
+    background-color: var(--color-muted-gold);
+    border-color: var(--color-muted-gold);
+    color: var(--color-ivory-white);
 }
 
 .color-item-icon {
-    background-color: var(--color, var(--color-blush-pink));
-    width: 80px;
-    height: 80px;
+    margin-bottom: var(--space-4);
+    padding: 0.75rem;
+    background-color: color-mix(in srgb, var(--color) 25%, transparent);
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    margin: 0 auto var(--space-6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1019,22 +1136,23 @@ section h2 {
 }
 
 .color-item-icon svg {
-    width: 40px;
-    height: 40px;
-    stroke: white;
+    width: 30px;
+    height: 30px;
+    stroke: var(--color);
 }
 
 .color-item:hover .color-item-icon {
-    transform: scale(1.1) rotate(-10deg);
+    /* new hover effect is on the parent, this can be removed or simplified */
 }
 
 .color-item h3 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-bottom: var(--space-2);
 }
 
 .color-item p {
     color: var(--color-text-light);
+    font-size: 0.9rem;
 }
 
 .step-cards {
