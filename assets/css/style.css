@@ -615,12 +615,16 @@ section h2 {
 }
 
 .page-header h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 700;
 }
 
+.page-header-actions {
+    margin-top: var(--space-6);
+}
+
 .page-content {
-    padding: var(--space-16) 0;
+    padding: var(--space-12) 0;
 }
 
 .page-content h2 {
@@ -2174,6 +2178,14 @@ footer {
     text-align: right;
 }
 
+.feature-grid.alt-layout .feature-visual .feature-illustration {
+    max-width: 85%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    box-shadow: var(--shadow-xl);
+}
+
 .what-to-expect-section {
     margin: var(--space-24) 0;
     text-align: center;
@@ -2182,15 +2194,12 @@ footer {
 .expect-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-5);
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: left;
+    gap: var(--space-8);
 }
 
 .expect-item {
     background-color: var(--color-background-alt);
-    padding: var(--space-5);
+    padding: var(--space-8);
     border-radius: var(--border-radius);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid var(--color-border);
@@ -2303,16 +2312,59 @@ footer {
 }
 
 .cta-section {
-    background-color: var(--color-champagne-beige);
-    padding: var(--space-7) 0;
+    padding: var(--space-24) 0;
+    background-color: var(--color-deep-charcoal);
+    color: var(--color-ivory-white);
     text-align: center;
     position: relative;
-    overflow: hidden;
+    background-image: url('../img/bloom-illustration.svg'); /* Reusing illustration as a texture */
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
 }
 
-.cta-section .cta-content {
-    position: relative;
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(58, 58, 58, 0.85); /* Deep charcoal overlay */
     z-index: 1;
+}
+
+.cta-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-section h2 {
+    font-size: 3rem;
+    font-family: 'Lora', serif;
+    margin-bottom: var(--space-6);
+}
+
+.cta-section .button-exclusive {
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    background-color: var(--color-ivory-white);
+    color: var(--color-deep-charcoal);
+    border-color: var(--color-ivory-white);
+}
+
+.cta-section .button-exclusive:hover {
+    background-color: var(--color-petal-rose);
+    border-color: var(--color-petal-rose);
+    color: var(--color-ivory-white);
+}
+
+.arrow-icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: var(--space-2);
+    transition: transform 0.2s;
+}
+
+.button:hover .arrow-icon {
+    transform: translateX(4px);
 }
 
 /* Responsive adjustments for new styles */
