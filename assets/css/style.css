@@ -333,7 +333,7 @@ section h2 {
 .journey-timeline {
     position: relative;
     max-width: 800px;
-    margin: var(--space-8) auto 0;
+    margin: var(--space-12) auto 0;
 }
 
 .journey-timeline::after {
@@ -343,23 +343,32 @@ section h2 {
     background: linear-gradient(to bottom, var(--color-blush-pink), var(--color-sage-green));
     top: 20px;
     bottom: 20px;
-    left: 20px;
+    left: 50%;
     margin-left: -1.5px;
     border-radius: 3px;
 }
 
 .timeline-item {
-    padding: var(--space-2) var(--space-8);
+    padding: var(--space-4) var(--space-8);
     position: relative;
-    background: inherit;
-    width: 100%;
+    width: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+    padding-left: 0;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+    padding-right: 0;
 }
 
 .timeline-icon {
     position: absolute;
-    left: 20px;
+    left: 50%;
     transform: translateX(-50%);
-    top: 10px;
+    top: calc(var(--space-4) + 10px);
     background: linear-gradient(135deg, var(--color-primary), var(--color-sage-green));
     color: white;
     width: 40px;
@@ -371,6 +380,14 @@ section h2 {
     z-index: 1;
     transition: var(--transition);
     box-shadow: var(--shadow-md);
+}
+
+.timeline-item:nth-child(odd) .timeline-icon {
+    left: 100%;
+}
+
+.timeline-item:nth-child(even) .timeline-icon {
+    left: 0;
 }
 
 .timeline-icon svg {
@@ -1332,6 +1349,12 @@ section h2 {
     color: var(--color-sage-green);
 }
 
+.color-item.selected {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 0 25px color-mix(in srgb, var(--color) 40%, transparent);
+    border-left-color: var(--color);
+}
+
 .circle-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -2133,5 +2156,138 @@ footer {
     }
     .contact-modal-content .form-row .form-group {
         flex-basis: 100%;
+    }
+}
+
+/* New Bloom Circles Page Styles */
+.feature-grid.alt-layout {
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-16);
+}
+
+.feature-grid.alt-layout .feature-text {
+    order: 1;
+}
+
+.feature-grid.alt-layout .feature-visual {
+    order: 2;
+    text-align: right;
+}
+
+.what-to-expect-section {
+    margin: var(--space-24) 0;
+    text-align: center;
+}
+
+.expect-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-8) auto 0;
+    max-width: 800px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6) var(--space-12);
+}
+
+.expect-list li {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-light);
+    padding-left: var(--space-8);
+    position: relative;
+}
+
+.expect-list li::before {
+    content: '✺';
+    position: absolute;
+    left: 0;
+    color: var(--color-muted-gold);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.expect-list li strong {
+    color: var(--color-text);
+    font-weight: 700;
+}
+
+.explore-circles-section {
+    text-align: center;
+    margin-bottom: var(--space-12);
+}
+.section-subtitle {
+    font-family: var(--font-family-serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-top: var(--space-8);
+}
+
+.circle-cards.detailed-view {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-8);
+}
+
+.circle-cards.detailed-view .circle-card {
+    background-color: var(--color-background-alt);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+}
+
+.circle-cards.detailed-view .circle-card-content {
+    padding: var(--space-8);
+    flex-grow: 1;
+}
+
+.circle-cards.detailed-view .circle-card h3 {
+    text-align: left;
+    font-size: 1.75rem;
+    color: var(--color-deep-charcoal);
+}
+
+.circle-cards.detailed-view .circle-subtitle {
+    display: block;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+    font-family: var(--font-family-sans);
+    font-size: 1rem;
+}
+
+.circle-cards.detailed-view .circle-card p {
+    text-align: left;
+    color: var(--color-text-light);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.circle-cards.detailed-view .circle-card:hover {
+    border-color: var(--color-muted-gold);
+}
+
+.circle-cards.detailed-view .circle-card::before {
+    background: var(--color-muted-gold);
+}
+
+.cta-section {
+    background: var(--color-champagne-beige);
+    text-align: center;
+    padding: var(--space-16) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section .cta-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive adjustments for new styles */
+@media (max-width: 900px) {
+    .expect-list {
+        grid-template-columns: 1fr;
     }
 }

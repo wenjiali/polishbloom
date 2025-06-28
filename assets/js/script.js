@@ -14,54 +14,54 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: 'Survival: Essentials Reset',
                 question: '“Am I safe and supported?”',
                 description: 'This worksheet helps you build a monthly Essential Confidence Plan. It focuses on covering your core needs—housing, groceries, utilities—with calm, clarity, and no guilt.',
-                ctaText: 'Try the “Essentials Reset” worksheet',
+                ctaText: 'Try the "Essentials Reset" worksheet',
                 ctaLink: '#' // This should link to the form at the bottom of the page.
             },
             lifestyle: {
                 title: 'Lifestyle: Design Your Joy Budget',
-                question: '“What brings me daily joy?”',
+                question: "What brings me daily joy?",
                 description: 'Use the Lifestyle Flow Tracker to balance joy and responsibility without burnout. It helps you make intentional space for hobbies, takeout, and the small indulgences that light up your life.',
                 ctaText: 'Design Your Joy Budget',
                 ctaLink: '#'
             },
             dreams: {
                 title: 'Dreams: Start Your Dream Plan',
-                question: '“What if my dream was a line item?”',
+                question: "What if my dream was a line item?",
                 description: 'The Dream Fund Map turns your biggest goals into actionable micro-moves. Visualize your progress and save for your book, your business, or that trip to Italy—like it truly matters.',
                 ctaText: 'Start Your Dream Plan',
                 ctaLink: '#'
             },
             growth: {
                 title: 'Growth: Grow with Purpose',
-                question: '“How am I becoming more me?”',
+                question: "How am I becoming more me?",
                 description: 'The Growth Budget Builder helps you plan annual investments in yourself, from courses and mentors to books and coaching, without any guilt.',
                 ctaText: 'Grow with Purpose',
                 ctaLink: '#'
             },
             security: {
                 title: 'Security: Secure Your Safety Net',
-                question: '“How do I protect my peace?”',
+                question: "How do I protect my peace?",
                 description: 'The Financial Safety Toolkit provides checklists and prompts to build your emergency fund, insurance, and other financial safety nets with a sense of calm, not fear.',
                 ctaText: 'Secure Your Safety Net',
                 ctaLink: '#'
             },
             education: {
                 title: 'Education: Explore Learning Investments',
-                question: '“How do I keep learning and evolving?”',
+                question: "How do I keep learning and evolving?",
                 description: 'Discover curated learning paths to spend smarter on courses, workshops, and other educational pursuits that align with your future self.',
                 ctaText: 'Explore Learning Investments',
                 ctaLink: '#'
             },
             giving: {
                 title: 'Giving: Build Your Giving Practice',
-                question: '“Where can I circulate love and impact?”',
+                question: "Where can I circulate love and impact?",
                 description: 'The Giving Ritual Plan helps you reflect on causes you care about, making the act of supporting friends, donating, or tipping an intentional and joyful form of abundance.',
                 ctaText: 'Build Your Giving Practice',
                 ctaLink: '#'
             },
             custom: {
                 title: 'And More… Create Your Money Palette',
-                question: '“What does abundance mean for you?”',
+                question: "What does abundance mean for you?",
                 description: 'This visual worksheet helps you define what matters most to you. This is your life, so create custom buckets for anything from Therapy and Kids to Nature and Healing.',
                 ctaText: 'Create Your Money Palette',
                 ctaLink: '#'
@@ -107,6 +107,31 @@ document.addEventListener('DOMContentLoaded', () => {
         miniPlanModal.addEventListener('click', (e) => {
             if (e.target === miniPlanModal) {
                 closeMiniPlanModal();
+            }
+        });
+    }
+
+    // --- DELAYED REDIRECT FOR RAINBOW CASHFLOW PAGE ---
+    const valueShowcase = document.querySelector('.color-system-grid');
+    if (valueShowcase) {
+        valueShowcase.addEventListener('click', function(e) {
+            const button = e.target.closest('.button');
+            if (button && button.href.includes('join.html')) {
+                e.preventDefault(); 
+
+                const allItems = valueShowcase.querySelectorAll('.color-item');
+                allItems.forEach(item => item.classList.remove('selected'));
+
+                const card = e.target.closest('.color-item');
+                if (card) {
+                    card.classList.add('selected');
+                }
+
+                button.textContent = 'Redirecting...';
+
+                setTimeout(() => {
+                    window.location.href = button.href;
+                }, 1500);
             }
         });
     }

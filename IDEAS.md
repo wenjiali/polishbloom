@@ -16,7 +16,7 @@ Here is a list of suggestions to improve the UX/UI design, readability, content,
 
 ### 1.3. Redesign the "Work With Me" Section
 - **Observation:** The services are listed as simple text paragraphs. This is functional but not visually engaging.
-- **Suggestion:** Redesign this section using a **card-based layout**. Each service (Rainbow Cashflow™, Polish Ritual™, etc.) would have its own card containing:
+- **Suggestion:** Redesign this section using a **card-based layout**. Each service (Rainbow Cashflow, Polish Ritual™, etc.) would have its own card containing:
     - An on-brand icon or image.
     - The service title.
     - A brief, benefit-focused description.
