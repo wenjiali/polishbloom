@@ -28,7 +28,8 @@
                     <li><a href="about.html">About</a></li>
                     <li><a href="bloom-circles.html">Bloom Circles</a></li>
                     <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
-                    <li><a href="index.html#testimonials">Stories</a></li>
+                    <li><a href="stories.html">Stories</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="join.html" class="button">Join Now</a></li>
                 </ul>
             </nav>
@@ -254,70 +255,54 @@ Whether you're planning your next move, reclaiming your confidence, or redefinin
             </div>
         </div>
     </footer>
-
+    
     <div id="quiz-modal" class="quiz-modal-overlay hidden">
         <div class="quiz-modal-content">
             <button id="close-quiz-btn" class="quiz-close-button">&times;</button>
             
+            <!-- Quiz Start Screen -->
             <div id="quiz-start-screen">
-                <h2 class="quiz-title">Discover Your Dominant Money Personality</h2>
-                <p class="quiz-subtitle">Answer 7 quick questions to reveal your money mindset and unlock a personalized path to financial well-being.</p>
-                <button id="start-quiz-btn-modal" class="button button-primary">Start the Quiz</button>
+                <h2 class="quiz-title">Discover Your Bloom Circle</h2>
+                <p class="quiz-subtitle">Answer a few quick questions to find the community that best aligns with your personality and goals.</p>
+                <button id="start-quiz-now-btn" class="button button-primary">Start the Quiz</button>
             </div>
 
-            <div id="quiz-question-screen" class="hidden">
-                <div id="quiz-progress"></div>
-                <h3 id="quiz-question-text"></h3>
-                <div class="quiz-answers-grid"></div>
+            <!-- Quiz Questions Screen -->
+            <div id="quiz-questions-screen" class="hidden">
+                <div id="quiz-progress"><div id="quiz-progress-bar"></div></div>
+                <p id="quiz-question-text"></p>
+                <div id="quiz-answers-grid" class="quiz-answers-grid">
+                    <!-- Answer buttons will be populated here by script.js -->
+                </div>
             </div>
 
+            <!-- Quiz Results Screen -->
             <div id="quiz-results-screen" class="hidden">
-                <div id="quiz-result-content"></div>
-                <div id="quiz-personalized-cta" class="hidden"></div>
+                <p class="result-badge">Your Recommended Circle</p>
+                <h2 id="result-title" class="result-title"></h2>
+                <p id="result-description" class="result-description"></p>
+                <div id="result-details" class="result-details">
+                    <!-- Details populated by script.js -->
+                </div>
+                <div class="quiz-cta">
+                    <p>Ready to join your circle?</p>
+                    <a href="join.html" class="button button-primary">Learn More & Apply</a>
+                </div>
+            </div>
+            
+            <!-- Mini Plan Screen -->
+            <div id="mini-plan-screen" class="hidden">
+                <h2 class="quiz-title">Your Personalized Mini-Plan</h2>
+                <div id="mini-plan-content">
+                    <p id="mini-plan-description"></p>
+                    <div id="mini-plan-cta-container">
+                        <a id="mini-plan-cta-btn" href="#" class="button button-primary"></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const circle = urlParams.get('circle');
-
-        if (circle) {
-            const welcomeBox = document.getElementById('personalized-welcome');
-            const circleName = circle.replace(/-/g, ' ');
-            welcomeBox.innerHTML = `<p>Welcome! Based on your quiz results, <strong>${circleName}</strong> is the perfect fit for you. Explore below or join today!</p>`;
-            welcomeBox.classList.remove('hidden');
-
-            const circleElement = document.getElementById(circle);
-            if(circleElement) {
-                circleElement.classList.add('highlighted');
-                circleElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-    });
-    </script>
     <script src="assets/js/script.js"></script>
-
-    <!-- SEO Schema Markup -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "EventSeries",
-      "name": "Bloom Circles",
-      "description": "Soulful gatherings and community workshops for growth and connection. A cozy, curated space where people come together to recharge, reflect, and rise through live conversations and themed workshops.",
-      "organizer": {
-        "@type": "LocalBusiness",
-        "name": "Polish & Bloom",
-        "url": "https://www.polishandbloom.com"
-      },
-      "startDate": "2024-01-01T00:00:00Z",
-      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-      "location": {
-        "@type": "VirtualLocation",
-        "url": "https://www.polishandbloom.com/bloom-circles.html"
-      }
-    }
-    </script>
 </body>
-</html> 
+</html>
