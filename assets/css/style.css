@@ -321,113 +321,134 @@ section h2 {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: var(--space-4);
-    height: 2px;
-    background-color: var(--color-muted-gold);
+    width: 3px;
+    height: 100%;
+    background-color: var(--color-petal-rose);
+    border-radius: 3px;
 }
 
-#journey {
-    padding-bottom: var(--space-24);
+#journey,
+#rainbow-how-it-works {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+    text-align: center;
+    background-color: var(--color-background-alt);
 }
 
 .journey-timeline {
     position: relative;
-    max-width: 800px;
+    max-width: 600px; /* More constrained width for single column */
     margin: var(--space-12) auto 0;
+    padding-left: var(--space-12); /* Space for the timeline bar */
 }
 
 .journey-timeline::after {
     content: '';
     position: absolute;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--color-blush-pink), var(--color-sage-green));
-    top: 20px;
-    bottom: 20px;
-    left: 50%;
-    margin-left: -1.5px;
-    border-radius: 3px;
+    left: 0; /* Align to the left */
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--color-dusty-lavender), var(--color-sage-green));
+    z-index: 1;
 }
 
 .timeline-item {
-    padding: var(--space-4) var(--space-8);
     position: relative;
-    width: 50%;
+    margin-bottom: var(--space-24); /* Increased space for cards */
+    width: 100%;
+    padding-left: var(--space-12); /* Space from timeline bar */
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
 }
 
-.timeline-item:nth-child(odd) {
-    left: 0;
-    padding-left: 0;
+.timeline-item:last-child {
+    margin-bottom: 0;
 }
 
+/* Unified single-sided styles */
+.timeline-item:nth-child(odd),
 .timeline-item:nth-child(even) {
-    left: 50%;
+    left: 0;
+    width: 100%;
+    padding-left: var(--space-12);
     padding-right: 0;
+    justify-content: flex-start;
+    text-align: left;
 }
 
 .timeline-icon {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: calc(var(--space-4) + 10px);
-    background: linear-gradient(135deg, var(--color-primary), var(--color-sage-green));
-    color: white;
-    width: 40px;
-    height: 40px;
+    top: 0;
+    left: -25px; /* Position on the left timeline bar */
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    background-color: var(--color-background-alt);
+    border: 2px solid var(--color-blush-pink);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1;
+    z-index: 2;
     transition: var(--transition);
-    box-shadow: var(--shadow-md);
+    transform: translateX(0);
+    box-shadow: 0 0 0 4px var(--color-background-alt);
 }
 
-.timeline-item:nth-child(odd) .timeline-icon {
-    left: 100%;
-}
-
+.timeline-item:nth-child(odd) .timeline-icon,
 .timeline-item:nth-child(even) .timeline-icon {
-    left: 0;
+    left: -25px;
+    transform: translateX(0);
 }
 
 .timeline-icon svg {
-    width: 20px;
-    height: 20px;
-    stroke-width: 2;
+    width: 24px;
+    height: 24px;
+    color: var(--color-petal-rose);
+    transition: var(--transition);
 }
 
 .timeline-item:hover .timeline-icon {
-    transform: translateX(-50%) scale(1.15);
-    box-shadow: 0 10px 20px rgba(167, 198, 161, 0.4);
+    transform: scale(1.1);
+    border-color: var(--color-petal-rose);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-blush-pink) 20%, transparent);
 }
+
 .timeline-item:hover .timeline-icon svg {
-    transform: rotate(-15deg);
+    color: var(--color-petal-rose-dark);
 }
 
 .timeline-content {
-    background: var(--color-background-alt);
+    background-color: var(--color-ivory-white);
     padding: var(--space-6);
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    width: 100%;
     transition: var(--transition);
 }
 
 .timeline-content:hover {
-    box-shadow: var(--shadow-lg);
     transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: color-mix(in srgb, var(--color-blush-pink) 60%, transparent);
 }
 
 .timeline-content h3 {
     font-size: 1.5rem;
-    color: var(--color-text);
+    margin-bottom: var(--space-2);
+    color: var(--color-deep-charcoal);
 }
 
 .timeline-content p {
-    margin-top: var(--space-2);
-    color: var(--color-text-light);
+    font-size: 1rem;
     line-height: 1.6;
+    color: var(--color-text-light);
 }
+
 #services {
+    padding-top: var(--space-16);
     background-color: var(--color-background-alt);
 }
 
@@ -2382,4 +2403,50 @@ footer {
     .expect-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Single-Sided Timeline for Rainbow Cashflow Page */
+#rainbow-how-it-works {
+    padding: var(--space-16) 0;
+    background-color: var(--color-background-alt);
+}
+
+#rainbow-how-it-works .journey-timeline {
+    max-width: 600px;
+    margin: var(--space-12) auto 0;
+    padding-left: var(--space-12);
+}
+
+#rainbow-how-it-works .journey-timeline::after {
+    left: 0;
+    transform: translateX(0);
+}
+
+#rainbow-how-it-works .timeline-item {
+    width: 100%;
+    left: 0;
+    padding-left: var(--space-12);
+    padding-right: 0;
+    margin-bottom: var(--space-12);
+    text-align: left;
+    justify-content: flex-start;
+}
+
+#rainbow-how-it-works .timeline-item:nth-child(odd),
+#rainbow-how-it-works .timeline-item:nth-child(even) {
+    left: 0;
+    padding-left: var(--space-12); /* Consistent padding */
+    padding-right: 0;
+    text-align: left;
+}
+
+#rainbow-how-it-works .timeline-icon {
+    left: -25px; /* Position icon on the timeline bar */
+    transform: translateX(0);
+}
+
+#rainbow-how-it-works .timeline-item:nth-child(odd) .timeline-icon,
+#rainbow-how-it-works .timeline-item:nth-child(even) .timeline-icon {
+    left: -25px;
+    transform: translateX(0);
 }
