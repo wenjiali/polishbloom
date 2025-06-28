@@ -138,91 +138,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- CONTACT MODAL LOGIC (runs on all pages with the modal) ---
     const contactModal = document.getElementById('contact-modal');
-    const openContactModalBtns = document.querySelectorAll('.js-open-contact-modal');
-
-    if (contactModal && openContactModalBtns.length > 0) {
-        const contactModalTitle = document.getElementById('contact-modal-title');
+    if (contactModal) {
+        const openContactModalBtns = document.querySelectorAll('.js-open-contact-modal');
         const closeContactBtn = document.getElementById('close-contact-btn');
         const contactForm = document.getElementById('contact-form');
         const formSuccessMessage = document.getElementById('form-success-message');
+        const contactModalTitle = document.getElementById('contact-modal-title');
 
-        function openContactModal(title, circle) {
+        const openContactModal = (title = 'Get in Touch') => {
             contactModalTitle.textContent = title;
-            const moneyPersonalityDropdown = document.getElementById('money-personality');
-
-            // Pre-fill dropdown if circle is passed and dropdown exists
-            if (circle && moneyPersonalityDropdown) {
-                moneyPersonalityDropdown.value = circle;
-            } else if (moneyPersonalityDropdown) {
-                // Otherwise, use value from localStorage (from quiz) or clear it
-                const personality = localStorage.getItem('moneyPersonality');
-                if (personality) {
-                    // This logic might need adjustment if personality title differs from dropdown value
-                    // For now, we find the option whose text includes the personality title
-                    let matchingOption = Array.from(moneyPersonalityDropdown.options).find(opt => opt.text.includes(personality));
-                    if (matchingOption) {
-                        moneyPersonalityDropdown.value = matchingOption.value;
-                    }
-                }
-            }
             contactModal.classList.remove('hidden');
-        }
+        };
 
-        function closeContactModal() {
+        const closeContactModal = () => {
             contactModal.classList.add('hidden');
             setTimeout(() => {
-                contactForm.classList.remove('hidden');
-                formSuccessMessage.classList.add('hidden');
+                contactForm.style.display = 'block';
+                formSuccessMessage.style.display = 'none';
                 contactForm.reset();
-                const moneyPersonalityDropdown = document.getElementById('money-personality');
-                 if (moneyPersonalityDropdown) {
-                    moneyPersonalityDropdown.value = ""; // Reset dropdown
-                }
-            }, 300); // Wait for transition
-        }
+            }, 300);
+        };
 
-        function handleOpenContactModal(e) {
-            e.preventDefault();
-            const title = e.currentTarget.dataset.title || 'Get In Touch';
-            const circle = e.currentTarget.dataset.circle || null;
-            openContactModal(title, circle);
-        }
-
-        function handleContactFormSubmit(e) {
-            e.preventDefault();
-            contactForm.classList.add('hidden');
-            formSuccessMessage.classList.remove('hidden');
-        }
-
-        openContactModalBtns.forEach(button => {
-            button.addEventListener('click', handleOpenContactModal);
+        openContactModalBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const title = e.currentTarget.dataset.title;
+                openContactModal(title);
+            });
         });
 
         closeContactBtn.addEventListener('click', closeContactModal);
-        contactForm.addEventListener('submit', handleContactFormSubmit);
-        contactModal.addEventListener('click', (e) => {
+        contactModal.addEventListener('click', e => {
             if (e.target === contactModal) {
                 closeContactModal();
             }
+        });
+
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
+            contactForm.style.display = 'none';
+            formSuccessMessage.style.display = 'block';
         });
     }
 
     // --- QUIZ LOGIC (runs on any page with the modal) ---
     const quizModal = document.getElementById('quiz-modal');
     if (quizModal) {
-        const openQuizBtns = document.querySelectorAll('.js-start-quiz-btn');
+        const openQuizBtns = document.querySelectorAll('.js-open-quiz-modal');
         const closeQuizBtn = document.getElementById('close-quiz-btn');
-        const startQuizBtnModal = document.getElementById('start-quiz-btn-modal');
-
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        
         const startScreen = document.getElementById('quiz-start-screen');
         const questionScreen = document.getElementById('quiz-question-screen');
         const resultsScreen = document.getElementById('quiz-results-screen');
         
-        const quizProgress = document.getElementById('quiz-progress');
+        const progressBar = document.getElementById('quiz-progress-bar');
         const questionText = document.getElementById('quiz-question-text');
-        const answersGrid = document.querySelector('#quiz-question-screen .quiz-answers-grid');
-        const resultDisplay = document.getElementById('quiz-result-content');
-        const personalizedCta = document.getElementById('quiz-personalized-cta');
+        const answersGrid = document.getElementById('quiz-answers-grid');
+        
+        const resultTitle = document.getElementById('result-title');
+        const resultDescription = document.getElementById('result-description');
+        const resultDetails = document.getElementById('result-details');
 
         const quizQuestions = [
             { question: "When you receive an unexpected financial windfall, your first instinct is to:", answers: { a: "Save or invest it for long-term security.", b: "Plan a memorable trip or experience.", c: "Create a detailed spreadsheet to allocate every dollar.", d: "Use it to help a friend or a cause you care about.", e: "Invest it in a creative project or business idea.", f: "Put it aside to decide later, avoiding any hasty decisions.", g: "Use it to get ahead on a major life goal (like a home or career change)." } },
@@ -234,41 +210,50 @@ document.addEventListener('DOMContentLoaded', () => {
             { question: "Your biggest financial fear is:", answers: { a: "An unexpected crisis wiping out your savings.", b: "Missing out on life's great adventures due to a lack of funds.", c: "Losing track of details and feeling financially chaotic.", d: "Not being able to help someone you care about.", e: "A brilliant idea failing due to a lack of capital.", f: "Feeling stressed or overwhelmed by money matters.", g: "Not reaching your full potential financially." } }
         ];
 
-        const quizResults = {
-                a: { color: "Blue", title: "The Secure Planner", description: "You value stability and security. You plan carefully and prefer long-term financial safety nets.", strengths: "Thoughtful, disciplined, cautious.", growth: "Avoid over-worrying, embrace some flexibility.", circle: "The Legacy Circle", ctaText: "Join the Legacy Circle" },
-                b: { color: "Yellow", title: "The Free Spirit", description: "You see money as a tool for freedom and adventure. You're spontaneous and optimistic.", strengths: "Intuitive, generous, adventurous.", growth: "Create simple savings goals, track spending lightly.", circle: "The Horizon Circle", ctaText: "Join the Horizon Circle" },
-                c: { color: "Green", title: "The Strategist", description: "You feel empowered by having a clear plan. You're organized, logical, and love to be in control of the details.", strengths: "Detail-oriented, efficient, goal-driven.", growth: "Allow for spontaneity, celebrate progress not just perfection.", circle: "The Blueprint Circle", ctaText: "Join the Blueprint Circle" },
-                d: { color: "Pink", title: "The Nurturer", description: "You are driven by generosity and community. You find joy in supporting others and using money to care for loved ones.", strengths: "Empathetic, caring, community-focused.", growth: "Set boundaries, prioritize your own financial self-care.", circle: "The Heartwood Circle", ctaText: "Join the Heartwood Circle" },
-                e: { color: "Orange", title: "The Creator", description: "You are an innovator who sees money as a tool for creative expression and opportunity. You're not afraid to take risks on new ideas.", strengths: "Entrepreneurial, inventive, resourceful.", growth: "Balance new ventures with stable income streams.", circle: "The Catalyst Circle", ctaText: "Join the Catalyst Circle" },
-                f: { color: "Purple", title: "The Peacekeeper", description: "You seek calm and balance in your financial life, avoiding stress and conflict. You prefer a mindful, intuitive approach.", strengths: "Calm, mindful, balanced.", growth: "Engage in necessary financial conversations, set clear goals.", circle: "The Sanctuary Circle", ctaText: "Join the Sanctuary Circle" },
-                g: { color: "Red", title: "The Achiever", description: "You are ambitious and motivated by success. You see money as a measure of growth and a tool to achieve big goals.", strengths: "Driven, confident, goal-oriented.", growth: "Balance ambition with rest, celebrate non-financial wins.", circle: "The Summit Circle", ctaText: "Join the Summit Circle" }
+        const quizResultsData = {
+            a: { title: "The Secure Planner", description: "You value stability and security. You plan carefully and prefer long-term financial safety nets.", strengths: "Thoughtful, disciplined, cautious.", growth: "Avoid over-worrying, embrace some flexibility.", circle: "The Legacy Circle" },
+            b: { title: "The Free Spirit", description: "You see money as a tool for freedom and adventure. You're spontaneous and optimistic.", strengths: "Intuitive, generous, adventurous.", growth: "Create simple savings goals, track spending lightly.", circle: "The Horizon Circle" },
+            c: { title: "The Strategist", description: "You feel empowered by having a clear plan. You're organized, logical, and love to be in control of the details.", strengths: "Detail-oriented, efficient, goal-driven.", growth: "Allow for spontaneity, celebrate progress not just perfection.", circle: "The Blueprint Circle" },
+            d: { title: "The Nurturer", description: "You are driven by generosity and community. You find joy in supporting others and using money to care for loved ones.", strengths: "Empathetic, caring, community-focused.", growth: "Set boundaries, prioritize your own financial self-care.", circle: "The Heartwood Circle" },
+            e: { title: "The Creator", description: "You are an innovator who sees money as a tool for creative expression and opportunity. You're not afraid to take risks on new ideas.", strengths: "Entrepreneurial, inventive, resourceful.", growth: "Balance new ventures with stable income streams.", circle: "The Catalyst Circle" },
+            f: { title: "The Peacekeeper", description: "You seek calm and balance in your financial life, avoiding stress and conflict. You prefer a mindful, intuitive approach.", strengths: "Calm, mindful, balanced.", growth: "Engage in necessary financial conversations, set clear goals.", circle: "The Sanctuary Circle" },
+            g: { title: "The Achiever", description: "You are ambitious and motivated by success. You see money as a measure of growth and a tool to achieve big goals.", strengths: "Driven, confident, goal-oriented.", growth: "Balance ambition with rest, celebrate non-financial wins.", circle: "The Summit Circle" }
         };
 
         let currentQuestionIndex = 0;
         let userAnswers = {};
 
-        function openQuizModal() { quizModal.classList.remove('hidden'); }
-        function closeQuizModal() { quizModal.classList.add('hidden'); setTimeout(resetQuiz, 300); }
+        const openQuizModal = () => {
+            quizModal.classList.remove('hidden');
+            resetQuiz(); 
+        };
 
-        function startQuiz() {
+        const closeQuizModal = () => {
+            quizModal.classList.add('hidden');
+        };
+
+        const startQuiz = () => {
             startScreen.classList.add('hidden');
-            resultsScreen.classList.add('hidden');
             questionScreen.classList.remove('hidden');
+            resultsScreen.classList.add('hidden');
             currentQuestionIndex = 0;
             userAnswers = {};
             displayQuestion();
-        }
+        };
 
-        function displayQuestion() {
+        const displayQuestion = () => {
             if (currentQuestionIndex < quizQuestions.length) {
-                const question = quizQuestions[currentQuestionIndex];
-                questionText.textContent = question.question;
-                quizProgress.textContent = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+                const progressPercentage = ((currentQuestionIndex) / quizQuestions.length) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                
+                const currentQ = quizQuestions[currentQuestionIndex];
+                questionText.textContent = currentQ.question;
                 answersGrid.innerHTML = '';
-                for (const key in question.answers) {
+                
+                for (const key in currentQ.answers) {
                     const button = document.createElement('button');
                     button.className = 'quiz-answer-button';
-                    button.textContent = question.answers[key];
+                    button.textContent = currentQ.answers[key];
                     button.dataset.answer = key;
                     button.addEventListener('click', handleAnswer);
                     answersGrid.appendChild(button);
@@ -276,77 +261,47 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 showResults();
             }
-        }
+        };
 
-        function handleAnswer(e) {
-            const selectedAnswer = e.target.dataset.answer;
+        const handleAnswer = (e) => {
+            const selectedAnswer = e.currentTarget.dataset.answer;
             userAnswers[selectedAnswer] = (userAnswers[selectedAnswer] || 0) + 1;
             currentQuestionIndex++;
             displayQuestion();
-        }
+        };
 
-        function showResults() {
+        const showResults = () => {
             questionScreen.classList.add('hidden');
             resultsScreen.classList.remove('hidden');
 
-            const answerCounts = Object.entries(userAnswers);
-            let dominantPersonality = 'a';
-            if (answerCounts.length > 0) {
-                dominantPersonality = answerCounts.sort((a, b) => b[1] - a[1])[0][0];
-            }
-            
-            const result = quizResults[dominantPersonality];
-            localStorage.setItem('moneyPersonality', result.title);
+            const resultKey = Object.keys(userAnswers).reduce((a, b) => userAnswers[a] > userAnswers[b] ? a : b);
+            const result = quizResultsData[resultKey];
 
-            resultDisplay.innerHTML = `
-                <span class="result-badge" style="background-color: var(--color-${result.color.toLowerCase()});">${result.title}</span>
-                <h3 class="result-title">You are The ${result.title}!</h3>
-                <p class="result-description">${result.description}</p>
-                <div class="result-details">
-                    <p><strong>Strengths:</strong> ${result.strengths}</p>
-                    <p><strong>Growth Areas:</strong> ${result.growth}</p>
-                </div>
+            resultTitle.textContent = result.title;
+            resultDescription.textContent = result.description;
+            
+            resultDetails.innerHTML = `
+                <p><strong>Your Circle:</strong> ${result.circle}</p>
+                <p><strong>Your Strengths:</strong> ${result.strengths}</p>
+                <p><strong>Area for Growth:</strong> ${result.growth}</p>
             `;
             
-            personalizedCta.innerHTML = `
-                <h4>Your Recommended Next Step:</h4>
-                <p>Based on your results, you'd feel right at home in <strong>${result.circle}.</strong></p>
-                <a href="#" class="button button-primary js-open-contact-modal" data-title="Apply to Join ${result.circle}" data-circle="${result.circle}">${result.ctaText}</a>
-            `;
-            personalizedCta.classList.remove('hidden');
-            
-            // Re-attach event listener to the new button inside the modal
-            const ctaBtn = personalizedCta.querySelector('.js-open-contact-modal');
-            if (ctaBtn) {
-                ctaBtn.addEventListener('click', (e) => {
-                    handleOpenContactModal(e);
-                    closeQuizModal();
-                });
-            }
-        }
+            // Optional: Store result for other pages
+            localStorage.setItem('moneyPersonality', result.circle);
+        };
 
-        function resetQuiz() {
+        const resetQuiz = () => {
             startScreen.classList.remove('hidden');
             questionScreen.classList.add('hidden');
             resultsScreen.classList.add('hidden');
-            resultDisplay.innerHTML = '';
-            personalizedCta.innerHTML = '';
-            personalizedCta.classList.add('hidden');
-            localStorage.removeItem('moneyPersonality');
-        }
+            progressBar.style.width = '0%';
+        };
 
-        openQuizBtns.forEach(btn => btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openQuizModal();
-        }));
-
-        if(startQuizBtnModal) startQuizBtnModal.addEventListener('click', startQuiz);
-        if(closeQuizBtn) closeQuizBtn.addEventListener('click', closeQuizModal);
-        
+        openQuizBtns.forEach(btn => btn.addEventListener('click', openQuizModal));
+        closeQuizBtn.addEventListener('click', closeQuizModal);
+        startQuizBtn.addEventListener('click', startQuiz);
         quizModal.addEventListener('click', (e) => {
-            if (e.target === quizModal) {
-                closeQuizModal();
-            }
+            if (e.target === quizModal) closeQuizModal();
         });
     }
 
