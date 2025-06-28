@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const quizQuestions = [
             { question: "When you receive an unexpected financial windfall, your first instinct is to:", answers: { a: "Save or invest it for long-term security.", b: "Plan a memorable trip or experience.", c: "Create a detailed spreadsheet to allocate every dollar.", d: "Use it to help a friend or a cause you care about.", e: "Invest it in a creative project or business idea.", f: "Put it aside to decide later, avoiding any hasty decisions.", g: "Use it to get ahead on a major life goal (like a home or career change)." } },
             { question: "Your ideal relationship with money is one of:", answers: { a: "Safety & predictability", b: "Freedom & spontaneity", c: "Organization & efficiency", d: "Connection & generosity", e: "Innovation & opportunity", f: "Peace & mindfulness", g: "Achievement & impact" } },
-            { question: "When making a large purchase, you are most likely to:", answers: { a: "Research exhaustively to ensure it’s a sound, future-proof choice.", b: "Focus on how it will enhance your life experiences.", c: "Compare prices and features methodically to get the best value.", d: "Consider its impact on your loved ones or community.", e: "Choose the option that feels the most exciting or has the biggest potential.", f: "Wait until you feel completely calm and certain about the decision.", g: "Choose the option that best aligns with your long-term ambitions." } },
+            { question: "When making a large purchase, you are most likely to:", answers: { a: "Research exhaustively to ensure it's a sound, future-proof choice.", b: "Focus on how it will enhance your life experiences.", c: "Compare prices and features methodically to get the best value.", d: "Consider its impact on your loved ones or community.", e: "Choose the option that feels the most exciting or has the biggest potential.", f: "Wait until you feel completely calm and certain about the decision.", g: "Choose the option that best aligns with your long-term ambitions." } },
             { question: "A 'rich life' means:", answers: { a: "Never having to worry about money.", b: "The freedom to do what you want, when you want.", c: "Having a clear system that works for you.", d: "Being able to support the people and causes you love.", e: "Building something of your own from the ground up.", f: "Feeling content and at ease, regardless of your bank balance.", g: "Making a significant impact and leaving a legacy." } },
             { question: "What financial topic do you wish you knew more about?", answers: { a: "Long-term investing and estate planning.", b: "Travel hacking or funding a sabbatical.", c: "Budgeting software and automation.", d: "Ethical investing or charitable giving strategies.", e: "Angel investing or funding a creative project.", f: "Mindful spending and financial minimalism.", g: "Salary negotiation and scaling your income." } },
             { question: "You feel most successful when:", answers: { a: "Your emergency fund is fully funded.", b: "You book a spontaneous flight just because.", c: "Your budget reconciles perfectly to the cent.", d: "You can treat your loved ones without a second thought.", e: "A risky idea pays off.", f: "You make a financial decision that feels truly peaceful.", g: "You hit an ambitious income or savings target." } },
@@ -350,34 +350,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FAQS (Join Page) ---
-    const faqItems = document.querySelectorAll('.join-faq-section .faq-item');
-    if(faqItems.length > 0) {
+    // --- FAQ Accordion Logic ---
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    if (faqItems.length > 0) {
         faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            const answer = item.querySelector('.faq-answer');
-            
-            if (question && answer) {
-                question.addEventListener('click', () => {
-                    const isOpen = question.getAttribute('aria-expanded') === 'true';
-                    
-                    // Close all other FAQ items
-                    faqItems.forEach(otherItem => {
-                        const otherQuestion = otherItem.querySelector('.faq-question');
-                        const otherAnswer = otherItem.querySelector('.faq-answer');
-                        if (otherItem !== item && otherQuestion && otherAnswer) {
-                            otherQuestion.setAttribute('aria-expanded', 'false');
-                            otherAnswer.classList.remove('open');
-                        }
-                    });
-                    
-                    // Toggle current item
-                    if (isOpen) {
-                        question.setAttribute('aria-expanded', 'false');
-                        answer.classList.remove('open');
+            const questionButton = item.querySelector('.faq-question');
+            const answerPanel = item.querySelector('.faq-answer');
+            const answerContent = answerPanel.querySelector('.faq-content');
+
+            if (questionButton && answerPanel && answerContent) {
+                questionButton.addEventListener('click', () => {
+                    const isExpanded = questionButton.getAttribute('aria-expanded') === 'true';
+
+                    questionButton.setAttribute('aria-expanded', !isExpanded);
+                    answerPanel.classList.toggle('open');
+
+                    if (answerPanel.classList.contains('open')) {
+                        // Set max-height to the content's scroll height for the open animation
+                        answerPanel.style.maxHeight = answerContent.scrollHeight + 'px';
                     } else {
-                        question.setAttribute('aria-expanded', 'true');
-                        answer.classList.add('open');
+                        // Unset max-height for the close animation
+                        answerPanel.style.maxHeight = null;
                     }
                 });
             }
