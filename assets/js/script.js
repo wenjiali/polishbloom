@@ -210,72 +210,71 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- QUIZ LOGIC (runs on any page with the modal) ---
     const quizModal = document.getElementById('quiz-modal');
     if (quizModal) {
-        const startQuizBtns = document.querySelectorAll('.js-start-quiz-btn');
+        const openQuizBtns = document.querySelectorAll('.js-start-quiz-btn');
         const closeQuizBtn = document.getElementById('close-quiz-btn');
-        const beginQuizBtn = document.getElementById('begin-quiz-btn');
+        const startQuizBtnModal = document.getElementById('start-quiz-btn-modal');
+
         const startScreen = document.getElementById('quiz-start-screen');
         const questionScreen = document.getElementById('quiz-question-screen');
         const resultsScreen = document.getElementById('quiz-results-screen');
+        
         const quizProgress = document.getElementById('quiz-progress');
         const questionText = document.getElementById('quiz-question-text');
-        const answersGrid = document.getElementById('quiz-answers');
-        const resultDisplay = document.getElementById('quiz-result-display');
-        const seeAllProgramsBtn = document.getElementById('see-all-programs-btn');
+        const answersGrid = document.querySelector('#quiz-question-screen .quiz-answers-grid');
+        const resultDisplay = document.getElementById('quiz-result-content');
+        const personalizedCta = document.getElementById('quiz-personalized-cta');
 
         const quizQuestions = [
-            { question: "When you think about money, what feeling comes up most often?", answers: { a: "Security and stability", b: "Freedom and adventure", c: "Control and planning", d: "Generosity and sharing", e: "Creativity and flexibility", f: "Calm and balance", g: "Ambition and growth" } },
-            { question: "How do you usually make financial decisions?", answers: { a: "Careful research and long-term thinking", b: "Following your intuition and gut feelings", c: "Creating detailed budgets and plans", d: "Consulting with trusted friends or family", e: "Experimenting with new ideas and approaches", f: "Going with the flow and staying mindful", g: "Setting big goals and chasing opportunities" } },
-            { question: "What motivates you most about managing money?", answers: { a: "Building a safe future", b: "Experiencing life fully", c: "Having complete control", d: "Supporting others and community", e: "Expressing yourself uniquely", f: "Maintaining peace of mind", g: "Achieving success and influence" } },
-            { question: "What's your biggest challenge with money?", answers: { a: "Worrying about unexpected expenses", b: "Staying committed to savings", c: "Keeping track of every detail", d: "Saying no to requests for help", e: "Finding the right balance between risk and fun", f: "Avoiding financial stress", g: "Feeling overwhelmed by opportunities" } },
-            { question: "How does money affect your relationships?", answers: { a: "I prioritize financial security for them.", b: "I want to share joyful experiences without stress.", c: "I prefer clear money roles and plans.", d: "I often give or lend money to support them.", e: "I like mixing creativity and fun in shared finances.", f: "I try to keep money talk calm and avoid conflict.", g: "I feel pressure to be a financial role model." } },
-            { question: "How do financial conversations typically go?", answers: { a: "We plan carefully and discuss finances openly.", b: "We focus on shared dreams and spontaneous fun.", c: "We set clear budgets and financial goals.", d: "We openly support each other's needs.", e: "We brainstorm new money ideas together.", f: "We avoid stress by keeping discussions light.", g: "We push each other to achieve more financially." } },
-            { question: "How does your career relate to your money mindset?", answers: { a: "I seek stability and steady growth.", b: "I want freedom and flexibility in work.", c: "I plan career moves with clear financial goals.", d: "I value work that supports my community.", e: "I pursue creative or entrepreneurial ventures.", f: "I prefer balance and avoid burnout.", g: "I aim for leadership and high earnings." } },
-            { question: "How do you practice self-love financially?", answers: { a: "I save and invest for my future security.", b: "I spend on experiences that bring me joy.", c: "I track progress and celebrate milestones.", d: "I use money to care for others and myself.", e: "I try new ways to make money meaningful.", f: "I remind myself to relax about money.", g: "I challenge myself to grow financially." } },
-            { question: "When faced with a financial setback, how do you respond?", answers: { a: "I review my plan and adjust carefully.", b: "I look for new opportunities and stay positive.", c: "I double down on budgeting and control.", d: "I seek support from loved ones.", e: "I get creative to find solutions.", f: "I focus on self-care and emotional balance.", g: "I tackle it head-on with determination." } },
-            { question: "What role does money play in your happiness?", answers: { a: "It gives me peace of mind and security.", b: "It allows me to explore and enjoy life.", c: "It helps me feel organized and in control.", d: "It empowers me to give and connect.", e: "It fuels my creativity and passions.", f: "It helps me maintain inner calm.", g: "It drives my ambitions and achievements." } }
+            { question: "When you receive an unexpected financial windfall, your first instinct is to:", answers: { a: "Save or invest it for long-term security.", b: "Plan a memorable trip or experience.", c: "Create a detailed spreadsheet to allocate every dollar.", d: "Use it to help a friend or a cause you care about.", e: "Invest it in a creative project or business idea.", f: "Put it aside to decide later, avoiding any hasty decisions.", g: "Use it to get ahead on a major life goal (like a home or career change)." } },
+            { question: "Your ideal relationship with money is one of:", answers: { a: "Safety & predictability", b: "Freedom & spontaneity", c: "Organization & efficiency", d: "Connection & generosity", e: "Innovation & opportunity", f: "Peace & mindfulness", g: "Achievement & impact" } },
+            { question: "When making a large purchase, you are most likely to:", answers: { a: "Research exhaustively to ensure it’s a sound, future-proof choice.", b: "Focus on how it will enhance your life experiences.", c: "Compare prices and features methodically to get the best value.", d: "Consider its impact on your loved ones or community.", e: "Choose the option that feels the most exciting or has the biggest potential.", f: "Wait until you feel completely calm and certain about the decision.", g: "Choose the option that best aligns with your long-term ambitions." } },
+            { question: "A 'rich life' means:", answers: { a: "Never having to worry about money.", b: "The freedom to do what you want, when you want.", c: "Having a clear system that works for you.", d: "Being able to support the people and causes you love.", e: "Building something of your own from the ground up.", f: "Feeling content and at ease, regardless of your bank balance.", g: "Making a significant impact and leaving a legacy." } },
+            { question: "What financial topic do you wish you knew more about?", answers: { a: "Long-term investing and estate planning.", b: "Travel hacking or funding a sabbatical.", c: "Budgeting software and automation.", d: "Ethical investing or charitable giving strategies.", e: "Angel investing or funding a creative project.", f: "Mindful spending and financial minimalism.", g: "Salary negotiation and scaling your income." } },
+            { question: "You feel most successful when:", answers: { a: "Your emergency fund is fully funded.", b: "You book a spontaneous flight just because.", c: "Your budget reconciles perfectly to the cent.", d: "You can treat your loved ones without a second thought.", e: "A risky idea pays off.", f: "You make a financial decision that feels truly peaceful.", g: "You hit an ambitious income or savings target." } },
+            { question: "Your biggest financial fear is:", answers: { a: "An unexpected crisis wiping out your savings.", b: "Missing out on life's great adventures due to a lack of funds.", c: "Losing track of details and feeling financially chaotic.", d: "Not being able to help someone you care about.", e: "A brilliant idea failing due to a lack of capital.", f: "Feeling stressed or overwhelmed by money matters.", g: "Not reaching your full potential financially." } }
         ];
 
         const quizResults = {
-                a: { color: "Blue", title: "The Secure Planner", description: "You value stability and security. You plan carefully and prefer long-term financial safety nets.", strengths: "Thoughtful, disciplined, cautious.", growth: "Avoid over-worrying, embrace some flexibility.", circle: "The Legacy Circle", cta: "Join the Legacy Circle to build a lasting financial foundation." },
-                b: { color: "Yellow", title: "The Free Spirit", description: "You see money as a tool for freedom and adventure. You're spontaneous and optimistic.", strengths: "Intuitive, generous, adventurous.", growth: "Create simple savings goals, track spending lightly.", circle: "The Horizon Circle", cta: "Join the Horizon Circle to fund your dreams and adventures." },
-                c: { color: "Green", title: "The Strategist", description: "You feel empowered by having a clear plan. You're organized, logical, and love to be in control of the details.", strengths: "Detail-oriented, efficient, goal-driven.", growth: "Allow for spontaneity, celebrate progress not just perfection.", circle: "The Blueprint Circle", cta: "Join the Blueprint Circle to master your financial plan." },
-                d: { color: "Pink", title: "The Nurturer", description: "You are driven by generosity and community. You find joy in supporting others and using money to care for loved ones.", strengths: "Empathetic, caring, community-focused.", growth: "Set boundaries, prioritize your own financial self-care.", circle: "The Heartwood Circle", cta: "Join the Heartwood Circle to align your money with your heart." },
-                e: { color: "Orange", title: "The Creator", description: "You are an innovator who sees money as a tool for creative expression and opportunity. You're not afraid to take risks on new ideas.", strengths: "Entrepreneurial, inventive, resourceful.", growth: "Balance new ventures with stable income streams.", circle: "The Catalyst Circle", cta: "Join the Catalyst Circle to spark your financial creativity." },
-                f: { color: "Purple", title: "The Peacekeeper", description: "You seek calm and balance in your financial life, avoiding stress and conflict. You prefer a mindful, intuitive approach.", strengths: "Calm, mindful, balanced.", growth: "Engage in necessary financial conversations, set clear goals.", circle: "The Sanctuary Circle", cta: "Join the Sanctuary Circle to find financial peace of mind." },
-                g: { color: "Red", title: "The Achiever", description: "You are ambitious and motivated by success. You see money as a measure of growth and a tool to achieve big goals.", strengths: "Driven, confident, goal-oriented.", growth: "Balance ambition with rest, celebrate non-financial wins.", circle: "The Summit Circle", cta: "Join the Summit Circle to reach your financial peak." }
+                a: { color: "Blue", title: "The Secure Planner", description: "You value stability and security. You plan carefully and prefer long-term financial safety nets.", strengths: "Thoughtful, disciplined, cautious.", growth: "Avoid over-worrying, embrace some flexibility.", circle: "The Legacy Circle", ctaText: "Join the Legacy Circle" },
+                b: { color: "Yellow", title: "The Free Spirit", description: "You see money as a tool for freedom and adventure. You're spontaneous and optimistic.", strengths: "Intuitive, generous, adventurous.", growth: "Create simple savings goals, track spending lightly.", circle: "The Horizon Circle", ctaText: "Join the Horizon Circle" },
+                c: { color: "Green", title: "The Strategist", description: "You feel empowered by having a clear plan. You're organized, logical, and love to be in control of the details.", strengths: "Detail-oriented, efficient, goal-driven.", growth: "Allow for spontaneity, celebrate progress not just perfection.", circle: "The Blueprint Circle", ctaText: "Join the Blueprint Circle" },
+                d: { color: "Pink", title: "The Nurturer", description: "You are driven by generosity and community. You find joy in supporting others and using money to care for loved ones.", strengths: "Empathetic, caring, community-focused.", growth: "Set boundaries, prioritize your own financial self-care.", circle: "The Heartwood Circle", ctaText: "Join the Heartwood Circle" },
+                e: { color: "Orange", title: "The Creator", description: "You are an innovator who sees money as a tool for creative expression and opportunity. You're not afraid to take risks on new ideas.", strengths: "Entrepreneurial, inventive, resourceful.", growth: "Balance new ventures with stable income streams.", circle: "The Catalyst Circle", ctaText: "Join the Catalyst Circle" },
+                f: { color: "Purple", title: "The Peacekeeper", description: "You seek calm and balance in your financial life, avoiding stress and conflict. You prefer a mindful, intuitive approach.", strengths: "Calm, mindful, balanced.", growth: "Engage in necessary financial conversations, set clear goals.", circle: "The Sanctuary Circle", ctaText: "Join the Sanctuary Circle" },
+                g: { color: "Red", title: "The Achiever", description: "You are ambitious and motivated by success. You see money as a measure of growth and a tool to achieve big goals.", strengths: "Driven, confident, goal-oriented.", growth: "Balance ambition with rest, celebrate non-financial wins.", circle: "The Summit Circle", ctaText: "Join the Summit Circle" }
         };
 
         let currentQuestionIndex = 0;
         let userAnswers = {};
 
-        function openQuizModal() {
-            quizModal.classList.remove('hidden');
-            startScreen.classList.remove('hidden');
-        }
-
-        function closeQuizModal() { quizModal.classList.add('hidden'); resetQuiz(); }
+        function openQuizModal() { quizModal.classList.remove('hidden'); }
+        function closeQuizModal() { quizModal.classList.add('hidden'); setTimeout(resetQuiz, 300); }
 
         function startQuiz() {
-            currentQuestionIndex = 0;
-            userAnswers = {};
             startScreen.classList.add('hidden');
             resultsScreen.classList.add('hidden');
             questionScreen.classList.remove('hidden');
+            currentQuestionIndex = 0;
+            userAnswers = {};
             displayQuestion();
         }
 
         function displayQuestion() {
-            const question = quizQuestions[currentQuestionIndex];
-            quizProgress.textContent = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
-            questionText.textContent = question.question;
-            answersGrid.innerHTML = '';
-            for (const key in question.answers) {
-                const answerBtn = document.createElement('button');
-                answerBtn.className = 'quiz-answer-button';
-                answerBtn.textContent = question.answers[key];
-                answerBtn.dataset.answer = key;
-                answerBtn.addEventListener('click', handleAnswer);
-                answersGrid.appendChild(answerBtn);
+            if (currentQuestionIndex < quizQuestions.length) {
+                const question = quizQuestions[currentQuestionIndex];
+                questionText.textContent = question.question;
+                quizProgress.textContent = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+                answersGrid.innerHTML = '';
+                for (const key in question.answers) {
+                    const button = document.createElement('button');
+                    button.className = 'quiz-answer-button';
+                    button.textContent = question.answers[key];
+                    button.dataset.answer = key;
+                    button.addEventListener('click', handleAnswer);
+                    answersGrid.appendChild(button);
+                }
+            } else {
+                showResults();
             }
         }
 
@@ -283,102 +282,107 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedAnswer = e.target.dataset.answer;
             userAnswers[selectedAnswer] = (userAnswers[selectedAnswer] || 0) + 1;
             currentQuestionIndex++;
-            if (currentQuestionIndex < quizQuestions.length) {
-                displayQuestion();
-            } else {
-                showResults();
-            }
+            displayQuestion();
         }
 
         function showResults() {
             questionScreen.classList.add('hidden');
             resultsScreen.classList.remove('hidden');
-            const resultKey = Object.keys(userAnswers).reduce((a, b) => userAnswers[a] > userAnswers[b] ? a : b);
-            const result = quizResults[resultKey];
-                localStorage.setItem('moneyPersonality', result.title);
+
+            const answerCounts = Object.entries(userAnswers);
+            let dominantPersonality = 'a';
+            if (answerCounts.length > 0) {
+                dominantPersonality = answerCounts.sort((a, b) => b[1] - a[1])[0][0];
+            }
+            
+            const result = quizResults[dominantPersonality];
+            localStorage.setItem('moneyPersonality', result.title);
+
             resultDisplay.innerHTML = `
-                <div class="result-badge" style="background-color:var(--color-${result.color.toLowerCase()});"></div>
-                <h3 class="result-title">${result.color} — ${result.title}</h3>
+                <span class="result-badge" style="background-color: var(--color-${result.color.toLowerCase()});">${result.title}</span>
+                <h3 class="result-title">You are The ${result.title}!</h3>
                 <p class="result-description">${result.description}</p>
                 <div class="result-details">
                     <p><strong>Strengths:</strong> ${result.strengths}</p>
                     <p><strong>Growth Areas:</strong> ${result.growth}</p>
                 </div>
             `;
-                const personalizedCta = document.getElementById('quiz-personalized-cta');
-                personalizedCta.innerHTML = `
-                    <h4>Your Recommended Bloom Circle</h4>
-                    <p>${result.cta}</p>
-                    <a href="#" class="button button-primary js-open-contact-modal" data-title="Join ${result.circle}" data-circle="${result.circle}">${result.circle}</a>
-                `;
-                
-                // This is the crucial part: find the new button and add the listener
-                const newCtaButton = personalizedCta.querySelector('.js-open-contact-modal');
-                if (newCtaButton) {
-                    newCtaButton.addEventListener('click', handleOpenContactModal);
-                }
+            
+            personalizedCta.innerHTML = `
+                <h4>Your Recommended Next Step:</h4>
+                <p>Based on your results, you'd feel right at home in <strong>${result.circle}.</strong></p>
+                <a href="#" class="button button-primary js-open-contact-modal" data-title="Apply to Join ${result.circle}" data-circle="${result.circle}">${result.ctaText}</a>
+            `;
+            personalizedCta.classList.remove('hidden');
+            
+            // Re-attach event listener to the new button inside the modal
+            const ctaBtn = personalizedCta.querySelector('.js-open-contact-modal');
+            if (ctaBtn) {
+                ctaBtn.addEventListener('click', (e) => {
+                    handleOpenContactModal(e);
+                    closeQuizModal();
+                });
+            }
         }
 
         function resetQuiz() {
-            resultsScreen.classList.add('hidden');
-            questionScreen.classList.add('hidden');
             startScreen.classList.remove('hidden');
-                localStorage.removeItem('moneyPersonality');
+            questionScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            resultDisplay.innerHTML = '';
+            personalizedCta.innerHTML = '';
+            personalizedCta.classList.add('hidden');
+            localStorage.removeItem('moneyPersonality');
         }
 
-        startQuizBtns.forEach(btn => {
-            btn.addEventListener('click', openQuizModal);
-        });
+        openQuizBtns.forEach(btn => btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openQuizModal();
+        }));
 
-        if (closeQuizBtn) {
-            closeQuizBtn.addEventListener('click', closeQuizModal);
-        }
-        if (beginQuizBtn) {
-            beginQuizBtn.addEventListener('click', startQuiz);
-        }
-        if (seeAllProgramsBtn) {
-            seeAllProgramsBtn.addEventListener('click', closeQuizModal);
-        }
+        if(startQuizBtnModal) startQuizBtnModal.addEventListener('click', startQuiz);
+        if(closeQuizBtn) closeQuizBtn.addEventListener('click', closeQuizModal);
         
         quizModal.addEventListener('click', (e) => {
             if (e.target === quizModal) {
-                    closeQuizModal();
+                closeQuizModal();
             }
         });
     }
 
-    // FAQ Accordion functionality
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-        
-        if (question && answer) {
-            question.addEventListener('click', () => {
-                const isOpen = question.getAttribute('aria-expanded') === 'true';
-                
-                // Close all other FAQ items
-                faqItems.forEach(otherItem => {
-                    const otherQuestion = otherItem.querySelector('.faq-question');
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                    if (otherItem !== item && otherQuestion && otherAnswer) {
-                        otherQuestion.setAttribute('aria-expanded', 'false');
-                        otherAnswer.classList.remove('open');
+    // --- FAQS (Join Page) ---
+    const faqItems = document.querySelectorAll('.join-faq-section .faq-item');
+    if(faqItems.length > 0) {
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            
+            if (question && answer) {
+                question.addEventListener('click', () => {
+                    const isOpen = question.getAttribute('aria-expanded') === 'true';
+                    
+                    // Close all other FAQ items
+                    faqItems.forEach(otherItem => {
+                        const otherQuestion = otherItem.querySelector('.faq-question');
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        if (otherItem !== item && otherQuestion && otherAnswer) {
+                            otherQuestion.setAttribute('aria-expanded', 'false');
+                            otherAnswer.classList.remove('open');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (isOpen) {
+                        question.setAttribute('aria-expanded', 'false');
+                        answer.classList.remove('open');
+                    } else {
+                        question.setAttribute('aria-expanded', 'true');
+                        answer.classList.add('open');
                     }
                 });
-                
-                // Toggle current item
-                if (isOpen) {
-                    question.setAttribute('aria-expanded', 'false');
-                    answer.classList.remove('open');
-                } else {
-                    question.setAttribute('aria-expanded', 'true');
-                    answer.classList.add('open');
-                }
-            });
-        }
-    });
+            }
+        });
+    }
 
     // Fade-in animations on scroll
     const fadeInElements = document.querySelectorAll('.fade-in');

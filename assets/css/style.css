@@ -1568,22 +1568,20 @@ section h2 {
 .stat-label {
     font-size: 0.9rem;
     color: var(--color-text-light);
-    margin-top: var(--space-2);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 /* Member Benefits Section */
 .member-benefits-section {
-    padding: var(--space-24) 0;
-    background-color: var(--color-ivory-white);
+    padding: var(--space-16) 0;
+    text-align: center;
+    margin-top: var(--space-24);
 }
 
 .member-benefits-section h2 {
-    text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.25rem;
     margin-bottom: var(--space-4);
-    color: var(--color-deep-charcoal);
 }
 
 .member-benefits-section .subheadline {
@@ -2179,16 +2177,28 @@ footer {
 }
 
 .feature-grid.alt-layout .feature-visual .feature-illustration {
-    max-width: 85%;
+    max-width: 100%;
     height: auto;
-    margin: 0 auto;
-    display: block;
-    box-shadow: var(--shadow-xl);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
 }
 
 .what-to-expect-section {
-    margin: var(--space-24) 0;
+    padding: var(--space-16) 0;
     text-align: center;
+    background-color: var(--color-background-alt);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.what-to-expect-section .section-title {
+    margin-bottom: var(--space-4);
+}
+
+.what-to-expect-section .subheadline {
+    max-width: 700px;
+    margin: 0 auto var(--space-12) auto;
+    color: var(--color-text-light);
 }
 
 .expect-grid {
