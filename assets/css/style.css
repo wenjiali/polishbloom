@@ -139,6 +139,33 @@ a {
     box-shadow: 0 7px 14px rgba(235, 166, 169, 0.45);
 }
 
+.button.button-cta {
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    color: var(--color-ivory-white);
+    background: linear-gradient(45deg, var(--color-petal-rose), color-mix(in srgb, var(--color-petal-rose) 80%, var(--color-muted-gold)));
+    border: none;
+    box-shadow: var(--shadow-lg);
+    animation: pulse-cta 2s infinite;
+}
+
+.button.button-cta:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-xl);
+    animation-play-state: paused;
+}
+
+@keyframes pulse-cta {
+    0% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-petal-rose) 40%, transparent);
+    }
+    70% {
+        box-shadow: 0 0 0 15px color-mix(in srgb, var(--color-petal-rose) 0%, transparent);
+    }
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-petal-rose) 0%, transparent);
+    }
+}
 
 /* Header */
 .site-header {
