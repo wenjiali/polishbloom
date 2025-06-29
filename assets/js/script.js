@@ -235,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startQuiz = () => {
             startScreen.classList.add('hidden');
             questionScreen.classList.remove('hidden');
+            questionScreen.style.opacity = '1';
             resultsScreen.classList.add('hidden');
             currentQuestionIndex = 0;
             userAnswers = {};
@@ -266,8 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const handleAnswer = (e) => {
             const selectedAnswer = e.currentTarget.dataset.answer;
             userAnswers[selectedAnswer] = (userAnswers[selectedAnswer] || 0) + 1;
-            currentQuestionIndex++;
-            displayQuestion();
+            
+            questionScreen.style.opacity = '0';
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                displayQuestion();
+                questionScreen.style.opacity = '1';
+            }, 300);
         };
 
         const showResults = () => {
@@ -293,6 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resetQuiz = () => {
             startScreen.classList.remove('hidden');
             questionScreen.classList.add('hidden');
+            questionScreen.style.opacity = '0';
             resultsScreen.classList.add('hidden');
             progressBar.style.width = '0%';
         };
@@ -473,3 +481,73 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileNavScrim.addEventListener('click', toggleMenu);
     }
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+    const multiStepForm = document.getElementById("multi-step-form");
+    if (!multiStepForm) return;
+
+    const formSteps = [...multiStepForm.querySelectorAll(".form-step")];
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const submitBtn = document.getElementById("submit-btn");
+    const progressBarFill = document.querySelector(".progress-bar-fill");
+    const progressSteps = [...document.querySelectorAll(".progress-step")];
+    const formSuccessMessage = document.getElementById("form-success-message");
+
+    let currentStep = 1;
+
+    const updateFormSteps = () => {
+        formSteps.forEach(step => {
+            step.classList.toggle("active", parseInt(step.dataset.step) === currentStep);
+        });
+    };
+
+    const updateProgressBar = () => {
+        const totalSteps = formSteps.length;
+        progressBarFill.style.width = `${((currentStep - 1) / (totalSteps - 1)) * 100}%`;
+
+        progressSteps.forEach((step, index) => {
+            if (index < currentStep) {
+                step.classList.add("active");
+            } else {
+                step.classList.remove("active");
+            }
+        });
+    };
+
+    const updateButtons = () => {
+        prevBtn.style.display = currentStep > 1 ? "inline-block" : "none";
+        nextBtn.style.display = currentStep < formSteps.length ? "inline-block" : "none";
+        submitBtn.style.display = currentStep === formSteps.length ? "inline-block" : "none";
+    };
+
+    const goToStep = (step) => {
+        currentStep = step;
+        updateFormSteps();
+        updateProgressBar();
+        updateButtons();
+    };
+
+    nextBtn.addEventListener("click", () => {
+        if (currentStep < formSteps.length) {
+            goToStep(currentStep + 1);
+        }
+    });
+
+    prevBtn.addEventListener("click", () => {
+        if (currentStep > 1) {
+            goToStep(currentStep - 1);
+        }
+    });
+    
+    multiStepForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        multiStepForm.style.display = "none";
+        document.querySelector(".progress-bar").style.display = "none";
+        formSuccessMessage.classList.remove("hidden");
+    });
+
+    // Initialize
+    goToStep(1);
+});
+
