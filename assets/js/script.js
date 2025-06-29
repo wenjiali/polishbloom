@@ -305,49 +305,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FAQ Accordion Logic ---
+    // --- FAQ ACCORDION LOGIC ---
     const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
 
-    if (faqItems.length > 0) {
-        faqItems.forEach(item => {
-            const questionButton = item.querySelector('.faq-question');
-            const answerPanel = item.querySelector('.faq-answer');
-            const answerContent = answerPanel.querySelector('.faq-content');
+        question.addEventListener('click', () => {
+            const isOpened = question.getAttribute('aria-expanded') === 'true';
+            
+            // Close all other items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                    otherItem.querySelector('.faq-answer').classList.remove('open');
+                }
+            });
 
-            if (questionButton && answerPanel && answerContent) {
-                questionButton.addEventListener('click', () => {
-                    const isExpanded = questionButton.getAttribute('aria-expanded') === 'true';
-
-                    questionButton.setAttribute('aria-expanded', !isExpanded);
-                    answerPanel.classList.toggle('open');
-
-                    if (answerPanel.classList.contains('open')) {
-                        // Set max-height to the content's scroll height for the open animation
-                        answerPanel.style.maxHeight = answerContent.scrollHeight + 'px';
-                    } else {
-                        // Unset max-height for the close animation
-                        answerPanel.style.maxHeight = null;
-                    }
-                });
+            // Toggle the clicked item
+            if (isOpened) {
+                question.setAttribute('aria-expanded', 'false');
+                answer.classList.remove('open');
+            } else {
+                question.setAttribute('aria-expanded', 'true');
+                answer.classList.add('open');
             }
+        });
+    });
+
+    // --- FADE-IN ANIMATIONS ON SCROLL ---
+    const fadeInElements = document.querySelectorAll('.fade-in');
+    if (fadeInElements.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeInElements.forEach(element => {
+            observer.observe(element);
         });
     }
-
-    // Fade-in animations on scroll
-    const fadeInElements = document.querySelectorAll('.fade-in');
-    const fadeInObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                fadeInObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1
-    });
-
-    fadeInElements.forEach(element => {
-        fadeInObserver.observe(element);
-    });
 
 })();

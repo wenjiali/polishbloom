@@ -717,11 +717,10 @@ section h2 {
 
 .quiz-modal-content {
     background: var(--color-background);
-    padding: var(--space-8);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
-    max-width: 700px; /* Increased width */
-    width: 95%; /* Use percentage for responsiveness */
+    max-width: 700px;
+    width: 95%;
     text-align: center;
     position: relative;
     transition: transform 0.3s ease;
@@ -729,20 +728,14 @@ section h2 {
     display: flex;
     flex-direction: column;
     max-height: 90vh;
+    overflow: hidden;
 }
 
 #quiz-start-screen,
 #quiz-question-screen,
 #quiz-results-screen {
-    padding: var(--space-4) var(--space-2);
-}
-
-@media (min-width: 600px) {
-    #quiz-start-screen,
-    #quiz-question-screen,
-    #quiz-results-screen {
-        padding: var(--space-8);
-    }
+    padding: var(--space-8);
+    overflow-y: auto;
 }
 
 .quiz-close-button {
@@ -795,7 +788,7 @@ section h2 {
     font-weight: 400;
     line-height: 1.4;
     margin-bottom: var(--space-8);
-    min-height: 70px; /* Adjusted min-height */
+    min-height: 70px;
 }
 
 .quiz-answers-grid {
@@ -2070,11 +2063,12 @@ section h2 {
     transform: rotate(45deg);
 }
 .faq-answer {
-    display: grid;
+    display: none;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.4s ease-out;
 }
 .faq-answer.open {
+    display: block;
     grid-template-rows: 1fr;
 }
 .faq-content {
@@ -2441,6 +2435,8 @@ footer {
 
 .arrow-icon {
     transition: transform 0.3s ease;
+    width: 1.2em;
+    height: 1.2em;
 }
 .button:hover .arrow-icon {
     transform: translateX(4px);
@@ -2489,13 +2485,13 @@ footer {
 
 /* Invitation Card Styles */
 .referred-cta-section {
-    padding: var(--space-12) 0;
+    padding: var(--space-16) 0;
 }
 .referred-cta-card {
     background-color: var(--color-ivory-white);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
-    padding: var(--space-10);
+    padding: var(--space-12);
     max-width: 700px;
     margin: 0 auto;
     text-align: center;
