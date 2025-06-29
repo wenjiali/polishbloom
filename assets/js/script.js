@@ -480,74 +480,83 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburgerBtn.addEventListener('click', toggleMenu);
         mobileNavScrim.addEventListener('click', toggleMenu);
     }
-})();
 
-document.addEventListener("DOMContentLoaded", () => {
+    // --- MULTI-STEP APPLICATION FORM ---
     const multiStepForm = document.getElementById("multi-step-form");
-    if (!multiStepForm) return;
+    if (multiStepForm) {
+        const formSteps = [...multiStepForm.querySelectorAll(".form-step")];
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const submitBtn = document.getElementById("submit-btn");
+        const progressBarFill = document.querySelector(".progress-bar-fill");
+        const progressSteps = [...document.querySelectorAll(".progress-step")];
+        const formSuccessMessage = document.getElementById("form-success-message");
 
-    const formSteps = [...multiStepForm.querySelectorAll(".form-step")];
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
-    const submitBtn = document.getElementById("submit-btn");
-    const progressBarFill = document.querySelector(".progress-bar-fill");
-    const progressSteps = [...document.querySelectorAll(".progress-step")];
-    const formSuccessMessage = document.getElementById("form-success-message");
+        let currentStep = 1;
 
-    let currentStep = 1;
+        const updateFormSteps = () => {
+            formSteps.forEach(step => {
+                step.classList.toggle("active", parseInt(step.dataset.step) === currentStep);
+            });
+        };
 
-    const updateFormSteps = () => {
-        formSteps.forEach(step => {
-            step.classList.toggle("active", parseInt(step.dataset.step) === currentStep);
-        });
-    };
+        const updateProgressBar = () => {
+            const totalSteps = formSteps.length;
+            // Set width to 33% on step 1, 66% on step 2, 100% on step 3
+            const percentage = totalSteps > 1 ? ((currentStep -1) / (totalSteps -1)) * 100 : 0;
+            
+            // On the join form, we want it to start with the first step highlighted
+            // but the bar to show progress. Let's start it visually at 1/3
+            const initialOffset = 33.3;
+            const progress = initialOffset + ((currentStep - 1) * initialOffset);
 
-    const updateProgressBar = () => {
-        const totalSteps = formSteps.length;
-        progressBarFill.style.width = `${((currentStep - 1) / (totalSteps - 1)) * 100}%`;
+            progressBarFill.style.width = `${progress}%`;
 
-        progressSteps.forEach((step, index) => {
-            if (index < currentStep) {
-                step.classList.add("active");
-            } else {
-                step.classList.remove("active");
+
+            progressSteps.forEach((step, index) => {
+                if (index < currentStep) {
+                    step.classList.add("active");
+                } else {
+                    step.classList.remove("active");
+                }
+            });
+        };
+
+        const updateButtons = () => {
+            prevBtn.style.display = currentStep > 1 ? "inline-block" : "none";
+            nextBtn.style.display = currentStep < formSteps.length ? "inline-block" : "none";
+            submitBtn.style.display = currentStep === formSteps.length ? "inline-block" : "none";
+        };
+
+        const goToStep = (step) => {
+            currentStep = step;
+            updateFormSteps();
+            updateProgressBar();
+            updateButtons();
+        };
+
+        nextBtn.addEventListener("click", () => {
+            if (currentStep < formSteps.length) {
+                goToStep(currentStep + 1);
             }
         });
-    };
 
-    const updateButtons = () => {
-        prevBtn.style.display = currentStep > 1 ? "inline-block" : "none";
-        nextBtn.style.display = currentStep < formSteps.length ? "inline-block" : "none";
-        submitBtn.style.display = currentStep === formSteps.length ? "inline-block" : "none";
-    };
+        prevBtn.addEventListener("click", () => {
+            if (currentStep > 1) {
+                goToStep(currentStep - 1);
+            }
+        });
+        
+        multiStepForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            multiStepForm.style.display = "none";
+            document.querySelector(".progress-bar").style.display = "none";
+            document.querySelector('.form-header').style.display = "none";
+            formSuccessMessage.classList.remove("hidden");
+        });
 
-    const goToStep = (step) => {
-        currentStep = step;
-        updateFormSteps();
-        updateProgressBar();
-        updateButtons();
-    };
-
-    nextBtn.addEventListener("click", () => {
-        if (currentStep < formSteps.length) {
-            goToStep(currentStep + 1);
-        }
-    });
-
-    prevBtn.addEventListener("click", () => {
-        if (currentStep > 1) {
-            goToStep(currentStep - 1);
-        }
-    });
-    
-    multiStepForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        multiStepForm.style.display = "none";
-        document.querySelector(".progress-bar").style.display = "none";
-        formSuccessMessage.classList.remove("hidden");
-    });
-
-    // Initialize
-    goToStep(1);
+        // Initialize
+        goToStep(1);
+    }
 });
 

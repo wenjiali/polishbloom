@@ -240,23 +240,68 @@ a {
 
 /* Hero Section */
 .hero-section {
-    padding-top: var(--space-24);
-    padding-bottom: var(--space-24);
+    padding: var(--space-16) 0;
     text-align: center;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='p' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M25 50 C25 25, 75 25, 75 50 S125 75, 75 100' stroke='%23EBA6A9' stroke-width='1' fill='none' opacity='0.1'/%3E%3Cpath d='M-25 0 C-25 25, 25 25, 25 50 S75 75, 25 100' stroke='%23EBA6A9' stroke-width='1' fill='none' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23p)'/%3E%3C/svg%3E");
+    background-color: var(--color-background-alt);
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 750px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-title {
-    font-size: 3.5rem;
-    max-width: 800px;
-    margin: 0 auto var(--space-4);
+    font-family: var(--font-family-serif);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    color: var(--color-primary-dark);
+    margin-bottom: var(--space-6);
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
-    max-width: 650px;
-    margin: 0 auto var(--space-8);
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
     color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto var(--space-10);
+}
+
+.hero-cta .button {
+    margin: 0 var(--space-2);
+}
+
+.button-lg {
+    font-size: 1.1rem;
+    padding: var(--space-4) var(--space-8);
+}
+
+.hero-illustration {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1200px;
+    z-index: 1;
+    opacity: 0.15;
+    user-select: none;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: var(--space-12) 0;
+        text-align: left;
+    }
+    .hero-illustration {
+        opacity: 0.1;
+    }
 }
 
 .hero-actions {
