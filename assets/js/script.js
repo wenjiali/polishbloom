@@ -352,4 +352,108 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- RAINBOW VALUE SYSTEM INTERACTIVITY ---
+    const rainbowSystem = document.getElementById('rainbow-value-system');
+    if (rainbowSystem) {
+        const colorItems = rainbowSystem.querySelectorAll('.color-item');
+        const detailsContainer = document.getElementById('rainbow-details-content');
+
+        const detailsData = {
+            survival: {
+                title: 'Survival',
+                question: '“Am I safe and supported?”',
+                description: 'This bucket covers your essential needs—housing, groceries, utilities—with calm, clarity, and no guilt. It is the foundation upon which your entire financial house is built.',
+                ctaText: 'Explore Survival Strategies',
+                colorVar: 'var(--color-red)'
+            },
+            lifestyle: {
+                title: 'Lifestyle',
+                question: '“What brings me daily joy?”',
+                description: 'This is for your day-to-day comforts and joys. It includes hobbies, takeout, and the small indulgences that light up your regular life and make it feel sustainable.',
+                ctaText: 'Design Your Joy Budget',
+                colorVar: 'var(--color-orange)'
+            },
+            dreams: {
+                title: 'Dreams',
+                question: '“What if my dream was a line item?”',
+                description: 'This is where you save for your biggest, most exciting goals. Use it to fund your book, your business, or that trip to Italy—like it truly matters.',
+                ctaText: 'Start Your Dream Plan',
+                colorVar: 'var(--color-yellow)'
+            },
+            growth: {
+                title: 'Growth',
+                question: '“How am I becoming more me?”',
+                description: 'This bucket is for investing in your personal and professional development. This includes courses, mentors, books, coaching‚ or any other investment that levels you up.',
+                ctaText: 'Invest in Your Growth',
+                colorVar: 'var(--color-green)'
+            },
+            security: {
+                title: 'Security',
+                question: '“How do I protect my peace?”',
+                description: 'This is for building your long-term safety net. It includes your emergency fund, insurance, and other financial safety nets that are the quiet heroes of financial calm.',
+                ctaText: 'Secure Your Safety Net',
+                colorVar: 'var(--color-blue)'
+            },
+            education: {
+                title: 'Education',
+                question: '“How do I keep learning and evolving?”',
+                description: 'This is for putting money towards learning and new skills. It can be used for learning a language, attending workshops, or studying parenting or investing.',
+                ctaText: 'Explore Learning Investments',
+                colorVar: 'var(--color-purple)'
+            },
+            giving: {
+                title: 'Giving Back',
+                question: '“Where can I circulate love and impact?”',
+                description: 'This bucket is for contributing to causes you care about deeply. You can use it to support a friend, donate, or tip generously—seeing giving as a form of abundance.',
+                ctaText: 'Build Your Giving Practice',
+                colorVar: 'var(--color-pink)'
+            },
+            custom: {
+                title: 'And More…',
+                question: '“What does abundance mean for you?”',
+                description: 'This is your life, so you get to create custom buckets for anything that matters to you. This could be Therapy, Kids, Nature, Healing, or anything else.',
+                ctaText: 'Create Your Money Palette',
+                colorVar: 'var(--color-deep-charcoal)'
+            }
+        };
+
+        const updateDetails = (color) => {
+            const data = detailsData[color];
+            if (!data) return;
+
+            const newCard = document.createElement('div');
+            newCard.className = 'rainbow-detail-card';
+            newCard.dataset.color = color;
+            newCard.style.setProperty('--color', data.colorVar);
+
+            newCard.innerHTML = `
+                <div class="card-content">
+                    <h3>${data.title}</h3>
+                    <p class="question">${data.question}</p>
+                    <p>${data.description}</p>
+                    <a href="join.html" class="button">${data.ctaText}</a>
+                </div>
+            `;
+
+            const currentCard = detailsContainer.querySelector('.rainbow-detail-card');
+            
+            currentCard.classList.remove('active');
+            newCard.classList.add('active');
+            
+            detailsContainer.replaceChild(newCard, currentCard);
+        };
+
+        colorItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const color = item.dataset.color;
+                
+                colorItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                updateDetails(color);
+            });
+        });
+    }
+
 })();
