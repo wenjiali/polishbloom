@@ -352,165 +352,97 @@
         <div class="contact-modal-content">
             <button id="close-contact-btn" class="contact-close-button">&times;</button>
             <div class="form-header">
-                <div class="form-header-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" /><circle cx="12" cy="10" r="3" /></svg>
-                </div>
                 <h2 id="contact-modal-title">Get in Touch</h2>
                 <p>We're so glad you're here. Please share a few details so we can connect personally.</p>
             </div>
             <form id="contact-form">
-                <!-- 1. Name -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" required>
+                        <input type="text" id="first-name" name="first-name" placeholder="e.g., Jane" required>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" required>
+                        <input type="text" id="last-name" name="last-name" placeholder="e.g., Doe" required>
                     </div>
                 </div>
-                <!-- 2. Email -->
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder="e.g., jane.doe@email.com" required>
                 </div>
-                <!-- 3. Location -->
-                <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                </div>
+                 <div class="form-row">
                     <div class="form-group">
                         <label for="city">City</label>
-                        <input type="text" id="city" name="city">
+                        <input type="text" id="city" name="city" placeholder="e.g., Toronto">
                     </div>
                     <div class="form-group">
-                        <label for="country">Country</label>
-                        <input type="text" id="country" name="country">
+                        <label for="province">Province</label>
+                        <input type="text" id="province" name="province" placeholder="e.g., ON">
                     </div>
                 </div>
-                 <!-- 4. Pronouns & 5. Occupation -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="pronouns">Preferred Pronouns</label>
-                        <input type="text" id="pronouns" name="pronouns">
-                    </div>
-                    <div class="form-group">
-                        <label for="occupation">Occupation / Career Field</label>
-                        <input type="text" id="occupation" name="occupation">
-                    </div>
-                </div>
-                <!-- 6. Referrer -->
                 <div class="form-group">
-                    <label for="referrer">Who referred you to Polish + Bloom? (Name + brief context)</label>
-                    <textarea id="referrer" name="referrer" rows="2"></textarea>
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="Tell us a bit about your goals..."></textarea>
                 </div>
-                <!-- 7. What drew you... -->
                 <div class="form-group">
-                    <label>What drew you to Polish + Bloom? (Please select, or describe below)</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="drawn_to[]" value="financial_growth"> Financial growth</label>
-                        <label><input type="checkbox" name="drawn_to[]" value="confidence_building"> Confidence building</label>
-                        <label><input type="checkbox" name="drawn_to[]" value="career_clarity"> Career clarity</label>
-                        <label><input type="checkbox" name="drawn_to[]" value="community"> Community</label>
-                        <label><input type="checkbox" name="drawn_to[]" value="emotional_support"> Emotional support</label>
-                    </div>
-                     <textarea id="drawn_to_other" name="drawn_to_other" rows="2" placeholder="You can also describe what drew you here in your own words..."></textarea>
+                    <label for="money-personality">Your Money Personality (Optional)</label>
+                    <select id="money-personality" name="money-personality">
+                        <option value="" disabled selected>Select your personality...</option>
+                        <option value="The Legacy Circle">The Legacy Circle (Secure Planner)</option>
+                        <option value="The Horizon Circle">The Horizon Circle (Free Spirit)</option>
+                        <option value="The Blueprint Circle">The Blueprint Circle (Strategist)</option>
+                        <option value="The Heartwood Circle">The Heartwood Circle (Nurturer)</option>
+                        <option value="The Catalyst Circle">The Catalyst Circle (Creator)</option>
+                        <option value="The Sanctuary Circle">The Sanctuary Circle (Peacekeeper)</option>
+                        <option value="The Summit Circle">The Summit Circle (Achiever)</option>
+                        <option value="Yet to explore">Yet to explore</option>
+                    </select>
+                    <small>Take our quiz to discover yours!</small>
                 </div>
-                <!-- 8. Seeking support in -->
-                <div class="form-group">
-                    <label>Which area(s) are you currently seeking the most support in? (Select all that apply)</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="support_areas[]" value="financial"> Financial wellness & mindset</label>
-                        <label><input type="checkbox" name="support_areas[]" value="career"> Career clarity or transitions</label>
-                        <label><input type="checkbox" name="support_areas[]" value="business"> Business startup guidance</label>
-                        <label><input type="checkbox" name="support_areas[]" value="self_worth"> Self-worth & confidence building</label>
-                        <label><input type="checkbox" name="support_areas[]" value="creative"> Creative direction</label>
-                        <label><input type="checkbox" name="support_areas[]" value="community"> Community & connection</label>
-                    </div>
-                    <label for="support_other" class="sr-only">Other support area</label>
-                    <input type="text" id="support_other" name="support_other" placeholder="Other (please specify)">
-                </div>
-                <!-- 9. Success -->
-                <div class="form-group">
-                    <label for="success_definition">What does success look like to you right now—in this season of your life?</label>
-                    <textarea id="success_definition" name="success_definition" rows="3"></textarea>
-                </div>
-                <!-- 10. Challenge -->
-                <div class="form-group">
-                    <label for="challenge_transform">What is one challenge or pattern you're ready to transform?</label>
-                    <textarea id="challenge_transform" name="challenge_transform" rows="3"></textarea>
-                </div>
-                <!-- 11. Previous experience -->
-                <div class="form-group">
-                    <label>Have you worked with a coach, therapist, or personal development community before?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="experience" value="yes"> Yes</label>
-                        <label><input type="radio" name="experience" value="no"> No</label>
-                    </div>
-                    <label for="experience_details" class="sr-only">Elaborate on previous experience</label>
-                    <input type="text" id="experience_details" name="experience_details" placeholder="Optional: care to elaborate?">
-                </div>
-                <!-- 12. Values -->
-                <div class="form-group">
-                    <label for="values">What values are most important to you in a community or group experience?</label>
-                    <input type="text" id="values" name="values" placeholder="e.g., trust, inclusivity, depth, creativity, etc.">
-                </div>
-                <!-- 13. Give and receive support -->
-                <div class="form-group">
-                    <label>Are you open to giving and receiving support from others in the community?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="give_receive" value="yes"> Yes</label>
-                        <label><input type="radio" name="give_receive" value="no"> No</label>
-                        <label><input type="radio" name="give_receive" value="more_info"> I'd like to know more</label>
-                    </div>
-                </div>
-                <!-- 14. Learning style -->
-                <div class="form-group">
-                    <label>Do you prefer more structured programs or open-ended, flow-based learning?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="learning_style" value="structured"> Structured</label>
-                        <label><input type="radio" name="learning_style" value="open"> Open</label>
-                        <label><input type="radio" name="learning_style" value="blend"> Blend of both</label>
-                    </div>
-                </div>
-                <!-- 15. Anything else -->
-                <div class="form-group">
-                    <label for="anything_else">Is there anything else you'd like us to know before we connect? (Optional)</label>
-                    <textarea id="anything_else" name="anything_else" rows="3"></textarea>
-                </div>
-                <!-- 16. Contact preference -->
-                <div class="form-group">
-                    <label>How would you prefer we contact you for next steps?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="contact_method" value="email"> Email</label>
-                        <label><input type="radio" name="contact_method" value="call"> Call</label>
-                        <label><input type="radio" name="contact_method" value="text"> Text</label>
-                        <label><input type="radio" name="contact_method" value="video"> Video intro session</label>
-                    </div>
-                </div>
-                <button type="submit" class="button button-primary">Submit Application</button>
+                <button type="submit" class="button button-primary">Submit</button>
             </form>
             <div id="form-success-message" class="hidden">
-                <p>Thank you for your time, let's bloom</p>
+                <p>Thank you! We've received your information and will be in touch shortly.</p>
             </div>
         </div>
     </div>
 
-    <footer id="footer">
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">Polish + Bloom</a>
+                    <p>Nurturing financial wellness and personal growth for women and beyond.</p>
+                </div>
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="bloom-circles.html">Bloom Circles</a></li>
+                        <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
+                        <li><a href="stories.html">Stories</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
                 <div class="footer-connect">
-                    <h4>Stay Connected</h4>
-                    <p>Meaningful conversations, delivered monthly.</p>
+                    <h4>Connect</h4>
                     <div class="social-links">
-                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>a>
-                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
                     </div>
                 </div>
-                <div class="footer-copyright">
-                    <p>&copy; <span id="current-year"></span> Polish + Bloom. All Rights Reserved.</p>
-                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 Polish + Bloom. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
             </div>
         </div>
-    </footer>
 
     <script src="assets/js/script.js?v=3"></script>
 </body>
