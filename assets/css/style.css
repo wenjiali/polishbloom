@@ -3669,8 +3669,164 @@ footer {
 }
 
 .quiz-prompt-card p {
-    margin-bottom: var(--space-6);
     color: var(--color-text-light);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
-/* === END UX IMPROVEMENTS === */
+/* Process Overview Section Styles */
+.process-overview-section {
+    margin-bottom: 4rem;
+}
+
+.process-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.process-header h2 {
+    font-size: 2.5rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.process-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.process-steps-visual {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.process-step-card {
+    background: var(--color-ivory-white);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-blush-pink);
+    transition: var(--transition);
+    position: relative;
+}
+
+.process-step-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.process-step-card .step-number {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--color-petal-rose), var(--color-petal-rose-dark));
+    color: var(--color-ivory-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.process-step-card .step-content h3 {
+    font-size: 1.3rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.process-step-card .step-content p {
+    color: var(--color-text-light);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.step-timeline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.step-timeline strong {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.step-timeline span {
+    color: var(--color-petal-rose);
+    font-weight: 600;
+}
+
+.process-cta {
+    background: linear-gradient(135deg, var(--color-blush-pink), var(--color-champagne-beige));
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    text-align: center;
+    border: 1px solid var(--color-border);
+}
+
+.process-cta .cta-content h3 {
+    font-size: 1.8rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.process-cta .cta-content p {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cta-buttons .button {
+    min-width: 160px;
+}
+
+/* Responsive styles for process overview */
+@media (max-width: 768px) {
+    .process-header h2 {
+        font-size: 2rem;
+    }
+    
+    .process-steps-visual {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .process-step-card {
+        padding: 1.5rem;
+    }
+    
+    .process-cta {
+        padding: 2rem;
+    }
+    
+    .process-cta .cta-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .cta-buttons .button {
+        width: 100%;
+        max-width: 300px;
+    }
+}

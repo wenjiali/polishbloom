@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply to Join - Polish + Bloom</title>
+    <meta name="description" content="Apply to join our curated community of women focused on financial wellness and personal growth.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/quiz-fix.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="config/oauth.js"></script>
+    <script src="config/ga4.js"></script>
+    <script src="https://cdn.amplitude.com/libs/amplitude-8.21.9-min.js"></script>
+    <script src="https://a4372cbb4f253cb0f020223f94e11289.js"></script>
+    <style>
+        .application-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+        
+        .application-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .application-header h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .application-header .subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 2rem;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fef7f7, #fff5f8);
+            border-radius: 20px;
+            border: 1px solid #fce7e7;
+        }
+        
+        .process-step {
+            text-align: center;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #f4a5b9, #e879a6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .step-number.active {
+            background: linear-gradient(135deg, #e879a6, #d85494);
+            transform: scale(1.1);
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-description {
+            font-size: 0.9rem;
+            color: #718096;
+            line-height: 1.4;
+        }
+        
+        .application-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f7fafc;
+        }
+        
+        .form-section {
+            margin-bottom: 3rem;
+        }
+        
+        .form-section h3 {
+            color: #2d3748;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-section .section-icon {
+            width: 24px;
+            height: 24px;
+            color: #f4a5b9;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f4a5b9;
+            box-shadow: 0 0 0 3px rgba(244, 165, 185, 0.1);
+            background: white;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .checkbox-item:hover {
+            background: #fef7f7;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .timeline-expectations {
+            background: #f8fbff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-expectations h4 {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .timeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-icon {
+            width: 8px;
+            height: 8px;
+            background: #f4a5b9;
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-content strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .timeline-content span {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .submit-section {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #f4a5b9, #e879a6);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 165, 185, 0.4);
+        }
+        
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .submit-button.loading::after {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .quiz-context {
+            background: #fef7f7;
+            border: 1px solid #fce7e7;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-context h4 {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .quiz-context p {
+            color: #718096;
+            margin-bottom: 1rem;
+        }
+        
+        .retake-quiz-btn {
+            background: none;
+            border: 2px solid #f4a5b9;
+            color: #f4a5b9;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .retake-quiz-btn:hover {
+            background: #f4a5b9;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .application-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .application-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="page-transition">
+    <!-- Journey Progress Indicator -->
+    <div class="journey-progress">
+        <div class="journey-progress-bar" style="width: 75%"></div>
+    </div>
+    
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header">
+        <div class="container">
+            <nav class="main-nav">
+                <a href="index.html" class="logo">Polish + Bloom</a>
+                <ul class="nav-links">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="bloom-circles.html">Bloom Circles</a></li>
+                    <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
+                    <li><a href="stories.html">Stories</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="join.html" class="button button-primary">Sign In</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="application-container">
+        <div class="application-header">
+            <h1>Apply to Join Polish + Bloom</h1>
+            <p class="subtitle">We're excited to learn about you and help you find your perfect Bloom Circle</p>
+        </div>
+
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number active">1</div>
+                <div class="step-title">Submit Application</div>
+                <div class="step-description">Share your background and goals with us</div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <div class="step-title">Personal Review</div>
+                <div class="step-description">We'll review your application within 2-3 business days</div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <div class="step-title">Welcome Call</div>
+                <div class="step-description">Brief chat to ensure perfect circle matching</div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <div class="step-title">Join Your Circle</div>
+                <div class="step-description">Create your account and connect with your community</div>
+            </div>
+        </div>
+
+        <div id="success-message" class="success-message">
+            <h3>🌸 Application Submitted Successfully!</h3>
+            <p>Thank you for your interest in joining Polish + Bloom. We'll review your application within 2-3 business days and reach out to schedule a brief welcome call.</p>
+            <p><strong>What's next:</strong> Keep an eye on your inbox for an email from our team with next steps.</p>
+        </div>
+
+        <div id="quiz-context" class="quiz-context" style="display: none;">
+            <h4>
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                Based on Your Quiz Results
+            </h4>
+            <p>We've pre-filled your recommended Bloom Circle below. Feel free to adjust if you'd like to explore other options.</p>
+            <button type="button" class="retake-quiz-btn" onclick="openQuizModal()">Retake Quiz</button>
+        </div>
+
+        <form id="application-form" class="application-form">
+            <div class="form-section">
+                <h3>
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Personal Information
+                </h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name *</label>
+                        <input type="text" id="first-name" name="first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name *</label>
+                        <input type="text" id="last-name" name="last-name" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Province/State *</label>
+                        <input type="text" id="province" name="province" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    Your Bloom Circle
+                </h3>
+                <div class="form-group">
+                    <label for="bloom-circle">Preferred Bloom Circle *</label>
+                    <select id="bloom-circle" name="bloom-circle" required>
+                        <option value="">Select your circle...</option>
+                        <option value="The Legacy Circle">The Legacy Circle (Secure Planner)</option>
+                        <option value="The Horizon Circle">The Horizon Circle (Free Spirit)</option>
+                        <option value="The Blueprint Circle">The Blueprint Circle (Strategist)</option>
+                        <option value="The Heartwood Circle">The Heartwood Circle (Nurturer)</option>
+                        <option value="The Catalyst Circle">The Catalyst Circle (Creator)</option>
+                        <option value="The Sanctuary Circle">The Sanctuary Circle (Peacekeeper)</option>
+                        <option value="The Summit Circle">The Summit Circle (Achiever)</option>
+                        <option value="Not sure - help me decide">Not sure - help me decide</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    Support Areas
+                </h3>
+                <p style="color: #718096; margin-bottom: 1rem;">What areas would you like support with? (Select all that apply)</p>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="budgeting" name="support-areas" value="budgeting">
+                        <label for="budgeting">Budgeting & Money Management</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="investing" name="support-areas" value="investing">
+                        <label for="investing">Investing & Wealth Building</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="business" name="support-areas" value="business">
+                        <label for="business">Business & Entrepreneurship</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="career" name="support-areas" value="career">
+                        <label for="career">Career Growth & Transitions</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="debt" name="support-areas" value="debt">
+                        <label for="debt">Debt Management</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="confidence" name="support-areas" value="confidence">
+                        <label for="confidence">Building Financial Confidence</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="planning" name="support-areas" value="planning">
+                        <label for="planning">Long-term Financial Planning</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mindset" name="support-areas" value="mindset">
+                        <label for="mindset">Money Mindset & Relationship with Money</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Your Goals
+                </h3>
+                <div class="form-group">
+                    <label for="success-definition">What does financial success look like to you? *</label>
+                    <textarea id="success-definition" name="success-definition" placeholder="Share your vision of financial success and what you hope to achieve..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="biggest-challenge">What's your biggest financial challenge right now? *</label>
+                    <textarea id="biggest-challenge" name="biggest-challenge" placeholder="Tell us about the main financial obstacle you're facing..." required></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    Background & Experience
+                </h3>
+                <div class="form-group">
+                    <label for="experience-level">How would you describe your current financial knowledge level? *</label>
+                    <select id="experience-level" name="experience-level" required>
+                        <option value="">Select your level...</option>
+                        <option value="beginner">Beginner - Just starting my financial journey</option>
+                        <option value="intermediate">Intermediate - Have some financial knowledge but want to grow</option>
+                        <option value="advanced">Advanced - Comfortable with finances but seeking community and refinement</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="referral-source">How did you hear about Polish + Bloom? *</label>
+                    <select id="referral-source" name="referral-source" required>
+                        <option value="">Select source...</option>
+                        <option value="friend-referral">Referred by a friend/member</option>
+                        <option value="social-media">Social media</option>
+                        <option value="search-engine">Google/search engine</option>
+                        <option value="podcast">Podcast</option>
+                        <option value="blog-article">Blog or article</option>
+                        <option value="professional-network">Professional network</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group" id="referral-details" style="display: none;">
+                    <label for="referral-details-text">Please provide more details:</label>
+                    <textarea id="referral-details-text" name="referral-details-text" placeholder="If referred by someone, please share their name. If other source, please specify..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    Values & Community
+                </h3>
+                <div class="form-group">
+                    <label for="values-alignment">What draws you to our community-focused approach? *</label>
+                    <textarea id="values-alignment" name="values-alignment" placeholder="Share what resonates with you about our values and community approach..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="commitment-level">How ready are you to actively participate in a supportive community? *</label>
+                    <select id="commitment-level" name="commitment-level" required>
+                        <option value="">Select your commitment level...</option>
+                        <option value="very-ready">Very ready - I'm excited to engage and contribute</option>
+                        <option value="ready">Ready - I'm willing to participate regularly</option>
+                        <option value="somewhat-ready">Somewhat ready - I'll participate when I can</option>
+                        <option value="exploring">Still exploring - I want to learn more first</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="timeline-expectations">
+                <h4>
+                    <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12,6 12,12 16,14"></polyline>
+                    </svg>
+                    What Happens Next
+                </h4>
+                <div class="timeline-step">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <strong>Within 2-3 business days:</strong> 
+                        <span>We'll review your application and send you a response</span>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <strong>If it's a good fit:</strong> 
+                        <span>We'll schedule a brief 15-minute welcome call to get to know you better</span>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <strong>After our call:</strong> 
+                        <span>We'll send you an invitation to create your account and join your perfect Bloom Circle</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-button">
+                    Submit Application
+                </button>
+                <p style="margin-top: 1rem; color: #718096; font-size: 0.9rem;">
+                    By submitting this application, you agree to our <a href="#" style="color: #f4a5b9;">Terms of Service</a> and <a href="#" style="color: #f4a5b9;">Privacy Policy</a>.
+                </p>
+            </div>
+        </form>
+    </main>
+
+    <!-- Quiz Modal (reused from index.html) -->
+    <div id="quiz-modal" class="quiz-modal-overlay hidden">
+        <div class="quiz-modal-content">
+            <button id="close-quiz-btn" class="quiz-close-button">&times;</button>
+            
+            <div id="quiz-start-screen">
+                <h2 class="quiz-title">Discover Your Bloom Circle</h2>
+                <p class="quiz-subtitle">Answer a few quick questions to find the community that best aligns with your personality and goals.</p>
+                <button id="start-quiz-btn" class="button button-primary">Start the Quiz</button>
+            </div>
+
+            <div id="quiz-question-screen" class="hidden">
+                <div id="quiz-progress"><div id="quiz-progress-bar"></div></div>
+                <p id="quiz-question-text"></p>
+                <div id="quiz-answers-grid" class="quiz-answers-grid"></div>
+            </div>
+
+            <div id="quiz-results-screen" class="hidden">
+                <p class="result-badge">Your Recommended Circle</p>
+                <h2 id="result-title" class="result-title"></h2>
+                <p id="result-description" class="result-description"></p>
+                <div id="result-details" class="result-details"></div>
+                <div class="quiz-cta">
+                    <p>Perfect! We'll pre-fill this recommendation in your application.</p>
+                    <button type="button" class="button button-primary" onclick="useQuizResult()">Use This Result</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">Polish + Bloom</a>
+                    <p>Nurturing financial wellness and personal growth for women and beyond.</p>
+                </div>
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="bloom-circles.html">Bloom Circles</a></li>
+                        <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
+                        <li><a href="stories.html">Stories</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-connect">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 Polish + Bloom. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        // Application Form Specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('application-form');
+            const submitButton = form.querySelector('.submit-button');
+            const successMessage = document.getElementById('success-message');
+            const referralSource = document.getElementById('referral-source');
+            const referralDetails = document.getElementById('referral-details');
+            
+            // Show referral details when needed
+            referralSource.addEventListener('change', function() {
+                if (this.value === 'friend-referral' || this.value === 'other') {
+                    referralDetails.style.display = 'block';
+                    referralDetails.querySelector('textarea').required = true;
+                } else {
+                    referralDetails.style.display = 'none';
+                    referralDetails.querySelector('textarea').required = false;
+                }
+            });
+
+            // Check for quiz results in URL params or localStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            const quizResult = urlParams.get('circle') || localStorage.getItem('quizResult');
+            
+            if (quizResult) {
+                document.getElementById('quiz-context').style.display = 'block';
+                document.getElementById('bloom-circle').value = quizResult;
+                
+                // Track quiz to application flow
+                if (typeof amplitude !== 'undefined') {
+                    amplitude.getInstance().logEvent('Quiz Result Applied', {
+                        'recommended_circle': quizResult,
+                        'source': 'application_form'
+                    });
+                }
+            }
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Add loading state
+                submitButton.classList.add('loading');
+                submitButton.disabled = true;
+                
+                // Collect form data
+                const formData = new FormData(form);
+                const supportAreas = Array.from(document.querySelectorAll('input[name="support-areas"]:checked')).map(cb => cb.value);
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // Track application submission
+                    if (typeof amplitude !== 'undefined') {
+                        amplitude.getInstance().logEvent('Application Submitted', {
+                            'bloom_circle': formData.get('bloom-circle'),
+                            'support_areas': supportAreas,
+                            'experience_level': formData.get('experience-level'),
+                            'referral_source': formData.get('referral-source'),
+                            'has_quiz_result': !!quizResult
+                        });
+                    }
+                    
+                    // Show success message
+                    form.style.display = 'none';
+                    successMessage.classList.add('show');
+                    
+                    // Scroll to success message
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Clear quiz result from storage
+                    localStorage.removeItem('quizResult');
+                    
+                }, 2000);
+            });
+        });
+
+        // Function to use quiz result (called from quiz modal)
+        function useQuizResult() {
+            const resultTitle = document.getElementById('result-title').textContent;
+            document.getElementById('bloom-circle').value = resultTitle;
+            document.getElementById('quiz-context').style.display = 'block';
+            closeQuizModal();
+        }
+
+        // Function to open quiz modal
+        function openQuizModal() {
+            document.getElementById('quiz-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close quiz modal
+        function closeQuizModal() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Quiz modal event listeners
+        document.getElementById('close-quiz-btn').addEventListener('click', closeQuizModal);
+        document.getElementById('quiz-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeQuizModal();
+            }
+        });
+    </script>
+</body>
+</html> 

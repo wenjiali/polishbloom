@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const getSmartCTAText = (context, journey) => {
         switch (context) {
             case 'hero-primary':
-                return journey.hasSeenQuiz ? 'Continue Your Journey' : 'Begin Your Journey';
+                return journey.hasSeenQuiz ? 'Continue Your Journey' : 'Apply to Join';
             case 'hero-secondary':
                 return journey.hasVisitedAbout ? 'Explore Programs' : 'Learn More';
             case 'quiz-prompt':
@@ -173,7 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
             '/rainbow-cashflow.html': 'Rainbow Cashflow',
             '/stories.html': 'Stories',
             '/blog.html': 'Blog',
-            '/join.html': 'Join'
+            '/join.html': 'Create Account',
+            '/apply.html': 'Apply'
         };
 
         const pageName = pageNames[currentPage] || 'Polish + Bloom';
@@ -199,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
             input.addEventListener('input', clearFieldError);
         });
 
-        // Enhance form submission with better feedback
+        // Form submission enhancement
         const forms = document.querySelectorAll('form');
         forms.forEach(form => {
             form.addEventListener('submit', handleFormSubmission);
@@ -210,44 +211,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const field = e.target;
         const value = field.value.trim();
         
-        // Remove existing error state
-        clearFieldError(e);
-        
-        if (field.hasAttribute('required') && !value) {
+        if (!value) {
             showFieldError(field, 'This field is required');
             return false;
         }
         
-        if (field.type === 'email' && value && !isValidEmail(value)) {
+        if (field.type === 'email' && !isValidEmail(value)) {
             showFieldError(field, 'Please enter a valid email address');
             return false;
         }
         
+        clearFieldError(e);
         return true;
     };
 
     const showFieldError = (field, message) => {
         field.classList.add('error');
-        field.setAttribute('aria-invalid', 'true');
+        field.style.borderColor = '#ef4444';
         
-        let errorMsg = field.parentNode.querySelector('.field-error');
-        if (!errorMsg) {
-            errorMsg = document.createElement('span');
-            errorMsg.className = 'field-error';
-            errorMsg.setAttribute('role', 'alert');
-            field.parentNode.appendChild(errorMsg);
+        let errorDiv = field.parentNode.querySelector('.field-error');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.style.color = '#ef4444';
+            errorDiv.style.fontSize = '0.875rem';
+            errorDiv.style.marginTop = '0.25rem';
+            field.parentNode.appendChild(errorDiv);
         }
-        errorMsg.textContent = message;
+        errorDiv.textContent = message;
     };
 
     const clearFieldError = (e) => {
         const field = e.target;
         field.classList.remove('error');
-        field.removeAttribute('aria-invalid');
+        field.style.borderColor = '';
         
-        const errorMsg = field.parentNode.querySelector('.field-error');
-        if (errorMsg) {
-            errorMsg.remove();
+        const errorDiv = field.parentNode.querySelector('.field-error');
+        if (errorDiv) {
+            errorDiv.remove();
         }
     };
 
@@ -256,26 +257,77 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const handleFormSubmission = (e) => {
-        const form = e.target;
-        const submitBtn = form.querySelector('[type="submit"]');
+        e.preventDefault();
         
-        if (submitBtn) {
-            addLoadingState(submitBtn, 2000);
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        
+        // Validate all required fields
+        const requiredFields = form.querySelectorAll('input[required], textarea[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!validateField({ target: field })) {
+                isValid = false;
+            }
+        });
+        
+        if (!isValid) {
+            // Focus on first error field
+            const firstErrorField = form.querySelector('.error');
+            if (firstErrorField) {
+                firstErrorField.focus();
+            }
+            return;
         }
         
-        // Track form submission with both analytics
+        // Add loading state
+        addLoadingState(submitBtn, 2000);
+        
+        // Track form submission
+        const formType = form.id || 'unknown';
         if (window.amplitude) {
             window.amplitude.track('Form Submitted', { 
-                form_type: form.id || 'unknown',
+                form_type: formType,
                 page: window.location.pathname 
             });
         }
         
-        // Track with GA4
         if (window.trackGA4Event) {
             window.trackGA4Event('form_submitted', {
-                form_type: form.id || 'unknown',
+                form_type: formType,
                 page_path: window.location.pathname
+            });
+        }
+        
+        // Simulate form processing
+        setTimeout(() => {
+            showFormSuccess(form);
+        }, 2000);
+    };
+
+    const showFormSuccess = (form) => {
+        const successDiv = form.parentNode.querySelector('.form-success') || 
+                          document.getElementById('form-success-message');
+        
+        if (successDiv) {
+            successDiv.classList.remove('hidden');
+            successDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Reset form
+        form.reset();
+        
+        // Track success
+        if (window.amplitude) {
+            window.amplitude.track('Form Submission Success', { 
+                form_type: form.id || 'unknown' 
+            });
+        }
+        
+        if (window.trackGA4Event) {
+            window.trackGA4Event('form_submission_success', {
+                form_type: form.id || 'unknown'
             });
         }
     };
@@ -285,276 +337,272 @@ document.addEventListener('DOMContentLoaded', () => {
     enhanceMobileNavigation();
     enhanceFormExperience();
 
-    // --- MINI-PLAN MODAL LOGIC (runs on Rainbow Cashflow page) ---
+    // --- EXISTING CODE: Mini Plan Modal ---
     const miniPlanModal = document.getElementById('mini-plan-modal');
-    if (miniPlanModal) {
-        const colorItems = document.querySelectorAll('.color-item[data-color]');
-        const closeMiniPlanBtn = document.getElementById('close-mini-plan-btn');
-        const miniPlanTitle = document.getElementById('mini-plan-title');
-        const miniPlanQuestion = document.getElementById('mini-plan-question');
-        const miniPlanDescription = document.getElementById('mini-plan-description');
-        const miniPlanCtaBtn = document.getElementById('mini-plan-cta-btn');
+    const miniPlanScrim = document.getElementById('mini-plan-scrim');
 
-        const miniPlanData = {
-            survival: {
-                title: 'Survival: Essentials Reset',
-                question: '“Am I safe and supported?”',
-                description: 'This worksheet helps you build a monthly Essential Confidence Plan. It focuses on covering your core needs—housing, groceries, utilities—with calm, clarity, and no guilt.',
-                ctaText: 'Try the "Essentials Reset" worksheet',
-                ctaLink: '#' // This should link to the form at the bottom of the page.
+    if (miniPlanModal) {
+        const miniPlanContent = document.getElementById('mini-plan-content');
+        const closeMiniPlanBtns = document.querySelectorAll('.close-mini-plan');
+
+        const planData = {
+            red: {
+                title: 'Survival',
+                description: 'Essential needs—housing, groceries, utilities—covered with calm and clarity.',
+                items: ['Rent/Mortgage', 'Groceries', 'Utilities', 'Transportation', 'Insurance'],
+                ctaText: 'Get Started with Survival Planning'
             },
-            lifestyle: {
-                title: 'Lifestyle: Design Your Joy Budget',
-                question: "What brings me daily joy?",
-                description: 'Use the Lifestyle Flow Tracker to balance joy and responsibility without burnout. It helps you make intentional space for hobbies, takeout, and the small indulgences that light up your life.',
-                ctaText: 'Design Your Joy Budget',
-                ctaLink: '#'
+            orange: {
+                title: 'Lifestyle',
+                description: 'Day-to-day comforts and joys that make life sustainable and enjoyable.',
+                items: ['Dining Out', 'Entertainment', 'Hobbies', 'Personal Care', 'Small Indulgences'],
+                ctaText: 'Design Your Joy Budget'
             },
-            dreams: {
-                title: 'Dreams: Start Your Dream Plan',
-                question: "What if my dream was a line item?",
-                description: 'The Dream Fund Map turns your biggest goals into actionable micro-moves. Visualize your progress and save for your book, your business, or that trip to Italy—like it truly matters.',
-                ctaText: 'Start Your Dream Plan',
-                ctaLink: '#'
+            yellow: {
+                title: 'Dreams',
+                description: 'Save for your biggest, most exciting goals and aspirations.',
+                items: ['Travel Goals', 'Creative Projects', 'Business Ideas', 'Major Purchases', 'Life Adventures'],
+                ctaText: 'Start Your Dream Fund'
             },
-            growth: {
-                title: 'Growth: Grow with Purpose',
-                question: "How am I becoming more me?",
-                description: 'The Growth Budget Builder helps you plan annual investments in yourself, from courses and mentors to books and coaching, without any guilt.',
-                ctaText: 'Grow with Purpose',
-                ctaLink: '#'
+            green: {
+                title: 'Growth',
+                description: 'Invest in personal and professional development.',
+                items: ['Courses & Education', 'Coaching/Mentoring', 'Skills Development', 'Professional Tools', 'Books & Learning'],
+                ctaText: 'Invest in Growth'
             },
-            security: {
-                title: 'Security: Secure Your Safety Net',
-                question: "How do I protect my peace?",
-                description: 'The Financial Safety Toolkit provides checklists and prompts to build your emergency fund, insurance, and other financial safety nets with a sense of calm, not fear.',
-                ctaText: 'Secure Your Safety Net',
-                ctaLink: '#'
+            blue: {
+                title: 'Security',
+                description: 'Build your long-term safety net and financial peace of mind.',
+                items: ['Emergency Fund', 'Retirement Savings', 'Insurance', 'Investments', 'Long-term Security'],
+                ctaText: 'Secure Your Future'
             },
-            education: {
-                title: 'Education: Explore Learning Investments',
-                question: "How do I keep learning and evolving?",
-                description: 'Discover curated learning paths to spend smarter on courses, workshops, and other educational pursuits that align with your future self.',
-                ctaText: 'Explore Learning Investments',
-                ctaLink: '#'
+            purple: {
+                title: 'Education',
+                description: 'Continuous learning and skill development for life enrichment.',
+                items: ['Language Learning', 'Workshops', 'Conferences', 'Certifications', 'Educational Travel'],
+                ctaText: 'Expand Your Knowledge'
             },
-            giving: {
-                title: 'Giving: Build Your Giving Practice',
-                question: "Where can I circulate love and impact?",
-                description: 'The Giving Ritual Plan helps you reflect on causes you care about, making the act of supporting friends, donating, or tipping an intentional and joyful form of abundance.',
-                ctaText: 'Build Your Giving Practice',
-                ctaLink: '#'
-            },
-            custom: {
-                title: 'And More… Create Your Money Palette',
-                question: "What does abundance mean for you?",
-                description: 'This visual worksheet helps you define what matters most to you. This is your life, so create custom buckets for anything from Therapy and Kids to Nature and Healing.',
-                ctaText: 'Create Your Money Palette',
-                ctaLink: '#'
+            pink: {
+                title: 'Giving Back',
+                description: 'Contribute to causes you care about and circulate love and impact.',
+                items: ['Charitable Donations', 'Community Support', 'Generous Tipping', 'Helping Friends', 'Social Impact'],
+                ctaText: 'Start Giving'
             }
         };
 
         function openMiniPlanModal(color, colorValue) {
-            const data = miniPlanData[color];
+            const data = planData[color];
             if (!data) return;
 
-            miniPlanTitle.textContent = data.title;
-            miniPlanTitle.style.borderColor = colorValue;
-            miniPlanQuestion.textContent = data.question;
-            miniPlanDescription.textContent = data.description;
-            miniPlanCtaBtn.textContent = data.ctaText;
-            miniPlanCtaBtn.href = data.ctaLink;
-            // When CTAs open the contact form, we'll add this logic back in
-            // miniPlanCtaBtn.classList.add('js-open-contact-modal');
-            // miniPlanCtaBtn.dataset.title = `Inquire about ${data.title}`;
-            
-            miniPlanCtaBtn.style.backgroundColor = colorValue;
-            miniPlanCtaBtn.style.borderColor = colorValue;
-
+            miniPlanContent.innerHTML = `
+                <div class="mini-plan-header" style="background: linear-gradient(135deg, ${colorValue}, ${colorValue}CC);">
+                    <h3>${data.title}</h3>
+                    <p>${data.description}</p>
+                </div>
+                <div class="mini-plan-body">
+                    <h4>Typical Categories:</h4>
+                    <ul>
+                        ${data.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    <div class="mini-plan-cta">
+                        <a href="apply.html" class="button button-primary">${data.ctaText}</a>
+                    </div>
+                </div>
+            `;
 
             miniPlanModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeMiniPlanModal() {
             miniPlanModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
         }
 
-        colorItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const color = item.dataset.color;
-                const colorValue = getComputedStyle(item).getPropertyValue('--color');
-                openMiniPlanModal(color, colorValue);
+        closeMiniPlanBtns.forEach(btn => {
+            btn.addEventListener('click', closeMiniPlanModal);
+        });
+
+        miniPlanScrim.addEventListener('click', closeMiniPlanModal);
+
+        // Add click handlers to rainbow colors
+        const rainbowColors = document.querySelectorAll('.rainbow-color');
+        rainbowColors.forEach(color => {
+            color.addEventListener('click', (e) => {
+                e.preventDefault();
+                const colorClass = color.className.split(' ').find(cls => cls.includes('color-'));
+                const colorValue = getComputedStyle(color).backgroundColor;
+                const colorName = colorClass ? colorClass.replace('color-', '') : 'red';
+                openMiniPlanModal(colorName, colorValue);
             });
-            // Make card clickable
-            item.style.cursor = 'pointer';
-        });
-
-        closeMiniPlanBtn.addEventListener('click', closeMiniPlanModal);
-        miniPlanModal.addEventListener('click', (e) => {
-            if (e.target === miniPlanModal) {
-                closeMiniPlanModal();
-            }
         });
     }
 
-    // --- DELAYED REDIRECT FOR RAINBOW CASHFLOW PAGE ---
-    const valueShowcase = document.querySelector('.color-system-grid');
-    if (valueShowcase) {
-        valueShowcase.addEventListener('click', function(e) {
-            const button = e.target.closest('.button');
-            if (button && button.href.includes('join.html')) {
-                e.preventDefault(); 
-
-                const allItems = valueShowcase.querySelectorAll('.color-item');
-                allItems.forEach(item => item.classList.remove('selected'));
-
-                const card = e.target.closest('.color-item');
-                if (card) {
-                    card.classList.add('selected');
-                }
-
-                button.textContent = 'Redirecting...';
-
-                setTimeout(() => {
-                    window.location.href = button.href;
-                }, 1500);
-            }
-        });
-    }
-
-    // --- CONTACT MODAL LOGIC (runs on all pages with the modal) ---
+    // --- EXISTING CODE: Contact Modal ---
     const contactModal = document.getElementById('contact-modal');
     if (contactModal) {
-        const openContactModalBtns = document.querySelectorAll('.js-open-contact-modal');
-        const closeContactBtn = document.getElementById('close-contact-btn');
         const contactForm = document.getElementById('contact-form');
-        const formSuccessMessage = document.getElementById('form-success-message');
         const contactModalTitle = document.getElementById('contact-modal-title');
+        const contactSuccessMessage = document.getElementById('form-success-message');
+        const openContactBtns = document.querySelectorAll('.js-open-contact-modal');
+        const closeContactBtn = document.getElementById('close-contact-btn');
 
         const openContactModal = (title = 'Get in Touch') => {
             contactModalTitle.textContent = title;
             contactModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Track modal opening
+            sessionStorage.setItem('opened-contact', 'true');
+            
+            if (window.amplitude) {
+                window.amplitude.track('Contact Modal Opened', { 
+                    title: title,
+                    page: window.location.pathname 
+                });
+            }
+            
+            if (window.trackGA4Event) {
+                window.trackGA4Event('contact_modal_opened', {
+                    modal_title: title,
+                    page_path: window.location.pathname
+                });
+            }
         };
 
         const closeContactModal = () => {
             contactModal.classList.add('hidden');
-            setTimeout(() => {
-                contactForm.style.display = 'block';
-                formSuccessMessage.style.display = 'none';
-                contactForm.reset();
-            }, 300);
+            document.body.style.overflow = 'auto';
+            
+            // Reset form and hide success message
+            contactForm.classList.remove('hidden');
+            contactSuccessMessage.classList.add('hidden');
+            contactForm.reset();
         };
 
-        openContactModalBtns.forEach(btn => {
+        openContactBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const title = e.currentTarget.dataset.title;
+                const title = btn.dataset.title || 'Get in Touch';
                 openContactModal(title);
             });
         });
 
         closeContactBtn.addEventListener('click', closeContactModal);
-        contactModal.addEventListener('click', e => {
+
+        contactModal.addEventListener('click', (e) => {
             if (e.target === contactModal) {
                 closeContactModal();
             }
         });
 
-        contactForm.addEventListener('submit', e => {
+        // Enhanced contact form handling
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            contactForm.style.display = 'none';
-            formSuccessMessage.style.display = 'block';
+            
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            addLoadingState(submitBtn, 2000);
+            
+            // Collect form data
+            const formData = new FormData(contactForm);
+            const contactData = {
+                name: `${formData.get('first-name')} ${formData.get('last-name')}`,
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                city: formData.get('city'),
+                province: formData.get('province'),
+                notes: formData.get('notes'),
+                moneyPersonality: formData.get('money-personality')
+            };
+            
+            // Track contact form submission
+            if (window.amplitude) {
+                window.amplitude.track('Contact Form Submitted', contactData);
+            }
+            
+            if (window.trackGA4Event) {
+                window.trackGA4Event('contact_form_submitted', {
+                    has_phone: !!contactData.phone,
+                    has_notes: !!contactData.notes,
+                    money_personality: contactData.moneyPersonality
+                });
+            }
+            
+            setTimeout(() => {
+                contactForm.classList.add('hidden');
+                contactSuccessMessage.classList.remove('hidden');
+            }, 2000);
         });
     }
 
-    // --- QUIZ LOGIC (runs on any page with the modal) ---
+    // --- QUIZ MODAL FUNCTIONALITY ---
     const quizModal = document.getElementById('quiz-modal');
     if (quizModal) {
         const openQuizBtns = document.querySelectorAll('.js-open-quiz-modal');
         const closeQuizBtn = document.getElementById('close-quiz-btn');
-        const startQuizBtn = document.getElementById('start-quiz-btn');
-        
         const startScreen = document.getElementById('quiz-start-screen');
         const questionScreen = document.getElementById('quiz-question-screen');
         const resultsScreen = document.getElementById('quiz-results-screen');
-        
+        const startQuizBtn = document.getElementById('start-quiz-btn');
         const progressBar = document.getElementById('quiz-progress-bar');
         const questionText = document.getElementById('quiz-question-text');
         const answersGrid = document.getElementById('quiz-answers-grid');
-        
         const resultTitle = document.getElementById('result-title');
         const resultDescription = document.getElementById('result-description');
         const resultDetails = document.getElementById('result-details');
-
-        const quizQuestions = [
-            { question: "When you receive an unexpected sum of money, your first instinct is to:", answers: { a: "Save or invest it for long-term security.", b: "Plan a memorable trip or experience.", c: "Create a detailed spreadsheet to allocate every dollar.", d: "Use it to help a friend or a cause you care about.", e: "Invest it in a creative project or business idea.", f: "Put it aside to decide later, avoiding any hasty decisions.", g: "Use it to get ahead on a major life goal (like a home or career change)." } },
-            { question: "Your ideal relationship with money is one of of:", answers: { a: "Safety & predictability", b: "Freedom & spontaneity", c: "Organization & efficiency", d: "Connection & generosity", e: "Innovation & opportunity", f: "Peace & mindfulness", g: "Achievement & impact" } },
-            { question: "When making a large purchase, you are most likely to:", answers: { a: "Research everything to ensure it's a sound, future-proof choice.", b: "Focus on how it will enhance your life experiences.", c: "Compare prices and features methodically to get the best value.", d: "Consider its impact on your loved ones or community.", e: "Choose the option that feels the most exciting or has the biggest potential.", f: "Wait until you feel completely calm and certain about the decision.", g: "Choose the option that best aligns with your long-term ambitions." } },
-            { question: "A 'rich life' means:", answers: { a: "Never having to worry about money.", b: "The freedom to do what you want, when you want.", c: "Having a clear system that works for you.", d: "Being able to support the people and causes you love.", e: "Building something of your own from the ground up.", f: "Feeling content and at ease, regardless of your bank balance.", g: "Making a significant impact and leaving a legacy." } },
-            { question: "What financial topic do you wish you knew more about?", answers: { a: "Long-term investing and estate planning.", b: "Travel hacking or funding a sabbatical.", c: "Budgeting software and automation.", d: "Ethical investing or charitable giving strategies.", e: "Angel investing or funding a creative project.", f: "Mindful spending and financial minimalism.", g: "Salary negotiation and scaling your income." } },
-            { question: "You feel most successful when:", answers: { a: "Your emergency fund is fully funded.", b: "You book a spontaneous flight just because.", c: "Your budget reconciles perfectly to the cent.", d: "You can treat your loved ones without a second thought.", e: "A risky idea pays off.", f: "You make a financial decision that feels truly peaceful.", g: "You hit an ambitious income or savings target." } },
-            { question: "Your biggest financial fear is:", answers: { a: "An unexpected crisis wiping out your savings.", b: "Missing out on life's great adventures due to a lack of funds.", c: "Losing track of details and feeling financially chaotic.", d: "Not being able to help someone you care about.", e: "A brilliant idea failing due to a lack of capital.", f: "Feeling stressed or overwhelmed by money matters.", g: "Not reaching your full potential financially." } }
-        ];
-
-        const quizResultsData = {
-            a: { title: "The Secure Planner", description: "You value stability and security. You plan carefully and prefer long-term financial safety nets.", strengths: "Thoughtful, disciplined, cautious.", growth: "Avoid over-worrying, embrace some flexibility.", circle: "The Legacy Circle" },
-            b: { title: "The Free Spirit", description: "You see money as a tool for freedom and adventure. You're spontaneous and optimistic.", strengths: "Intuitive, generous, adventurous.", growth: "Create simple savings goals, track spending lightly.", circle: "The Horizon Circle" },
-            c: { title: "The Strategist", description: "You feel empowered by having a clear plan. You're organized, logical, and love to be in control of the details.", strengths: "Detail-oriented, efficient, goal-driven.", growth: "Allow for spontaneity, celebrate progress not just perfection.", circle: "The Blueprint Circle" },
-            d: { title: "The Nurturer", description: "You are driven by generosity and community. You find joy in supporting others and using money to care for loved ones.", strengths: "Empathetic, caring, community-focused.", growth: "Set boundaries, prioritize your own financial self-care.", circle: "The Heartwood Circle" },
-            e: { title: "The Creator", description: "You are an innovator who sees money as a tool for creative expression and opportunity. You're not afraid to take risks on new ideas.", strengths: "Entrepreneurial, inventive, resourceful.", growth: "Balance new ventures with stable income streams.", circle: "The Catalyst Circle" },
-            f: { title: "The Peacekeeper", description: "You seek calm and balance in your financial life, avoiding stress and conflict. You prefer a mindful, intuitive approach.", strengths: "Calm, mindful, balanced.", growth: "Engage in necessary financial conversations, set clear goals.", circle: "The Sanctuary Circle" },
-            g: { title: "The Achiever", description: "You are ambitious and motivated by success. You see money as a measure of growth and a tool to achieve big goals.", strengths: "Driven, confident, goal-oriented.", growth: "Balance ambition with rest, celebrate non-financial wins.", circle: "The Summit Circle" }
-        };
 
         let currentQuestionIndex = 0;
         let userAnswers = {};
 
         const openQuizModal = () => {
             quizModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
             
-            // Force correct modal positioning via JavaScript
-            quizModal.style.setProperty('align-items', 'flex-start', 'important');
-            quizModal.style.setProperty('padding-top', '2vh', 'important');
-            quizModal.style.setProperty('overflow-y', 'auto', 'important');
+            // Track quiz opening
+            sessionStorage.setItem('seen-quiz', 'true');
             
-            const modalContent = quizModal.querySelector('.quiz-modal-content');
-            if (modalContent) {
-                modalContent.style.setProperty('max-height', 'none', 'important');
-                modalContent.style.setProperty('overflow', 'visible', 'important');
-                modalContent.style.setProperty('margin-top', '0', 'important');
+            if (window.amplitude) {
+                window.amplitude.track('Quiz Modal Opened', { 
+                    page: window.location.pathname 
+                });
             }
             
-            // Fix quiz screen layouts
-            const screens = ['quiz-start-screen', 'quiz-question-screen', 'quiz-results-screen'];
-            screens.forEach(screenId => {
-                const screen = document.getElementById(screenId);
-                if (screen) {
-                    screen.style.setProperty('display', 'block', 'important');
-                    screen.style.setProperty('min-height', 'auto', 'important');
-                    screen.style.setProperty('overflow', 'visible', 'important');
-                    screen.style.setProperty('justify-content', 'flex-start', 'important');
-                }
-            });
-            
-            resetQuiz(); 
+            if (window.trackGA4Event) {
+                window.trackGA4Event('quiz_modal_opened', {
+                    page_path: window.location.pathname
+                });
+            }
         };
 
         const closeQuizModal = () => {
             quizModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            resetQuiz();
         };
 
         const startQuiz = () => {
             startScreen.classList.add('hidden');
             questionScreen.classList.remove('hidden');
-            questionScreen.style.opacity = '1';
-            resultsScreen.classList.add('hidden');
+            
+            // Reset quiz state
             currentQuestionIndex = 0;
-            userAnswers = {};
+            userAnswers = {
+                'The Legacy Circle': 0,
+                'The Horizon Circle': 0,
+                'The Blueprint Circle': 0,
+                'The Heartwood Circle': 0,
+                'The Catalyst Circle': 0,
+                'The Sanctuary Circle': 0,
+                'The Summit Circle': 0
+            };
+            
             displayQuestion();
             
-            // Track quiz start with both analytics
+            // Track quiz start
             if (window.amplitude) {
-                window.amplitude.track('Quiz Started', { quiz_type: 'money_personality' });
+                window.amplitude.track('Quiz Started', { 
+                    quiz_type: 'money_personality' 
+                });
             }
             
             if (window.trackGA4Event) {
@@ -565,39 +613,35 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const displayQuestion = () => {
-            if (currentQuestionIndex < quizQuestions.length) {
-                // Ensure modal positioning is still correct
-                const questionScreen = document.getElementById('quiz-question-screen');
-                if (questionScreen) {
-                    questionScreen.style.setProperty('display', 'block', 'important');
-                    questionScreen.style.setProperty('min-height', 'auto', 'important');
-                    questionScreen.style.setProperty('overflow', 'visible', 'important');
-                }
-                
-                const progressPercentage = ((currentQuestionIndex) / quizQuestions.length) * 100;
-                progressBar.style.width = `${progressPercentage}%`;
-                
-                const currentQ = quizQuestions[currentQuestionIndex];
-                questionText.textContent = currentQ.question;
-                answersGrid.innerHTML = '';
-                
-                for (const key in currentQ.answers) {
-                    const button = document.createElement('button');
-                    button.className = 'quiz-answer-button';
-                    button.textContent = currentQ.answers[key];
-                    button.dataset.answer = key;
-                    button.addEventListener('click', handleAnswer);
-                    answersGrid.appendChild(button);
-                }
-            } else {
+            const question = quizQuestions[currentQuestionIndex];
+            if (!question) {
                 showResults();
+                return;
             }
+
+            questionText.textContent = question.question;
+            answersGrid.innerHTML = '';
+
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'quiz-answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => handleAnswer(answer.points));
+                answersGrid.appendChild(button);
+            });
+
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
         };
 
-        const handleAnswer = (e) => {
-            const selectedAnswer = e.currentTarget.dataset.answer;
-            userAnswers[selectedAnswer] = (userAnswers[selectedAnswer] || 0) + 1;
-            
+        const handleAnswer = (points) => {
+            // Add points to user answers
+            Object.keys(points).forEach(circle => {
+                userAnswers[circle] += points[circle];
+            });
+
+            // Add transition effect
             questionScreen.style.opacity = '0';
 
             setTimeout(() => {
@@ -623,21 +667,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Area for Growth:</strong> ${result.growth}</p>
             `;
             
-            // Optional: Store result for other pages
+            // Store result for application form
+            localStorage.setItem('quizResult', result.title);
             localStorage.setItem('moneyPersonality', result.circle);
+            
+            // Update the CTA button to pass the result to the application form
+            const quizCTA = resultsScreen.querySelector('.quiz-cta a');
+            if (quizCTA) {
+                quizCTA.href = `apply.html?circle=${encodeURIComponent(result.title)}`;
+                quizCTA.textContent = 'Apply to Join Your Circle';
+            }
             
             // Track quiz completion with both analytics
             if (window.amplitude) {
                 window.amplitude.track('Quiz Completed', { 
                     quiz_type: 'money_personality',
-                    result: result.circle 
+                    result: result.title 
                 });
             }
             
             if (window.trackGA4Event) {
                 window.trackGA4Event('quiz_completed', {
                     quiz_type: 'money_personality',
-                    result: result.circle
+                    result: result.title
                 });
             }
         };
@@ -714,56 +766,56 @@ document.addEventListener('DOMContentLoaded', () => {
         const detailsData = {
             survival: {
                 title: 'Survival',
-                question: '“Am I safe and supported?”',
+                question: '"Am I safe and supported?"',
                 description: 'This bucket covers your essential needs—housing, groceries, utilities—with calm, clarity, and no guilt. It is the foundation upon which your entire financial house is built.',
                 ctaText: 'Explore Survival Strategies',
                 colorVar: 'var(--color-red)'
             },
             lifestyle: {
                 title: 'Lifestyle',
-                question: '“What brings me daily joy?”',
+                question: '"What brings me daily joy?"',
                 description: 'This is for your day-to-day comforts and joys. It includes hobbies, takeout, and the small indulgences that light up your regular life and make it feel sustainable.',
                 ctaText: 'Design Your Joy Budget',
                 colorVar: 'var(--color-orange)'
             },
             dreams: {
                 title: 'Dreams',
-                question: '“What if my dream was a line item?”',
+                question: '"What if my dream was a line item?"',
                 description: 'This is where you save for your biggest, most exciting goals. Use it to fund your book, your business, or that trip to Italy—like it truly matters.',
                 ctaText: 'Start Your Dream Plan',
                 colorVar: 'var(--color-yellow)'
             },
             growth: {
                 title: 'Growth',
-                question: '“How am I becoming more me?”',
+                question: '"How am I becoming more me?"',
                 description: 'This bucket is for investing in your personal and professional development. This includes courses, mentors, books, coaching‚ or any other investment that levels you up.',
                 ctaText: 'Invest in Your Growth',
                 colorVar: 'var(--color-green)'
             },
             security: {
                 title: 'Security',
-                question: '“How do I protect my peace?”',
+                question: '"How do I protect my peace?"',
                 description: 'This is for building your long-term safety net. It includes your emergency fund, insurance, and other financial safety nets that are the quiet heroes of financial calm.',
                 ctaText: 'Secure Your Safety Net',
                 colorVar: 'var(--color-blue)'
             },
             education: {
                 title: 'Education',
-                question: '“How do I keep learning and evolving?”',
+                question: '"How do I keep learning and evolving?"',
                 description: 'This is for putting money towards learning and new skills. It can be used for learning a language, attending workshops, or studying parenting or investing.',
                 ctaText: 'Explore Learning Investments',
                 colorVar: 'var(--color-purple)'
             },
             giving: {
                 title: 'Giving Back',
-                question: '“Where can I circulate love and impact?”',
+                question: '"Where can I circulate love and impact?"',
                 description: 'This bucket is for contributing to causes you care about deeply. You can use it to support a friend, donate, or tip generously—seeing giving as a form of abundance.',
                 ctaText: 'Build Your Giving Practice',
                 colorVar: 'var(--color-pink)'
             },
             custom: {
                 title: 'And More…',
-                question: '“What does abundance mean for you?”',
+                question: '"What does abundance mean for you?"',
                 description: 'This is your life, so you get to create custom buckets for anything that matters to you. This could be Therapy, Kids, Nature, Healing, or anything else.',
                 ctaText: 'Create Your Money Palette',
                 colorVar: 'var(--color-deep-charcoal)'
@@ -784,7 +836,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3>${data.title}</h3>
                     <p class="question">${data.question}</p>
                     <p>${data.description}</p>
-                    <a href="join.html" class="button">${data.ctaText}</a>
+                    <a href="apply.html" class="button">${data.ctaText}</a>
                 </div>
             `;
 
@@ -800,108 +852,215 @@ document.addEventListener('DOMContentLoaded', () => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
                 const color = item.dataset.color;
-                
-                colorItems.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-                
-                updateDetails(color);
+                if (color) {
+                    updateDetails(color);
+                }
             });
         });
     }
 
-    // --- MOBILE NAVIGATION ---
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const mobileNav = document.getElementById('mobile-nav');
-    const mobileNavScrim = document.getElementById('mobile-nav-scrim');
-
-    if (hamburgerBtn && mobileNav && mobileNavScrim) {
+    // --- ADDITIONAL EXISTING FUNCTIONALITY ---
+    // Add any other existing functionality here...
+    
+    // Initialize mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    if (mobileMenuToggle) {
         const toggleMenu = () => {
-            const isOpened = hamburgerBtn.getAttribute('aria-expanded') === 'true';
-            document.body.classList.toggle('mobile-nav-open');
-            hamburgerBtn.setAttribute('aria-expanded', !isOpened);
-            mobileNavScrim.classList.toggle('hidden');
+            const nav = document.querySelector('.main-nav');
+            nav.classList.toggle('active');
+            
+            // Update hamburger icon
+            mobileMenuToggle.classList.toggle('active');
+            
+            // Track mobile menu usage
+            if (window.amplitude) {
+                window.amplitude.track('Mobile Menu Toggled', {
+                    page: window.location.pathname
+                });
+            }
+            
+            if (window.trackGA4Event) {
+                window.trackGA4Event('mobile_menu_toggled', {
+                    page_path: window.location.pathname
+                });
+            }
         };
 
-        hamburgerBtn.addEventListener('click', toggleMenu);
-        mobileNavScrim.addEventListener('click', toggleMenu);
+        mobileMenuToggle.addEventListener('click', toggleMenu);
     }
 
-    // --- MULTI-STEP APPLICATION FORM ---
-    const multiStepForm = document.getElementById("multi-step-form");
-    if (multiStepForm) {
-        const formSteps = [...multiStepForm.querySelectorAll(".form-step")];
-        const prevBtn = document.getElementById("prev-btn");
-        const nextBtn = document.getElementById("next-btn");
-        const submitBtn = document.getElementById("submit-btn");
-        const progressBarFill = document.querySelector(".progress-bar-fill");
-        const progressSteps = [...document.querySelectorAll(".progress-step")];
-        const formSuccessMessage = document.getElementById("form-success-message");
-
-        let currentStep = 1;
+    // --- FORM STEPS FUNCTIONALITY ---
+    const formSteps = document.querySelectorAll('.form-step');
+    if (formSteps.length > 0) {
+        let currentStep = 0;
+        const totalSteps = formSteps.length;
 
         const updateFormSteps = () => {
-            formSteps.forEach(step => {
-                step.classList.toggle("active", parseInt(step.dataset.step) === currentStep);
+            formSteps.forEach((step, index) => {
+                step.classList.toggle('active', index === currentStep);
             });
         };
 
         const updateProgressBar = () => {
-            const totalSteps = formSteps.length;
-            // Set width to 33% on step 1, 66% on step 2, 100% on step 3
-            const percentage = totalSteps > 1 ? ((currentStep -1) / (totalSteps -1)) * 100 : 0;
-            
-            // On the join form, we want it to start with the first step highlighted
-            // but the bar to show progress. Let's start it visually at 1/3
-            const initialOffset = 33.3;
-            const progress = initialOffset + ((currentStep - 1) * initialOffset);
-
-            progressBarFill.style.width = `${progress}%`;
-
-
-            progressSteps.forEach((step, index) => {
-                if (index < currentStep) {
-                    step.classList.add("active");
-                } else {
-                    step.classList.remove("active");
-                }
-            });
+            const progressBar = document.querySelector('.form-progress-bar');
+            if (progressBar) {
+                const progress = ((currentStep + 1) / totalSteps) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
         };
 
+        const nextStepBtns = document.querySelectorAll('.next-step');
+        const prevStepBtns = document.querySelectorAll('.prev-step');
+
+        nextStepBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (currentStep < totalSteps - 1) {
+                    currentStep++;
+                    updateFormSteps();
+                    updateProgressBar();
+                }
+            });
+        });
+
+        prevStepBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateFormSteps();
+                    updateProgressBar();
+                }
+            });
+        });
+
         const updateButtons = () => {
-            prevBtn.style.display = currentStep > 1 ? "inline-block" : "none";
-            nextBtn.style.display = currentStep < formSteps.length ? "inline-block" : "none";
-            submitBtn.style.display = currentStep === formSteps.length ? "inline-block" : "none";
+            // Update button states based on current step
         };
 
         const goToStep = (step) => {
             currentStep = step;
             updateFormSteps();
             updateProgressBar();
-            updateButtons();
         };
 
-        nextBtn.addEventListener("click", () => {
-            if (currentStep < formSteps.length) {
-                goToStep(currentStep + 1);
-            }
-        });
-
-        prevBtn.addEventListener("click", () => {
-            if (currentStep > 1) {
-                goToStep(currentStep - 1);
-            }
-        });
-        
-        multiStepForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            multiStepForm.style.display = "none";
-            document.querySelector(".progress-bar").style.display = "none";
-            document.querySelector('.form-header').style.display = "none";
-            formSuccessMessage.classList.remove("hidden");
-        });
-
         // Initialize
-        goToStep(1);
+        updateFormSteps();
+        updateProgressBar();
     }
 });
+
+// --- QUIZ DATA ---
+const quizQuestions = [
+    {
+        question: "When it comes to money, what's most important to you?",
+        answers: [
+            { text: "Building something lasting for future generations", points: { "The Legacy Circle": 3, "The Blueprint Circle": 1 } },
+            { text: "Having freedom to do what I want, when I want", points: { "The Horizon Circle": 3, "The Sanctuary Circle": 1 } },
+            { text: "Creating systems that work efficiently", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+            { text: "Taking care of others and making a difference", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
+            { text: "Building something new and exciting", points: { "The Catalyst Circle": 3, "The Horizon Circle": 1 } },
+            { text: "Feeling secure and at peace", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
+            { text: "Achieving my goals and reaching new heights", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
+        ]
+    },
+    {
+        question: "How do you prefer to make financial decisions?",
+        answers: [
+            { text: "With careful planning and family input", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
+            { text: "Quickly, based on what feels right", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
+            { text: "With detailed analysis and research", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+            { text: "By considering how it affects others", points: { "The Heartwood Circle": 3, "The Sanctuary Circle": 1 } },
+            { text: "By weighing risks and potential rewards", points: { "The Catalyst Circle": 3, "The Summit Circle": 1 } },
+            { text: "With plenty of time to think it through", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
+            { text: "By setting clear goals and metrics", points: { "The Summit Circle": 3, "The Blueprint Circle": 1 } }
+        ]
+    },
+    {
+        question: "What's your biggest financial fear?",
+        answers: [
+            { text: "Not leaving enough for my family", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
+            { text: "Being tied down by financial obligations", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
+            { text: "Making a mistake due to lack of planning", points: { "The Blueprint Circle": 3, "The Sanctuary Circle": 1 } },
+            { text: "Not being able to help others when they need it", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
+            { text: "Missing out on a great opportunity", points: { "The Catalyst Circle": 3, "The Summit Circle": 1 } },
+            { text: "Financial stress affecting my peace of mind", points: { "The Sanctuary Circle": 3, "The Heartwood Circle": 1 } },
+            { text: "Not achieving my financial goals", points: { "The Summit Circle": 3, "The Blueprint Circle": 1 } }
+        ]
+    },
+    {
+        question: "How do you view debt?",
+        answers: [
+            { text: "Something to avoid to protect family stability", points: { "The Legacy Circle": 3, "The Sanctuary Circle": 1 } },
+            { text: "A tool that shouldn't limit my experiences", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
+            { text: "Something that requires careful management", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+            { text: "Stressful, especially if it affects my ability to help others", points: { "The Heartwood Circle": 3, "The Sanctuary Circle": 1 } },
+            { text: "Worth it if it helps me build something valuable", points: { "The Catalyst Circle": 3, "The Blueprint Circle": 1 } },
+            { text: "Something that keeps me up at night", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
+            { text: "A strategic tool for achieving bigger goals", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
+        ]
+    },
+    {
+        question: "What motivates you most about building wealth?",
+        answers: [
+            { text: "Creating a legacy that lasts beyond me", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
+            { text: "Having the freedom to live life on my terms", points: { "The Horizon Circle": 3, "The Sanctuary Circle": 1 } },
+            { text: "The satisfaction of a well-executed plan", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+            { text: "Being able to support causes I care about", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
+            { text: "Funding my next big idea or venture", points: { "The Catalyst Circle": 3, "The Horizon Circle": 1 } },
+            { text: "The peace of mind that comes with security", points: { "The Sanctuary Circle": 3, "The Blueprint Circle": 1 } },
+            { text: "The thrill of reaching new financial milestones", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
+        ]
+    }
+];
+
+const quizResultsData = {
+    "The Legacy Circle": {
+        title: "The Legacy Circle",
+        circle: "Secure Planner",
+        description: "You're driven by the desire to create lasting security and build something meaningful for future generations.",
+        strengths: "Long-term thinking, family focus, stability-minded",
+        growth: "Balancing security with growth opportunities"
+    },
+    "The Horizon Circle": {
+        title: "The Horizon Circle",
+        circle: "Free Spirit",
+        description: "You value freedom and flexibility, wanting your money to enable experiences and adventures.",
+        strengths: "Adaptable, experiential, spontaneous",
+        growth: "Creating structure while maintaining flexibility"
+    },
+    "The Blueprint Circle": {
+        title: "The Blueprint Circle",
+        circle: "Strategist",
+        description: "You love systems, planning, and having detailed strategies for your financial future.",
+        strengths: "Analytical, organized, detail-oriented",
+        growth: "Balancing planning with adaptability"
+    },
+    "The Heartwood Circle": {
+        title: "The Heartwood Circle",
+        circle: "Nurturer",
+        description: "You're motivated by taking care of others and making a positive impact with your resources.",
+        strengths: "Generous, caring, values-driven",
+        growth: "Balancing giving with personal financial health"
+    },
+    "The Catalyst Circle": {
+        title: "The Catalyst Circle",
+        circle: "Creator",
+        description: "You're an innovator and risk-taker, excited about using money to build and create new things.",
+        strengths: "Innovative, entrepreneurial, opportunity-focused",
+        growth: "Managing risk while pursuing opportunities"
+    },
+    "The Sanctuary Circle": {
+        title: "The Sanctuary Circle",
+        circle: "Peacekeeper",
+        description: "You prioritize peace of mind and emotional well-being in your financial decisions.",
+        strengths: "Thoughtful, patient, security-focused",
+        growth: "Building confidence for bigger financial moves"
+    },
+    "The Summit Circle": {
+        title: "The Summit Circle",
+        circle: "Achiever",
+        description: "You're goal-oriented and motivated by reaching new heights in your financial journey.",
+        strengths: "Ambitious, goal-oriented, performance-driven",
+        growth: "Balancing achievement with well-being"
+    }
+};
 
