@@ -14,6 +14,9 @@
 
     <script src="https://cdn.amplitude.com/script/a4372cbb4f253cb0f02022]3f94e11289.js"></script><script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('a4372cbb4f253cb0f020223f94e11289', {"fetchRemoteConfig":true,"autocapture":true});</script>
     
+    <!-- OAuth Configuration -->
+    <script src="config/oauth.js"></script>
+    
     <!-- OAuth SDKs -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
@@ -419,20 +422,25 @@
     </div>
 
     <script>
-        // OAuth Configuration - Replace with your actual client IDs
-        const OAUTH_CONFIG = {
-            google: {
-                clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com'
-            },
-            facebook: {
-                appId: 'YOUR_FACEBOOK_APP_ID'
-            },
-            linkedin: {
-                clientId: 'YOUR_LINKEDIN_CLIENT_ID',
-                redirectUri: window.location.origin + window.location.pathname,
-                state: Math.random().toString(36).substring(2, 15) // CSRF protection
+        // OAuth Configuration is now loaded from config/oauth.js
+        
+        // Check if OAuth is properly configured
+        function validateOAuthConfig() {
+            if (!window.OAUTH_CONFIG) {
+                console.error('❌ OAuth configuration not loaded. Make sure config/oauth.js is accessible.');
+                return false;
             }
-        };
+            
+            const config = window.OAUTH_CONFIG;
+            
+            // Check Google configuration
+            if (config.google.clientId.includes('YOUR_GOOGLE')) {
+                console.warn('⚠️ Google OAuth not configured. Please update config/oauth.js with your Google Client ID.');
+                return false;
+            }
+            
+            return true;
+        }
 
         // Initialize Facebook SDK
         window.fbAsyncInit = function() {
@@ -470,24 +478,44 @@
             const button = event.target.closest('.social-button');
             button.classList.add('loading');
             
+            // Validate OAuth configuration first
+            if (!validateOAuthConfig()) {
+                showMessage('OAuth not properly configured. Please check the console for details.', 'error');
+                button.classList.remove('loading');
+                return;
+            }
+            
             if (typeof google === 'undefined') {
                 showMessage('Google SDK not loaded. Please refresh and try again.', 'error');
                 button.classList.remove('loading');
                 return;
             }
 
-            google.accounts.oauth2.initTokenClient({
-                client_id: OAUTH_CONFIG.google.clientId,
-                scope: 'profile email',
-                callback: (response) => {
-                    button.classList.remove('loading');
-                    if (response.access_token) {
-                        handleGoogleCallback(response.access_token);
-                    } else {
-                        showMessage('Google authentication failed. Please try again.', 'error');
+            try {
+                google.accounts.oauth2.initTokenClient({
+                    client_id: window.OAUTH_CONFIG.google.clientId,
+                    scope: 'profile email',
+                    callback: (response) => {
+                        button.classList.remove('loading');
+                        if (response.access_token) {
+                            handleGoogleCallback(response.access_token);
+                        } else if (response.error) {
+                            console.error('Google OAuth Error:', response);
+                            if (response.error === 'invalid_client') {
+                                showMessage('Google OAuth not properly configured. Please check your Client ID in config/oauth.js', 'error');
+                            } else {
+                                showMessage(`Google authentication failed: ${response.error}`, 'error');
+                            }
+                        } else {
+                            showMessage('Google authentication was cancelled.', 'error');
+                        }
                     }
-                }
-            }).requestAccessToken();
+                }).requestAccessToken();
+            } catch (error) {
+                console.error('Google OAuth initialization error:', error);
+                button.classList.remove('loading');
+                showMessage('Failed to initialize Google authentication. Please check your configuration.', 'error');
+            }
         }
         
         async function handleGoogleCallback(accessToken) {
