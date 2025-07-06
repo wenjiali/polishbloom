@@ -11,6 +11,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=2024">
+    
+    <!-- OAuth SDKs -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    
     <style>
         /* Social Authentication Styles */
         .auth-container {
@@ -73,6 +78,7 @@
             margin-bottom: 0.75rem;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .social-button::before {
@@ -133,6 +139,27 @@
             height: 20px;
             margin-right: 0.75rem;
             flex-shrink: 0;
+        }
+        
+        .social-button.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .social-button.loading::after {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            width: 16px;
+            height: 16px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         .divider {
@@ -205,52 +232,28 @@
             overflow: hidden;
         }
         
-        .auth-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .auth-button:hover::before {
-            left: 100%;
-        }
-        
         .auth-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(244, 165, 185, 0.4);
         }
         
-        .auth-button:active {
-            transform: translateY(0);
+        .auth-button.loading {
+            opacity: 0.7;
+            pointer-events: none;
         }
         
-        .auth-footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #f3f4f6;
-        }
-        
-        .auth-footer p {
-            color: #6b7280;
-            font-size: 0.875rem;
-            line-height: 1.6;
-        }
-        
-        .auth-footer a {
-            color: #f4a5b9;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        
-        .auth-footer a:hover {
-            color: #e879a6;
+        .auth-button.loading::after {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
         }
         
         .toggle-form {
@@ -264,83 +267,50 @@
             color: #f4a5b9;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
+            text-decoration: underline;
         }
         
         .toggle-form button:hover {
             color: #e879a6;
         }
         
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+        
+        .auth-footer a {
+            color: #f4a5b9;
+            text-decoration: none;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
         .hidden {
-            display: none;
+            display: none !important;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .auth-container {
-                padding: 1rem;
-            }
-            
-            .auth-card {
-                padding: 2rem 1.5rem;
-                border-radius: 20px;
-            }
-            
-            .auth-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .social-button {
-                padding: 0.75rem 1.25rem;
-                font-size: 0.9rem;
-            }
-            
-            .social-button svg {
-                width: 18px;
-                height: 18px;
-            }
+        .auth-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 500;
         }
         
-        @media (max-width: 480px) {
-            .auth-card {
-                padding: 1.5rem 1rem;
-                border-radius: 16px;
-            }
-            
-            .auth-header h1 {
-                font-size: 1.6rem;
-            }
-            
-            .social-button {
-                padding: 0.6rem 1rem;
-                font-size: 0.85rem;
-            }
+        .auth-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
         }
         
-        /* Loading States */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .auth-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
         }
     </style>
 </head>
@@ -351,6 +321,8 @@
                 <h1>Welcome to Polish + Bloom</h1>
                 <p>Join our community of women focused on financial wellness and personal growth</p>
             </div>
+            
+            <div id="auth-message" class="auth-message hidden"></div>
             
             <!-- Social Authentication Section -->
             <div class="social-auth-section">
@@ -433,231 +405,32 @@
         </div>
     </div>
 
-    <!-- Membership Content (shown after authentication) -->
-    <div id="membership-content" style="display: none;">
-        <div id="mobile-nav-scrim" class="hidden"></div>
-        <header class="site-header">
-            <div class="container">
-                <nav class="main-nav">
-                    <a href="index.html" class="logo">Polish + Bloom</a>
-                    <ul class="nav-links">
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="bloom-circles.html">Bloom Circles</a></li>
-                        <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
-                        <li><a href="stories.html">Stories</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="join.html" class="button">Join Now</a></li>
-                    </ul>
-                    <button id="hamburger-btn" class="hamburger-btn" aria-label="Open Menu" aria-expanded="false">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </nav>
-            </div>
-            <div id="mobile-nav" class="mobile-nav">
-                <nav>
-                    <ul>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="bloom-circles.html">Bloom Circles</a></li>
-                        <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
-                        <li><a href="stories.html">Stories</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="join.html" class="button button-primary">Join Now</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
-        <main>
-            <section class="join-hero-section">
-                <div class="container fade-in">
-                    <div class="join-hero-content">
-                        <h1 class="join-hero-title">Welcome to the Garden</h1>
-                        <p class="join-hero-subtitle">An invitation to intentional community and growth. Where women gather to transform their relationship with money, confidence, and possibility.</p>
-                        <div class="join-hero-stats">
-                            <div class="stat-item">
-                                <div class="stat-number">200+</div>
-                                <div class="stat-label">Members</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">15+</div>
-                                <div class="stat-label">Cities</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">98%</div>
-                                <div class="stat-label">Satisfaction</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="application-section">
-                <div class="container">
-                    <div class="application-form-container">
-                        <div class="form-header">
-                            <h2>Begin Your Application</h2>
-                            <p>We're so glad you're here. This is the first step toward finding your circle and joining a community of supportive, inspiring women.</p>
-                        </div>
-
-                        <!-- Progress Bar -->
-                        <div class="progress-bar">
-                            <div class="progress-bar-fill" style="width: 33.3%;"></div>
-                            <div class="progress-step active" data-step="1">
-                                <span class="step-label">Your Details</span>
-                            </div>
-                            <div class="progress-step" data-step="2">
-                                <span class="step-label">Your Journey</span>
-                            </div>
-                            <div class="progress-step" data-step="3">
-                                <span class="step-label">Final Touches</span>
-                            </div>
-                        </div>
-
-                        <form id="multi-step-form" class="application-form" novalidate>
-                            <!-- Step 1: Your Details -->
-                            <div class="form-step active" data-step="1">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="first_name">First Name</label>
-                                        <input type="text" id="first_name" name="first_name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="last_name">Last Name</label>
-                                        <input type="text" id="last_name" name="last_name" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email_app">Email Address</label>
-                                    <input type="email" id="email_app" name="email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input type="text" id="city" name="city">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="province">Province / State</label>
-                                        <input type="text" id="province" name="province">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 2: Your Journey -->
-                            <div class="form-step" data-step="2">
-                                <div class="form-group">
-                                    <label>Which area(s) are you currently seeking the most support in? (Select all that apply)</label>
-                                    <div class="checkbox-group">
-                                        <label><input type="checkbox" name="support_areas[]" value="financial"> Financial wellness & mindset</label>
-                                        <label><input type="checkbox" name="support_areas[]" value="career"> Career clarity or transitions</label>
-                                        <label><input type="checkbox" name="support_areas[]" value="business"> Business startup guidance</label>
-                                        <label><input type="checkbox" name="support_areas[]" value="self_worth"> Self-worth & confidence building</label>
-                                        <label><input type="checkbox" name="support_areas[]" value="creative"> Creative direction</label>
-                                        <label><input type="checkbox" name="support_areas[]" value="community"> Community & connection</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="success_definition">What does success look like to you right now—in this season of your life?</label>
-                                    <textarea id="success_definition" name="success_definition" rows="4"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="challenge_transform">What is one challenge or pattern you're ready to transform?</label>
-                                    <textarea id="challenge_transform" name="challenge_transform" rows="4"></textarea>
-                                </div>
-                            </div>
-
-                            <!-- Step 3: Final Touches -->
-                            <div class="form-step" data-step="3">
-                                <div class="form-group">
-                                    <label>Have you worked with a coach, therapist, or personal development community before?</label>
-                                    <div class="radio-group">
-                                        <label><input type="radio" name="experience" value="yes"> Yes</label>
-                                        <label><input type="radio" name="experience" value="no"> No</label>
-                                    </div>
-                                    <input type="text" id="experience_details" name="experience_details" placeholder="Optional: care to elaborate?">
-                                </div>
-                                <div class="form-group">
-                                    <label for="referral_source">How did you hear about us?</label>
-                                    <input type="text" id="referral_source" name="referral_source" placeholder="e.g., friend, social media, podcast, etc.">
-                                </div>
-                                <div class="form-group">
-                                    <label for="values">What values are most important to you in a community experience?</label>
-                                    <input type="text" id="values" name="values" placeholder="e.g., trust, inclusivity, depth, creativity, etc.">
-                                </div>
-                            </div>
-
-                            <!-- Form Navigation -->
-                            <div class="form-navigation">
-                                <button type="button" class="button button-secondary" id="prev-btn" style="display: none;">Previous</button>
-                                <button type="button" class="button button-primary" id="next-btn">Next</button>
-                                <button type="submit" class="button button-primary" id="submit-btn" style="display: none;">Submit Application</button>
-                            </div>
-                        </form>
-                        <div id="form-success-message" class="hidden" style="text-align: center; margin-top: 2rem;">
-                            <h3>Thank you!</h3>
-                            <p>We've received your application and will be in touch within 2-3 business days to schedule a discovery call.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="site-footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <h3>Polish + Bloom</h3>
-                        <p>Where women gather to transform their relationship with money, confidence, and possibility.</p>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Community</h4>
-                        <ul>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="bloom-circles.html">Bloom Circles</a></li>
-                            <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
-                            <li><a href="stories.html">Stories</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="join.html">Join</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Connect</h4>
-                        <div class="social-links">
-                            <a href="#" aria-label="Instagram">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="m16 11.37-4-4-4 4"></path>
-                                    <path d="M12 3v14"></path>
-                                </svg>
-                            </a>
-                            <a href="#" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2024 Polish + Bloom. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-
     <script>
+        // OAuth Configuration - Replace with your actual client IDs
+        const OAUTH_CONFIG = {
+            google: {
+                clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com'
+            },
+            facebook: {
+                appId: 'YOUR_FACEBOOK_APP_ID'
+            },
+            linkedin: {
+                clientId: 'YOUR_LINKEDIN_CLIENT_ID',
+                redirectUri: window.location.origin + window.location.pathname,
+                state: Math.random().toString(36).substring(2, 15) // CSRF protection
+            }
+        };
+
+        // Initialize Facebook SDK
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: OAUTH_CONFIG.facebook.appId,
+                cookie: true,
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+
         // Form Toggle Functionality
         let isSignUp = false;
         
@@ -679,29 +452,159 @@
             }
         }
         
-        // Social Authentication Functions
+        // Google OAuth
         function signInWithGoogle() {
-            const button = event.target;
+            const button = event.target.closest('.social-button');
             button.classList.add('loading');
             
-            // Redirect to Google OAuth
-            window.location.href = '/api/auth/google';
+            if (typeof google === 'undefined') {
+                showMessage('Google SDK not loaded. Please refresh and try again.', 'error');
+                button.classList.remove('loading');
+                return;
+            }
+
+            google.accounts.oauth2.initTokenClient({
+                client_id: OAUTH_CONFIG.google.clientId,
+                scope: 'profile email',
+                callback: (response) => {
+                    button.classList.remove('loading');
+                    if (response.access_token) {
+                        handleGoogleCallback(response.access_token);
+                    } else {
+                        showMessage('Google authentication failed. Please try again.', 'error');
+                    }
+                }
+            }).requestAccessToken();
         }
         
+        async function handleGoogleCallback(accessToken) {
+            try {
+                const response = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${accessToken}`);
+                const userInfo = await response.json();
+                
+                const userData = {
+                    provider: 'google',
+                    id: userInfo.id,
+                    name: userInfo.name,
+                    email: userInfo.email,
+                    picture: userInfo.picture,
+                    accessToken: accessToken
+                };
+                
+                handleSuccessfulAuth(userData);
+            } catch (error) {
+                console.error('Google user info error:', error);
+                showMessage('Failed to get user information from Google.', 'error');
+            }
+        }
+        
+        // Facebook OAuth
         function signInWithFacebook() {
-            const button = event.target;
+            const button = event.target.closest('.social-button');
             button.classList.add('loading');
             
-            // Redirect to Facebook OAuth
-            window.location.href = '/api/auth/facebook';
+            if (typeof FB === 'undefined') {
+                showMessage('Facebook SDK not loaded. Please refresh and try again.', 'error');
+                button.classList.remove('loading');
+                return;
+            }
+
+            FB.login(function(response) {
+                button.classList.remove('loading');
+                if (response.authResponse) {
+                    handleFacebookCallback(response.authResponse);
+                } else {
+                    showMessage('Facebook authentication was cancelled.', 'error');
+                }
+            }, {scope: 'email'});
         }
         
+        function handleFacebookCallback(authResponse) {
+            FB.api('/me', {fields: 'name,email,picture'}, function(userInfo) {
+                const userData = {
+                    provider: 'facebook',
+                    id: userInfo.id,
+                    name: userInfo.name,
+                    email: userInfo.email,
+                    picture: userInfo.picture?.data?.url,
+                    accessToken: authResponse.accessToken
+                };
+                
+                handleSuccessfulAuth(userData);
+            });
+        }
+        
+        // LinkedIn OAuth
         function signInWithLinkedIn() {
-            const button = event.target;
+            const button = event.target.closest('.social-button');
             button.classList.add('loading');
             
-            // Redirect to LinkedIn OAuth
-            window.location.href = '/api/auth/linkedin';
+            // Store state for CSRF protection
+            sessionStorage.setItem('linkedin_state', OAUTH_CONFIG.linkedin.state);
+            
+            const linkedinUrl = `https://www.linkedin.com/oauth/v2/authorization?` +
+                `response_type=code&` +
+                `client_id=${OAUTH_CONFIG.linkedin.clientId}&` +
+                `redirect_uri=${encodeURIComponent(OAUTH_CONFIG.linkedin.redirectUri)}&` +
+                `state=${OAUTH_CONFIG.linkedin.state}&` +
+                `scope=r_liteprofile%20r_emailaddress`;
+            
+            window.location.href = linkedinUrl;
+        }
+        
+        // Handle LinkedIn callback (when user returns from LinkedIn)
+        function handleLinkedInCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const state = urlParams.get('state');
+            const error = urlParams.get('error');
+            
+            if (error) {
+                showMessage('LinkedIn authentication failed: ' + error, 'error');
+                return;
+            }
+            
+            if (code && state) {
+                // Verify state for CSRF protection
+                const storedState = sessionStorage.getItem('linkedin_state');
+                if (state !== storedState) {
+                    showMessage('Security error: Invalid state parameter.', 'error');
+                    return;
+                }
+                
+                // Clean up URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // For client-side only, we can't exchange the code for a token
+                // This would normally require a backend server
+                showMessage('LinkedIn authentication successful! In a real implementation, this would exchange the code for an access token.', 'success');
+                
+                // Simulate successful LinkedIn auth
+                const userData = {
+                    provider: 'linkedin',
+                    id: 'linkedin_' + Date.now(),
+                    name: 'LinkedIn User',
+                    email: 'user@linkedin.com',
+                    picture: null,
+                    code: code
+                };
+                
+                setTimeout(() => handleSuccessfulAuth(userData), 2000);
+            }
+        }
+        
+        // Handle successful authentication
+        function handleSuccessfulAuth(userData) {
+            // Store user data in sessionStorage
+            sessionStorage.setItem('user', JSON.stringify(userData));
+            sessionStorage.setItem('isAuthenticated', 'true');
+            
+            showMessage(`Welcome, ${userData.name}! Redirecting to your dashboard...`, 'success');
+            
+            // Redirect to dashboard after short delay
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
         }
         
         // Email/Password Form Handling
@@ -713,34 +616,27 @@
             
             button.classList.add('loading');
             
-            fetch('/api/auth/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Show success message briefly
-                    showAuthMessage('Sign in successful! Redirecting...', 'success');
-                    
-                    // Redirect after short delay
-                    setTimeout(() => {
-                        window.location.href = data.redirectUrl || '/dashboard';
-                    }, 1000);
+            // Simulate authentication (replace with your logic)
+            setTimeout(() => {
+                // Check stored users in localStorage
+                const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = storedUsers.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    const userData = {
+                        provider: 'local',
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        picture: null
+                    };
+                    handleSuccessfulAuth(userData);
                 } else {
-                    showAuthMessage(data.message || 'Sign in failed. Please try again.', 'error');
+                    showMessage('Invalid email or password. Please try again.', 'error');
                 }
-            })
-            .catch(error => {
-                console.error('Sign in error:', error);
-                showAuthMessage('Network error. Please check your connection and try again.', 'error');
-            })
-            .finally(() => {
+                
                 button.classList.remove('loading');
-            });
+            }, 1500);
         });
         
         document.getElementById('signup-form').addEventListener('submit', function(e) {
@@ -752,274 +648,90 @@
             const confirmPassword = document.getElementById('signup-confirm-password').value;
             
             if (password !== confirmPassword) {
-                showAuthMessage('Passwords do not match. Please try again.', 'error');
+                showMessage('Passwords do not match. Please try again.', 'error');
                 return;
             }
             
             button.classList.add('loading');
             
-            fetch('/api/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showAuthMessage('Account created successfully! Redirecting...', 'success');
-                    
-                    // Redirect after short delay
-                    setTimeout(() => {
-                        window.location.href = data.redirectUrl || '/join?step=application';
-                    }, 1000);
-                } else {
-                    showAuthMessage(data.message || 'Account creation failed. Please try again.', 'error');
+            // Simulate account creation (replace with your logic)
+            setTimeout(() => {
+                // Store user in localStorage
+                const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                // Check if user already exists
+                if (storedUsers.find(u => u.email === email)) {
+                    showMessage('An account with this email already exists.', 'error');
+                    button.classList.remove('loading');
+                    return;
                 }
-            })
-            .catch(error => {
-                console.error('Sign up error:', error);
-                showAuthMessage('Network error. Please check your connection and try again.', 'error');
-            })
-            .finally(() => {
+                
+                const newUser = {
+                    id: 'local_' + Date.now(),
+                    name,
+                    email,
+                    password
+                };
+                
+                storedUsers.push(newUser);
+                localStorage.setItem('users', JSON.stringify(storedUsers));
+                
+                const userData = {
+                    provider: 'local',
+                    id: newUser.id,
+                    name: newUser.name,
+                    email: newUser.email,
+                    picture: null
+                };
+                
+                handleSuccessfulAuth(userData);
                 button.classList.remove('loading');
-            });
+            }, 1500);
         });
         
-        // Function to show authentication messages
-        function showAuthMessage(message, type) {
-            // Remove existing messages
-            const existingMessage = document.querySelector('.auth-message');
-            if (existingMessage) {
-                existingMessage.remove();
-            }
-            
-            // Create message element
-            const messageEl = document.createElement('div');
-            messageEl.className = `auth-message auth-message-${type}`;
+        // Utility Functions
+        function showMessage(message, type) {
+            const messageEl = document.getElementById('auth-message');
             messageEl.textContent = message;
+            messageEl.className = `auth-message ${type}`;
+            messageEl.classList.remove('hidden');
             
-            // Add styles
-            messageEl.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 12px 20px;
-                border-radius: 8px;
-                font-weight: 500;
-                z-index: 10000;
-                animation: slideIn 0.3s ease;
-                ${type === 'success' ? 
-                    'background: #10b981; color: white;' : 
-                    'background: #ef4444; color: white;'
-                }
-            `;
-            
-            document.body.appendChild(messageEl);
-            
-            // Remove message after 5 seconds
-            setTimeout(() => {
-                messageEl.style.animation = 'slideOut 0.3s ease';
+            // Auto-hide success messages
+            if (type === 'success') {
                 setTimeout(() => {
-                    if (messageEl.parentNode) {
-                        messageEl.parentNode.removeChild(messageEl);
-                    }
-                }, 300);
-            }, 5000);
+                    messageEl.classList.add('hidden');
+                }, 5000);
+            }
         }
         
-        // Check for URL parameters to show auth errors
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Check for LinkedIn callback
+            if (window.location.search.includes('code=')) {
+                handleLinkedInCallback();
+            }
+            
+            // Check for error parameters
             const urlParams = new URLSearchParams(window.location.search);
             const error = urlParams.get('error');
-            
             if (error) {
-                let errorMessage = 'Authentication failed. Please try again.';
-                
-                switch (error) {
-                    case 'google_auth_failed':
-                        errorMessage = 'Google authentication failed. Please try again.';
-                        break;
-                    case 'facebook_auth_failed':
-                        errorMessage = 'Facebook authentication failed. Please try again.';
-                        break;
-                    case 'linkedin_auth_failed':
-                        errorMessage = 'LinkedIn authentication failed. Please try again.';
-                        break;
-                    case 'auth_failed':
-                        errorMessage = 'Authentication failed. Please try again.';
-                        break;
-                }
-                
-                showAuthMessage(errorMessage, 'error');
-                
+                showMessage(`Authentication error: ${error}`, 'error');
                 // Clean up URL
-                const cleanUrl = window.location.pathname;
-                window.history.replaceState({}, document.title, cleanUrl);
+                window.history.replaceState({}, document.title, window.location.pathname);
             }
             
             // Initialize auth card animation
             const authCard = document.querySelector('.auth-card');
-            if (authCard) {
-                authCard.style.opacity = '0';
-                authCard.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    authCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    authCard.style.opacity = '1';
-                    authCard.style.transform = 'translateY(0)';
-                }, 100);
-            }
-        });
-        
-        // Add CSS animations for messages
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Function to show the membership content after authentication
-        function showMembershipContent() {
-            // Hide the authentication container
-            const authContainer = document.querySelector('.auth-container');
-            authContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            authContainer.style.opacity = '0';
-            authContainer.style.transform = 'translateY(-20px)';
+            authCard.style.opacity = '0';
+            authCard.style.transform = 'translateY(20px)';
             
             setTimeout(() => {
-                authContainer.style.display = 'none';
-                
-                // Show the membership content
-                const membershipContent = document.getElementById('membership-content');
-                membershipContent.style.display = 'block';
-                membershipContent.style.opacity = '0';
-                membershipContent.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    membershipContent.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    membershipContent.style.opacity = '1';
-                    membershipContent.style.transform = 'translateY(0)';
-                    
-                    // Initialize the membership content functionality
-                    initializeMembershipContent();
-                }, 100);
-            }, 500);
-        }
-        
-        // Initialize membership content functionality when it's shown
-        function initializeMembershipContent() {
-            // Multi-step form functionality
-            let currentStep = 1;
-            const totalSteps = 3;
-            const formSteps = document.querySelectorAll('.form-step');
-            const progressSteps = document.querySelectorAll('.progress-step');
-            const progressBar = document.querySelector('.progress-bar-fill');
-            const nextBtn = document.getElementById('next-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const submitBtn = document.getElementById('submit-btn');
-            
-            function updateFormSteps() {
-                formSteps.forEach((step, index) => {
-                    step.classList.toggle('active', index + 1 === currentStep);
-                });
-            }
-            
-            function updateProgressBar() {
-                const progress = (currentStep / totalSteps) * 100;
-                progressBar.style.width = progress + '%';
-                
-                progressSteps.forEach((step, index) => {
-                    step.classList.toggle('active', index + 1 <= currentStep);
-                });
-            }
-            
-            function updateButtons() {
-                prevBtn.style.display = currentStep > 1 ? 'inline-block' : 'none';
-                nextBtn.style.display = currentStep < totalSteps ? 'inline-block' : 'none';
-                submitBtn.style.display = currentStep === totalSteps ? 'inline-block' : 'none';
-            }
-            
-            function goToStep(step) {
-                if (step >= 1 && step <= totalSteps) {
-                    currentStep = step;
-                    updateFormSteps();
-                    updateProgressBar();
-                    updateButtons();
-                }
-            }
-            
-            // Event listeners for form navigation
-            nextBtn.addEventListener('click', () => goToStep(currentStep + 1));
-            prevBtn.addEventListener('click', () => goToStep(currentStep - 1));
-            
-            // Form submission
-            document.getElementById('multi-step-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Hide form and show success message
-                document.querySelector('.application-form-container').style.display = 'none';
-                document.getElementById('form-success-message').classList.remove('hidden');
-            });
-            
-            // Mobile navigation functionality
-            const hamburgerBtn = document.getElementById('hamburger-btn');
-            const mobileNav = document.getElementById('mobile-nav');
-            const mobileNavScrim = document.getElementById('mobile-nav-scrim');
-            
-            if (hamburgerBtn) {
-                hamburgerBtn.addEventListener('click', function() {
-                    const isOpen = mobileNav.classList.contains('open');
-                    
-                    if (isOpen) {
-                        mobileNav.classList.remove('open');
-                        mobileNavScrim.classList.add('hidden');
-                        hamburgerBtn.setAttribute('aria-expanded', 'false');
-                    } else {
-                        mobileNav.classList.add('open');
-                        mobileNavScrim.classList.remove('hidden');
-                        hamburgerBtn.setAttribute('aria-expanded', 'true');
-                    }
-                });
-                
-                // Close mobile nav when clicking on scrim
-                mobileNavScrim.addEventListener('click', function() {
-                    mobileNav.classList.remove('open');
-                    mobileNavScrim.classList.add('hidden');
-                    hamburgerBtn.setAttribute('aria-expanded', 'false');
-                });
-            }
-            
-            // Initialize form state
-            updateFormSteps();
-            updateProgressBar();
-            updateButtons();
-        }
+                authCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                authCard.style.opacity = '1';
+                authCard.style.transform = 'translateY(0)';
+            }, 100);
+        });
     </script>
-    
-    <!-- Include the main script file for additional functionality -->
-    <script src="assets/js/script.js?v=2024"></script>
 </body>
 </html>
  
