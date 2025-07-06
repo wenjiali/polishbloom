@@ -3,470 +3,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Polish + Bloom | Exclusive Membership</title>
-    <meta name="description" content="Learn about our invite-only membership and the vetting process designed to cultivate a trusted, aligned community for personal and professional growth.">
+    <title>Join Polish + Bloom | Sign In</title>
+    <meta name="description" content="Join our exclusive community of women focused on financial wellness and personal growth. Sign in with your preferred social account or create a new account.">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=2024">
+    <style>
+        /* Social Authentication Styles */
+        .auth-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fef7f7 0%, #fef3f3 50%, #fef0f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .auth-header h1 {
+            font-family: var(--font-family-serif);
+            font-size: 2.2rem;
+            color: #8b4b6b;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .auth-header p {
+            color: #9ca3af;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .social-auth-section {
+            margin-bottom: 2rem;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            border: 2px solid #f3f4f6;
+            border-radius: 16px;
+            background: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .social-button:hover::before {
+            left: 100%;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .social-button.google {
+            border-color: #ea4335;
+            color: #ea4335;
+        }
+        
+        .social-button.google:hover {
+            background: linear-gradient(135deg, #ea4335, #d93025);
+            color: white;
+            border-color: #ea4335;
+        }
+        
+        .social-button.facebook {
+            border-color: #1877f2;
+            color: #1877f2;
+        }
+        
+        .social-button.facebook:hover {
+            background: linear-gradient(135deg, #1877f2, #166fe5);
+            color: white;
+            border-color: #1877f2;
+        }
+        
+        .social-button.linkedin {
+            border-color: #0a66c2;
+            color: #0a66c2;
+        }
+        
+        .social-button.linkedin:hover {
+            background: linear-gradient(135deg, #0a66c2, #004182);
+            color: white;
+            border-color: #0a66c2;
+        }
+        
+        .social-button svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+        }
+        
+        .email-auth-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #f4a5b9;
+            box-shadow: 0 0 0 3px rgba(244, 165, 185, 0.1);
+            background: white;
+        }
+        
+        .auth-button {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #f4a5b9, #e879a6);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .auth-button:hover::before {
+            left: 100%;
+        }
+        
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 165, 185, 0.4);
+        }
+        
+        .auth-button:active {
+            transform: translateY(0);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #f3f4f6;
+        }
+        
+        .auth-footer p {
+            color: #6b7280;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        
+        .auth-footer a {
+            color: #f4a5b9;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .auth-footer a:hover {
+            color: #e879a6;
+        }
+        
+        .toggle-form {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .toggle-form button {
+            background: none;
+            border: none;
+            color: #f4a5b9;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .toggle-form button:hover {
+            color: #e879a6;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-container {
+                padding: 1rem;
+            }
+            
+            .auth-card {
+                padding: 2rem 1.5rem;
+                border-radius: 20px;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .social-button {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.9rem;
+            }
+            
+            .social-button svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 1.5rem 1rem;
+                border-radius: 16px;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .social-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* Loading States */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body class="join-page">
-    <div id="mobile-nav-scrim" class="hidden"></div>
-    <header class="site-header">
-        <div class="container">
-            <nav class="main-nav">
-                <a href="index.html" class="logo">Polish + Bloom</a>
-                <ul class="nav-links">
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="bloom-circles.html">Bloom Circles</a></li>
-                    <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
-                    <li><a href="stories.html">Stories</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="join.html" class="button">Join Now</a></li>
-                </ul>
-                <button id="hamburger-btn" class="hamburger-btn" aria-label="Open Menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Welcome to Polish + Bloom</h1>
+                <p>Join our community of women focused on financial wellness and personal growth</p>
+            </div>
+            
+            <!-- Social Authentication Section -->
+            <div class="social-auth-section">
+                <button class="social-button google" onclick="signInWithGoogle()">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Continue with Google
                 </button>
-            </nav>
-        </div>
-        <div id="mobile-nav" class="mobile-nav">
-            <nav>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="bloom-circles.html">Bloom Circles</a></li>
-                    <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
-                    <li><a href="stories.html">Stories</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="join.html" class="button button-primary">Join Now</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <section class="join-hero-section">
-            <div class="container fade-in">
-                <div class="join-hero-content">
-                    <h1 class="join-hero-title">Welcome to the Garden</h1>
-                    <p class="join-hero-subtitle">An invitation to intentional community and growth. Where women gather to transform their relationship with money, confidence, and possibility.</p>
-                    <div class="join-hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">200+</div>
-                            <div class="stat-label">Members</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">15+</div>
-                            <div class="stat-label">Cities</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">98%</div>
-                            <div class="stat-label">Satisfaction</div>
-                        </div>
-                    </div>
-                </div>
+                
+                <button class="social-button facebook" onclick="signInWithFacebook()">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    Continue with Facebook
+                </button>
+                
+                <button class="social-button linkedin" onclick="signInWithLinkedIn()">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    Continue with LinkedIn
+                </button>
             </div>
-        </section>
-        <section class="application-section">
-            <div class="container">
-                <div class="application-form-container">
-                    <div class="form-header">
-                        <h2>Begin Your Application</h2>
-                        <p>We're so glad you're here. This is the first step toward finding your circle and joining a community of supportive, inspiring women.</p>
-                    </div>
-
-                    <!-- Progress Bar -->
-                    <div class="progress-bar">
-                        <div class="progress-bar-fill" style="width: 33.3%;"></div>
-                        <div class="progress-step active" data-step="1">
-                            <span class="step-label">Your Details</span>
-                        </div>
-                        <div class="progress-step" data-step="2">
-                            <span class="step-label">Your Journey</span>
-                        </div>
-                        <div class="progress-step" data-step="3">
-                            <span class="step-label">Final Touches</span>
-                        </div>
-                    </div>
-
-                    <form id="multi-step-form" class="application-form" novalidate>
-                        <!-- Step 1: Your Details -->
-                        <div class="form-step active" data-step="1">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" id="first_name" name="first_name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" id="last_name" name="last_name" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                             <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input type="text" id="city" name="city">
-                                </div>
-                                <div class="form-group">
-                                    <label for="province">Province / State</label>
-                                    <input type="text" id="province" name="province">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Step 2: Your Journey -->
-                        <div class="form-step" data-step="2">
-                            <div class="form-group">
-                                <label>Which area(s) are you currently seeking the most support in? (Select all that apply)</label>
-                                <div class="checkbox-group">
-                                    <label><input type="checkbox" name="support_areas[]" value="financial"> Financial wellness & mindset</label>
-                                    <label><input type="checkbox" name="support_areas[]" value="career"> Career clarity or transitions</label>
-                                    <label><input type="checkbox" name="support_areas[]" value="business"> Business startup guidance</label>
-                                    <label><input type="checkbox" name="support_areas[]" value="self_worth"> Self-worth & confidence building</label>
-                                    <label><input type="checkbox" name="support_areas[]" value="creative"> Creative direction</label>
-                                    <label><input type="checkbox" name="support_areas[]" value="community"> Community & connection</label>
-                                </div>
-                            </div>
-                             <div class="form-group">
-                                <label for="success_definition">What does success look like to you right now—in this season of your life?</label>
-                                <textarea id="success_definition" name="success_definition" rows="4"></textarea>
-                            </div>
-                             <div class="form-group">
-                                <label for="challenge_transform">What is one challenge or pattern you're ready to transform?</label>
-                                <textarea id="challenge_transform" name="challenge_transform" rows="4"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Step 3: Final Touches -->
-                        <div class="form-step" data-step="3">
-                            <div class="form-group">
-                                <label>Have you worked with a coach, therapist, or personal development community before?</label>
-                                <div class="radio-group">
-                                    <label><input type="radio" name="experience" value="yes"> Yes</label>
-                                    <label><input type="radio" name="experience" value="no"> No</label>
-                                </div>
-                                <input type="text" id="experience_details" name="experience_details" placeholder="Optional: care to elaborate?">
-                            </div>
-                             <div class="form-group">
-                                <label for="referral_source">How did you hear about us?</label>
-                                <input type="text" id="referral_source" name="referral_source" placeholder="e.g., friend, social media, podcast, etc.">
-                            </div>
-                             <div class="form-group">
-                                <label for="values">What values are most important to you in a community experience?</label>
-                                <input type="text" id="values" name="values" placeholder="e.g., trust, inclusivity, depth, creativity, etc.">
-                            </div>
-                        </div>
-
-                        <!-- Form Navigation -->
-                        <div class="form-navigation">
-                            <button type="button" class="button button-secondary" id="prev-btn" style="display: none;">Previous</button>
-                            <button type="button" class="button button-primary" id="next-btn">Next</button>
-                            <button type="submit" class="button button-primary" id="submit-btn" style="display: none;">Submit Application</button>
-                        </div>
-                    </form>
-                     <div id="form-success-message" class="hidden" style="text-align: center; margin-top: 2rem;">
-                        <h3>Thank you!</h3>
-                        <p>We've received your application and will be in touch within 2-3 business days to schedule a discovery call.</p>
-                    </div>
-                </div>
+            
+            <div class="divider">
+                <span>Or continue with email</span>
             </div>
-        </section>
-
-        <section id="journey" style="display:none;">
-            <h2 class="fade-in">Your Journey to a Blooming Life</h2>
-            <p class="subheadline fade-in" style="transition-delay: 0.1s;">A clear, supportive process designed for lasting transformation and growth.</p>
-            <div class="journey-timeline">
-                <div class="timeline-item fade-in">
-                    <div class="timeline-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon><circle cx="12" cy="12" r="3"></circle></svg>
-                    </div>
-                    <div class="timeline-content">
-                        <h3>1. Discover Your Path</h3>
-                        <p>Start with our quiz to find the perfect Bloom Circle for your unique financial personality. This first step provides immediate insight into your strengths and growth areas.</p>
-                    </div>
-                </div>
-                <div class="timeline-item fade-in">
-                    <div class="timeline-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                    </div>
-                    <div class="timeline-content">
-                        <h3>2. Chart Your Course</h3>
-                        <p>Receive personalized insights and actionable advice tailored to your goals, from spending and saving to investing and mindset. Your journey is unique, and your plan should be too.</p>
-                    </div>
-                </div>
-                <div class="timeline-item fade-in">
-                    <div class="timeline-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    </div>
-                    <div class="timeline-content">
-                        <h3>3. Bloom with Community</h3>
-                        <p>Connect with a supportive community, access our signature programs, and get expert guidance to stay motivated. True growth happens together.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="faq" class="page-content">
-            <div class="container" style="max-width: 800px;">
-                <div class="join-faq-section fade-in" style="transition-delay: 0.4s;">
-                    <div class="faq-header">
-                        <h2>Common Questions</h2>
-                        <p class="faq-subtitle">Everything you need to know about joining our community</p>
-                    </div>
-                    
-                    <div class="faq-items">
-                        <div class="faq-item" data-category="philosophy">
-                            <button class="faq-question" type="button" aria-expanded="false">
-                                <span class="faq-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M9 18V5l12-2v13"/>
-                                        <circle cx="6" cy="14" r="3"/>
-                                        <circle cx="18" cy="10" r="3"/>
-                                    </svg>
-                                </span>
-                                <h3>Why is Polish + Bloom invite-only?</h3>
-                                <span class="faq-toggle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6,9 12,15 18,9"/>
-                                    </svg>
-                                </span>
-                            </button>
-                            <div class="faq-answer">
-                                <div class="faq-content">
-                                    <p>Our community is built on trust and vulnerability. An invite-only model allows us to cultivate a safe space where every member is committed to confidentiality and mutual support. This isn't about exclusivity; it's about creating the most effective environment for personal and financial transformation.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item" data-category="process">
-                            <button class="faq-question" type="button" aria-expanded="false">
-                                <span class="faq-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 20h9"/>
-                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-                                    </svg>
-                                </span>
-                                <h3>What is your vetting process?</h3>
-                                <span class="faq-toggle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6,9 12,15 18,9"/>
-                                    </svg>
-                                </span>
-                            </button>
-                            <div class="faq-answer">
-                                <div class="faq-content">
-                                    <p>Our process is simple, personal, and designed to ensure a perfect fit for everyone. It includes:</p>
-                                    <ul>
-                                        <li><strong>An Intro Questionnaire</strong> to understand your goals and needs.</li>
-                                        <li><strong>A brief Discovery Chat</strong> with our team to answer your questions and ensure alignment.</li>
-                                        <li><strong>A personal Welcome & Match</strong> to the circle or program best suited for you.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item" data-category="practical">
-                            <button class="faq-question" type="button" aria-expanded="false">
-                                <span class="faq-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                        <circle cx="9" cy="7" r="4"/>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                    </svg>
-                                </span>
-                                <h3>How do I get referred?</h3>
-                                <span class="faq-toggle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6,9 12,15 18,9"/>
-                                    </svg>
-                                </span>
-                            </button>
-                            <div class="faq-answer">
-                                <div class="faq-content">
-                                    <p>Most referrals come from current members or our network of trusted partners, such as coaches and financial advisors. If you know someone in our community, we encourage you to ask them about us. They can guide you on the next steps.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item" data-category="practical">
-                            <button class="faq-question" type="button" aria-expanded="false">
-                                <span class="faq-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                                        <circle cx="12" cy="18" r=".5"/>
-                                    </svg>
-                                </span>
-                                <h3>What if I don't know anyone in the community?</h3>
-                                <span class="faq-toggle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6,9 12,15 18,9"/>
-                                    </svg>
-                                </span>
-                            </button>
-                            <div class="faq-answer">
-                                <div class="faq-content">
-                                    <p>You are still welcome to apply. While most members are referred, we thoughtfully review every direct application. If our mission resonates with you, please get in touch via our contact form and tell us a bit about your journey.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item" data-category="practical">
-                            <button class="faq-question" type="button" aria-expanded="false">
-                                <span class="faq-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="12" y1="1" x2="12" y2="23"/>
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                                    </svg>
-                                </span>
-                                <h3>Is there a membership fee?</h3>
-                                <span class="faq-toggle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6,9 12,15 18,9"/>
-                                    </svg>
-                                </span>
-                            </button>
-                            <div class="faq-answer">
-                                <div class="faq-content">
-                                    <p>We offer both complimentary community memberships and paid premium programs. This ensures our core support is accessible, while also providing options for deeper, more personalized guidance. All financial commitments are discussed transparently during the matching process to ensure they feel aligned and sustainable for you.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item" data-category="practical">
-                            <button class="faq-question" type="button" aria-expanded="false">
-                                <span class="faq-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12,6 12,12 16,14"/>
-                                    </svg>
-                                </span>
-                                <h3>How long does the vetting process take?</h3>
-                                <span class="faq-toggle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6,9 12,15 18,9"/>
-                                    </svg>
-                                </span>
-                            </button>
-                            <div class="faq-answer">
-                                <div class="faq-content">
-                                    <p>Our process is designed to be thorough yet efficient. From submitting your questionnaire to receiving your match, the entire journey typically takes between one to two weeks, depending on scheduling for the Discovery Chat.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <div id="contact-modal" class="contact-modal-overlay hidden">
-        <div class="contact-modal-content">
-            <button id="close-contact-btn" class="contact-close-button">&times;</button>
-            <div class="form-header">
-                <h2 id="contact-modal-title">Get in Touch</h2>
-                <p>We're so glad you're here. Please share a few details so we can connect personally.</p>
-            </div>
-            <form id="contact-form">
-                <div class="form-row">
+            
+            <!-- Email/Password Authentication Section -->
+            <div class="email-auth-section">
+                <form id="signin-form">
                     <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" placeholder="e.g., Jane" required>
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" placeholder="e.g., Doe" required>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="e.g., jane.doe@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
-                </div>
-                 <div class="form-row">
+                    <button type="submit" class="auth-button">Sign In</button>
+                </form>
+                
+                <form id="signup-form" class="hidden">
                     <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" name="city" placeholder="e.g., Toronto">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="province">Province</label>
-                        <input type="text" id="province" name="province" placeholder="e.g., ON">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" name="email" required>
                     </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" name="confirm-password" required>
+                    </div>
+                    <button type="submit" class="auth-button">Create Account</button>
+                </form>
+                
+                <div class="toggle-form">
+                    <button type="button" id="toggle-auth" onclick="toggleAuthForm()">
+                        Don't have an account? Sign up
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label for="notes">Notes</label>
-                    <textarea id="notes" name="notes" rows="4" placeholder="Tell us a bit about your goals..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="money-personality">Your Money Personality (Optional)</label>
-                    <select id="money-personality" name="money-personality">
-                        <option value="" disabled selected>Select your personality...</option>
-                        <option value="The Legacy Circle">The Legacy Circle (Secure Planner)</option>
-                        <option value="The Horizon Circle">The Horizon Circle (Free Spirit)</option>
-                        <option value="The Blueprint Circle">The Blueprint Circle (Strategist)</option>
-                        <option value="The Heartwood Circle">The Heartwood Circle (Nurturer)</option>
-                        <option value="The Catalyst Circle">The Catalyst Circle (Creator)</option>
-                        <option value="The Sanctuary Circle">The Sanctuary Circle (Peacekeeper)</option>
-                        <option value="The Summit Circle">The Summit Circle (Achiever)</option>
-                        <option value="Yet to explore">Yet to explore</option>
-                    </select>
-                    <small>Take our quiz to discover yours!</small>
-                </div>
-                <button type="submit" class="button button-primary">Submit</button>
-            </form>
-            <div id="form-success-message" class="hidden">
-                <p>Thank you! We've received your information and will be in touch shortly.</p>
+            </div>
+            
+            <div class="auth-footer">
+                <p>By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+                <p style="margin-top: 1rem;">
+                    <a href="index.html">← Back to Home</a>
+                </p>
             </div>
         </div>
     </div>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">Polish + Bloom</a>
-                    <p>Nurturing financial wellness and personal growth for women and beyond.</p>
-                </div>
-                <div class="footer-nav">
-                    <ul>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="bloom-circles.html">Bloom Circles</a></li>
-                        <li><a href="rainbow-cashflow.html">Rainbow Cashflow</a></li>
-                        <li><a href="stories.html">Stories</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-connect">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright">
-                <p>&copy; 2024 Polish + Bloom. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-            </div>
-        </div>
-
-    <script src="assets/js/script.js?v=3"></script>
+    <script>
+        // Form Toggle Functionality
+        let isSignUp = false;
+        
+        function toggleAuthForm() {
+            const signinForm = document.getElementById('signin-form');
+            const signupForm = document.getElementById('signup-form');
+            const toggleButton = document.getElementById('toggle-auth');
+            
+            if (isSignUp) {
+                signinForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                toggleButton.textContent = "Don't have an account? Sign up";
+                isSignUp = false;
+            } else {
+                signinForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                toggleButton.textContent = "Already have an account? Sign in";
+                isSignUp = true;
+            }
+        }
+        
+        // Social Authentication Functions
+        function signInWithGoogle() {
+            const button = event.target;
+            button.classList.add('loading');
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Google authentication would be implemented here. This would integrate with Google OAuth API.');
+                button.classList.remove('loading');
+            }, 1500);
+        }
+        
+        function signInWithFacebook() {
+            const button = event.target;
+            button.classList.add('loading');
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Facebook authentication would be implemented here. This would integrate with Facebook Login API.');
+                button.classList.remove('loading');
+            }, 1500);
+        }
+        
+        function signInWithLinkedIn() {
+            const button = event.target;
+            button.classList.add('loading');
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('LinkedIn authentication would be implemented here. This would integrate with LinkedIn OAuth API.');
+                button.classList.remove('loading');
+            }, 1500);
+        }
+        
+        // Email/Password Form Handling
+        document.getElementById('signin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const button = this.querySelector('.auth-button');
+            button.classList.add('loading');
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Email sign-in would be implemented here. This would authenticate with your backend API.');
+                button.classList.remove('loading');
+            }, 1500);
+        });
+        
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+            
+            const button = this.querySelector('.auth-button');
+            button.classList.add('loading');
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Account creation would be implemented here. This would create a new user account via your backend API.');
+                button.classList.remove('loading');
+            }, 1500);
+        });
+        
+        // Add smooth animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const authCard = document.querySelector('.auth-card');
+            authCard.style.opacity = '0';
+            authCard.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                authCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                authCard.style.opacity = '1';
+                authCard.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
 </body>
 </html>
  

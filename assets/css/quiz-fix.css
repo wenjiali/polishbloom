@@ -1,0 +1,46 @@
+/* Quiz Modal Fix - Override problematic centering and height restrictions */
+
+/* Force modal to align to top instead of center */
+.quiz-modal-overlay {
+    align-items: flex-start !important;
+    padding-top: 2vh !important;
+    padding-bottom: 2vh !important;
+    overflow-y: auto !important;
+}
+
+/* Remove height restrictions that cause clipping */
+.quiz-modal-content {
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* Fix inner screen layout to prevent centering */
+#quiz-start-screen,
+#quiz-question-screen,
+#quiz-results-screen {
+    display: block !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    justify-content: flex-start !important;
+}
+
+/* Override the problematic desktop media query */
+@media (min-width: 601px) {
+    .quiz-modal-content {
+        overflow: visible !important;
+        max-height: none !important;
+    }
+    
+    #quiz-start-screen,
+    #quiz-question-screen,
+    #quiz-results-screen {
+        overflow: visible !important;
+        min-height: auto !important;
+    }
+}
+
+/* Ensure proper spacing for question text */
+#quiz-question-text {
+    margin-bottom: var(--space-6) !important;
+    line-height: 1.4 !important;
+}

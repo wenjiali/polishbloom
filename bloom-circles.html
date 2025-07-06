@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=2.0">
+    <link rel="stylesheet" href="assets/css/quiz-fix.css?v=1.2">
 </head>
 <body>
 
@@ -274,19 +275,19 @@ Whether you're planning your next move, reclaiming your confidence, or redefinin
         </div>
     </footer>
     
-    <div id="quiz-modal" class="quiz-modal-overlay hidden">
-        <div class="quiz-modal-content">
+    <div id="quiz-modal" class="quiz-modal-overlay hidden" style="align-items: flex-start !important; padding-top: 2vh !important; overflow-y: auto !important;">
+        <div class="quiz-modal-content" style="max-height: none !important; overflow: visible !important; margin-top: 0 !important;">
             <button id="close-quiz-btn" class="quiz-close-button">&times;</button>
             
             <!-- Quiz Start Screen -->
-            <div id="quiz-start-screen">
+            <div id="quiz-start-screen" style="display: block !important; min-height: auto !important; overflow: visible !important; justify-content: flex-start !important;">
                 <h2 class="quiz-title">Discover Your Bloom Circle</h2>
                 <p class="quiz-subtitle">Answer a few quick questions to find the community that best aligns with your personality and goals.</p>
                 <button id="start-quiz-btn" class="button button-primary">Start the Quiz</button>
             </div>
 
             <!-- Quiz Questions Screen -->
-            <div id="quiz-question-screen" class="hidden">
+            <div id="quiz-question-screen" class="hidden" style="display: block !important; min-height: auto !important; overflow: visible !important; justify-content: flex-start !important;">
                 <div id="quiz-progress"><div id="quiz-progress-bar"></div></div>
                 <p id="quiz-question-text"></p>
                 <div id="quiz-answers-grid" class="quiz-answers-grid">
@@ -295,7 +296,7 @@ Whether you're planning your next move, reclaiming your confidence, or redefinin
             </div>
 
             <!-- Quiz Results Screen -->
-            <div id="quiz-results-screen" class="hidden">
+            <div id="quiz-results-screen" class="hidden" style="display: block !important; min-height: auto !important; overflow: visible !important; justify-content: flex-start !important;">
                 <p class="result-badge">Your Recommended Circle</p>
                 <h2 id="result-title" class="result-title"></h2>
                 <p id="result-description" class="result-description"></p>
