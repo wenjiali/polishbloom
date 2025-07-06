@@ -684,72 +684,221 @@
             const button = event.target;
             button.classList.add('loading');
             
-            // Simulate API call
-            setTimeout(() => {
-                // Redirect to previous join page content after successful authentication
-                showMembershipContent();
-                button.classList.remove('loading');
-            }, 1500);
+            // Redirect to Google OAuth
+            window.location.href = '/api/auth/google';
         }
         
         function signInWithFacebook() {
             const button = event.target;
             button.classList.add('loading');
             
-            // Simulate API call
-            setTimeout(() => {
-                // Redirect to previous join page content after successful authentication
-                showMembershipContent();
-                button.classList.remove('loading');
-            }, 1500);
+            // Redirect to Facebook OAuth
+            window.location.href = '/api/auth/facebook';
         }
         
         function signInWithLinkedIn() {
             const button = event.target;
             button.classList.add('loading');
             
-            // Simulate API call
-            setTimeout(() => {
-                // Redirect to previous join page content after successful authentication
-                showMembershipContent();
-                button.classList.remove('loading');
-            }, 1500);
+            // Redirect to LinkedIn OAuth
+            window.location.href = '/api/auth/linkedin';
         }
         
         // Email/Password Form Handling
         document.getElementById('signin-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const button = this.querySelector('.auth-button');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
             button.classList.add('loading');
             
-            // Simulate API call
-            setTimeout(() => {
-                // Redirect to previous join page content after successful authentication
-                showMembershipContent();
+            fetch('/api/auth/signin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message briefly
+                    showAuthMessage('Sign in successful! Redirecting...', 'success');
+                    
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = data.redirectUrl || '/dashboard';
+                    }, 1000);
+                } else {
+                    showAuthMessage(data.message || 'Sign in failed. Please try again.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Sign in error:', error);
+                showAuthMessage('Network error. Please check your connection and try again.', 'error');
+            })
+            .finally(() => {
                 button.classList.remove('loading');
-            }, 1500);
+            });
         });
         
         document.getElementById('signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
+            const button = this.querySelector('.auth-button');
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('signup-confirm-password').value;
             
             if (password !== confirmPassword) {
-                alert('Passwords do not match. Please try again.');
+                showAuthMessage('Passwords do not match. Please try again.', 'error');
                 return;
             }
             
-            const button = this.querySelector('.auth-button');
             button.classList.add('loading');
             
-            // Simulate API call
-            setTimeout(() => {
-                // Redirect to previous join page content after successful authentication
-                showMembershipContent();
+            fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAuthMessage('Account created successfully! Redirecting...', 'success');
+                    
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = data.redirectUrl || '/join?step=application';
+                    }, 1000);
+                } else {
+                    showAuthMessage(data.message || 'Account creation failed. Please try again.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Sign up error:', error);
+                showAuthMessage('Network error. Please check your connection and try again.', 'error');
+            })
+            .finally(() => {
                 button.classList.remove('loading');
-            }, 1500);
+            });
         });
+        
+        // Function to show authentication messages
+        function showAuthMessage(message, type) {
+            // Remove existing messages
+            const existingMessage = document.querySelector('.auth-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // Create message element
+            const messageEl = document.createElement('div');
+            messageEl.className = `auth-message auth-message-${type}`;
+            messageEl.textContent = message;
+            
+            // Add styles
+            messageEl.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                ${type === 'success' ? 
+                    'background: #10b981; color: white;' : 
+                    'background: #ef4444; color: white;'
+                }
+            `;
+            
+            document.body.appendChild(messageEl);
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                messageEl.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (messageEl.parentNode) {
+                        messageEl.parentNode.removeChild(messageEl);
+                    }
+                }, 300);
+            }, 5000);
+        }
+        
+        // Check for URL parameters to show auth errors
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            
+            if (error) {
+                let errorMessage = 'Authentication failed. Please try again.';
+                
+                switch (error) {
+                    case 'google_auth_failed':
+                        errorMessage = 'Google authentication failed. Please try again.';
+                        break;
+                    case 'facebook_auth_failed':
+                        errorMessage = 'Facebook authentication failed. Please try again.';
+                        break;
+                    case 'linkedin_auth_failed':
+                        errorMessage = 'LinkedIn authentication failed. Please try again.';
+                        break;
+                    case 'auth_failed':
+                        errorMessage = 'Authentication failed. Please try again.';
+                        break;
+                }
+                
+                showAuthMessage(errorMessage, 'error');
+                
+                // Clean up URL
+                const cleanUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
+            }
+            
+            // Initialize auth card animation
+            const authCard = document.querySelector('.auth-card');
+            if (authCard) {
+                authCard.style.opacity = '0';
+                authCard.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    authCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    authCard.style.opacity = '1';
+                    authCard.style.transform = 'translateY(0)';
+                }, 100);
+            }
+        });
+        
+        // Add CSS animations for messages
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
         
         // Function to show the membership content after authentication
         function showMembershipContent() {
@@ -778,19 +927,6 @@
                 }, 100);
             }, 500);
         }
-        
-        // Add smooth animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const authCard = document.querySelector('.auth-card');
-            authCard.style.opacity = '0';
-            authCard.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                authCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                authCard.style.opacity = '1';
-                authCard.style.transform = 'translateY(0)';
-            }, 100);
-        });
         
         // Initialize membership content functionality when it's shown
         function initializeMembershipContent() {
