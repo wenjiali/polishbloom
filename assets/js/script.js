@@ -29,6 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (smartText && btn.textContent !== smartText) {
                 btn.textContent = smartText;
             }
+            
+            // Add click tracking for CTA buttons
+            btn.addEventListener('click', () => {
+                // Track with both analytics
+                if (window.amplitude) {
+                    window.amplitude.track('CTA Clicked', { 
+                        context: context,
+                        text: btn.textContent,
+                        page: window.location.pathname 
+                    });
+                }
+                
+                if (window.trackGA4Event) {
+                    window.trackGA4Event('cta_clicked', {
+                        context: context,
+                        text: btn.textContent,
+                        page_path: window.location.pathname
+                    });
+                }
+            });
         });
     };
 
@@ -127,9 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
             hamburgerBtn.setAttribute('aria-expanded', !isOpened);
             mobileNavScrim.classList.toggle('hidden');
             
-            // Add analytics tracking
+            // Add analytics tracking with both platforms
             if (window.amplitude) {
                 window.amplitude.track('Mobile Menu Toggled', { opened: !isOpened });
+            }
+            
+            // Track with GA4
+            if (window.trackGA4Event) {
+                window.trackGA4Event('mobile_menu_opened', {
+                    menu_state: !isOpened ? 'opened' : 'closed'
+                });
             }
         };
 
@@ -236,11 +263,19 @@ document.addEventListener('DOMContentLoaded', () => {
             addLoadingState(submitBtn, 2000);
         }
         
-        // Track form submission
+        // Track form submission with both analytics
         if (window.amplitude) {
             window.amplitude.track('Form Submitted', { 
                 form_type: form.id || 'unknown',
                 page: window.location.pathname 
+            });
+        }
+        
+        // Track with GA4
+        if (window.trackGA4Event) {
+            window.trackGA4Event('form_submitted', {
+                form_type: form.id || 'unknown',
+                page_path: window.location.pathname
             });
         }
     };
@@ -516,6 +551,17 @@ document.addEventListener('DOMContentLoaded', () => {
             currentQuestionIndex = 0;
             userAnswers = {};
             displayQuestion();
+            
+            // Track quiz start with both analytics
+            if (window.amplitude) {
+                window.amplitude.track('Quiz Started', { quiz_type: 'money_personality' });
+            }
+            
+            if (window.trackGA4Event) {
+                window.trackGA4Event('quiz_started', {
+                    quiz_type: 'money_personality'
+                });
+            }
         };
 
         const displayQuestion = () => {
@@ -579,6 +625,21 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Optional: Store result for other pages
             localStorage.setItem('moneyPersonality', result.circle);
+            
+            // Track quiz completion with both analytics
+            if (window.amplitude) {
+                window.amplitude.track('Quiz Completed', { 
+                    quiz_type: 'money_personality',
+                    result: result.circle 
+                });
+            }
+            
+            if (window.trackGA4Event) {
+                window.trackGA4Event('quiz_completed', {
+                    quiz_type: 'money_personality',
+                    result: result.circle
+                });
+            }
         };
 
         const resetQuiz = () => {
