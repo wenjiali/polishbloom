@@ -1466,23 +1466,58 @@ section h2 {
 }
 
 .color-item {
-    background-color: var(--color-ivory-white);
-    border-radius: var(--border-radius);
-    padding: var(--space-8);
-    text-align: center;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--color-border);
-    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
     overflow: hidden;
 }
 
-.color-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
+.color-item:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--color, var(--primary-color));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
 }
 
+.color-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 100%);
+}
+
+.color-item:hover:before {
+    transform: scaleX(1);
+}
+
+.color-item:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.color-item.clicked {
+    transform: translateY(0px) scale(0.95);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border-color: var(--color, var(--primary-color));
+}
+
+.color-item.clicked:before {
+    transform: scaleX(1);
+}
 
 .color-item-content,
 .color-item-details {
@@ -3875,6 +3910,21 @@ footer {
 }
 
 .color-item:hover:before {
+    transform: scaleX(1);
+}
+
+.color-item:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.color-item.clicked {
+    transform: translateY(0px) scale(0.95);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border-color: var(--color, var(--primary-color));
+}
+
+.color-item.clicked:before {
     transform: scaleX(1);
 }
 

@@ -851,9 +851,53 @@ document.addEventListener('DOMContentLoaded', () => {
         colorItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
+                console.log('Color item clicked:', item.dataset.color);
+                
+                // Add visual feedback
+                item.classList.add('clicked');
+                setTimeout(() => {
+                    item.classList.remove('clicked');
+                }, 300);
+                
                 const color = item.dataset.color;
                 if (color) {
+                    console.log('Updating details for color:', color);
                     updateDetails(color);
+                    
+                    // Smooth scroll to details section
+                    const detailsContainer = document.querySelector('.rainbow-details-container');
+                    console.log('Details container found:', detailsContainer);
+                    
+                    if (detailsContainer) {
+                        console.log('Scrolling to details container...');
+                        setTimeout(() => {
+                            detailsContainer.scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'start',
+                                inline: 'nearest'
+                            });
+                            console.log('Scroll initiated');
+                        }, 150); // Slightly longer delay to ensure content is updated
+                    } else {
+                        console.error('Details container not found!');
+                    }
+                    
+                    // Track color card interaction
+                    if (window.amplitude) {
+                        window.amplitude.track('Rainbow Card Clicked', { 
+                            color: color,
+                            page: window.location.pathname 
+                        });
+                    }
+                    
+                    if (window.trackGA4Event) {
+                        window.trackGA4Event('rainbow_card_clicked', {
+                            color: color,
+                            page_path: window.location.pathname
+                        });
+                    }
+                } else {
+                    console.error('No color data found on clicked item');
                 }
             });
         });
