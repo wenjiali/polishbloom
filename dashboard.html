@@ -158,6 +158,238 @@
             background: #e5e7eb;
             color: #374151;
         }
+        
+        /* Profile Modal Styles */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+        
+        .profile-modal.show {
+            display: block;
+        }
+        
+        .profile-modal-content {
+            background: white;
+            margin: 2rem auto;
+            padding: 0;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .profile-modal-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .profile-modal-header h2 {
+            color: #8b4b6b;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        
+        .profile-modal-header p {
+            color: #6b7280;
+            margin: 0;
+        }
+        
+        .profile-form {
+            padding: 2rem;
+        }
+        
+        .profile-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .profile-form input[type="text"],
+        .profile-form input[type="email"],
+        .profile-form input[type="tel"],
+        .profile-form select,
+        .profile-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+        
+        .profile-form input[type="text"]:focus,
+        .profile-form input[type="email"]:focus,
+        .profile-form input[type="tel"]:focus,
+        .profile-form select:focus,
+        .profile-form textarea:focus {
+            outline: none;
+            border-color: #f4a5b9;
+            box-shadow: 0 0 0 3px rgba(244, 165, 185, 0.1);
+        }
+        
+        .profile-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+        
+        .radio-group input[type="radio"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+        
+        .profile-modal-actions {
+            padding: 2rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .profile-modal-actions button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cancel {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: none;
+        }
+        
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #f4a5b9, #e879a6);
+            color: white;
+            border: none;
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 165, 185, 0.4);
+        }
+        
+        .btn-save:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .profile-completion-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #f0f9ff;
+            color: #0369a1;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        .profile-completion-badge.incomplete {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .profile-completion-badge.complete {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .close-modal:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -209,6 +441,118 @@
         </div>
     </div>
 
+    <!-- Profile Completion Modal -->
+    <div id="profile-modal" class="profile-modal">
+        <div class="profile-modal-content">
+            <button class="close-modal" onclick="closeProfileModal()">&times;</button>
+            
+            <div class="profile-modal-header">
+                <h2>Complete Your Profile</h2>
+                <p>Help us personalize your Polish + Bloom experience by sharing more about yourself and your financial wellness journey.</p>
+            </div>
+            
+            <form id="profile-form" class="profile-form">
+                <!-- Personal Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" placeholder="e.g., Toronto">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="province">Province/State</label>
+                    <input type="text" id="province" name="province" placeholder="e.g., ON, CA">
+                </div>
+                
+                <!-- Support Areas -->
+                <div class="form-group">
+                    <label>What areas would you like support with? (Select all that apply) *</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="supportAreas" value="budgeting"> Budgeting & Money Management</label>
+                        <label><input type="checkbox" name="supportAreas" value="debt"> Debt Management</label>
+                        <label><input type="checkbox" name="supportAreas" value="saving"> Saving & Emergency Funds</label>
+                        <label><input type="checkbox" name="supportAreas" value="investing"> Investing & Wealth Building</label>
+                        <label><input type="checkbox" name="supportAreas" value="business"> Starting/Growing a Business</label>
+                        <label><input type="checkbox" name="supportAreas" value="mindset"> Money Mindset & Confidence</label>
+                        <label><input type="checkbox" name="supportAreas" value="goals"> Goal Setting & Planning</label>
+                        <label><input type="checkbox" name="supportAreas" value="life-transitions"> Life Transitions & Money</label>
+                    </div>
+                </div>
+                
+                <!-- Success Definition -->
+                <div class="form-group">
+                    <label for="successDefinition">How do you define financial success for yourself? *</label>
+                    <textarea id="successDefinition" name="successDefinition" required placeholder="Share what financial success looks like to you..."></textarea>
+                </div>
+                
+                <!-- Challenge Transform -->
+                <div class="form-group">
+                    <label for="challengeTransform">What's one financial challenge you'd most like to transform this year?</label>
+                    <textarea id="challengeTransform" name="challengeTransform" placeholder="Describe a specific challenge you're facing..."></textarea>
+                </div>
+                
+                <!-- Experience Level -->
+                <div class="form-group">
+                    <label>How would you describe your current relationship with money? *</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="experience" value="just-starting" required> Just starting my financial journey</label>
+                        <label><input type="radio" name="experience" value="some-knowledge"> I have some knowledge but want guidance</label>
+                        <label><input type="radio" name="experience" value="confident"> I'm confident but want community support</label>
+                        <label><input type="radio" name="experience" value="advanced"> I'm advanced and want to help others</label>
+                    </div>
+                </div>
+                
+                <!-- Experience Details -->
+                <div class="form-group">
+                    <label for="experienceDetails">Tell us more about your financial journey so far:</label>
+                    <textarea id="experienceDetails" name="experienceDetails" placeholder="Share any relevant experience, challenges, or wins..."></textarea>
+                </div>
+                
+                <!-- Referral Source -->
+                <div class="form-group">
+                    <label for="referralSource">How did you hear about Polish + Bloom?</label>
+                    <select id="referralSource" name="referralSource">
+                        <option value="">Select one...</option>
+                        <option value="friend-referral">Friend or family referral</option>
+                        <option value="social-media">Social media</option>
+                        <option value="google-search">Google search</option>
+                        <option value="podcast">Podcast</option>
+                        <option value="blog-article">Blog or article</option>
+                        <option value="event">Event or workshop</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <!-- Values -->
+                <div class="form-group">
+                    <label for="values">What values are most important to you when it comes to money and life?</label>
+                    <textarea id="values" name="values" placeholder="e.g., security, freedom, generosity, adventure..."></textarea>
+                </div>
+            </form>
+            
+            <div class="profile-modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeProfileModal()">Cancel</button>
+                <button type="button" class="btn-save" onclick="saveProfile()">Save Profile</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Load user data and populate dashboard
         function loadUserData() {
@@ -245,8 +589,228 @@
         
         // Complete profile functionality
         function completeProfile() {
-            alert('Profile completion feature coming soon! This would open a form to collect additional user information.');
+            openProfileModal();
         }
+        
+        // Profile modal functions
+        function openProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            
+            // Load existing profile data if available
+            loadExistingProfileData();
+            
+            // Track profile modal opening
+            if (window.amplitude) {
+                window.amplitude.track('Profile Modal Opened');
+            }
+            if (window.trackGA4Event) {
+                window.trackGA4Event('profile_modal_opened');
+            }
+        }
+        
+        function closeProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function loadExistingProfileData() {
+            const userData = JSON.parse(sessionStorage.getItem('user') || '{}');
+            
+            // Pre-fill basic information from OAuth data
+            if (userData.name) {
+                const nameParts = userData.name.split(' ');
+                document.getElementById('firstName').value = nameParts[0] || '';
+                document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
+            }
+            
+            // Load saved profile data if exists
+            const profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+            Object.keys(profileData).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        element.checked = profileData[key];
+                    } else if (element.type === 'radio') {
+                        if (element.value === profileData[key]) {
+                            element.checked = true;
+                        }
+                    } else {
+                        element.value = profileData[key];
+                    }
+                }
+            });
+            
+            // Handle support areas (checkboxes)
+            if (profileData.supportAreas && Array.isArray(profileData.supportAreas)) {
+                const checkboxes = document.querySelectorAll('input[name="supportAreas"]');
+                checkboxes.forEach(cb => {
+                    cb.checked = profileData.supportAreas.includes(cb.value);
+                });
+            }
+        }
+        
+        function validateProfile() {
+            const form = document.getElementById('profile-form');
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#ef4444';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#d1d5db';
+                }
+            });
+            
+            // Check support areas (at least one must be selected)
+            const supportAreas = document.querySelectorAll('input[name="supportAreas"]:checked');
+            if (supportAreas.length === 0) {
+                alert('Please select at least one support area.');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        function saveProfile() {
+            if (!validateProfile()) {
+                return;
+            }
+            
+            const saveBtn = document.querySelector('.btn-save');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+            
+            // Collect form data
+            const formData = new FormData(document.getElementById('profile-form'));
+            const profileData = {};
+            
+            // Handle regular form fields
+            for (let [key, value] of formData.entries()) {
+                if (key === 'supportAreas') {
+                    if (!profileData.supportAreas) {
+                        profileData.supportAreas = [];
+                    }
+                    profileData.supportAreas.push(value);
+                } else {
+                    profileData[key] = value;
+                }
+            }
+            
+            // Save to localStorage (in a real app, this would go to your backend)
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            
+            // Update user session data
+            const userData = JSON.parse(sessionStorage.getItem('user') || '{}');
+            userData.profileComplete = true;
+            userData.profile = profileData;
+            sessionStorage.setItem('user', JSON.stringify(userData));
+            
+            // Track profile completion
+            if (window.amplitude) {
+                window.amplitude.track('Profile Completed', { 
+                    supportAreas: profileData.supportAreas?.length || 0,
+                    experience: profileData.experience 
+                });
+            }
+            if (window.trackGA4Event) {
+                window.trackGA4Event('profile_completed', {
+                    support_areas_count: profileData.supportAreas?.length || 0,
+                    experience_level: profileData.experience
+                });
+            }
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Profile';
+                
+                // Update the dashboard
+                updateDashboardAfterProfile();
+                
+                // Close modal
+                closeProfileModal();
+                
+                // Show success message
+                showSuccessMessage('Profile updated successfully! Your personalized recommendations are now available.');
+            }, 1000);
+        }
+        
+        function updateDashboardAfterProfile() {
+            const userData = JSON.parse(sessionStorage.getItem('user') || '{}');
+            
+            // Update profile completion status
+            const profileButton = document.querySelector('.action-card .action-button[onclick="completeProfile()"]');
+            if (profileButton && userData.profileComplete) {
+                profileButton.textContent = 'Update Profile';
+                profileButton.parentElement.querySelector('h3').textContent = 'Profile Complete';
+                profileButton.parentElement.querySelector('p').textContent = 'Your profile is complete! You can update it anytime to refine your experience.';
+            }
+            
+            // Add profile completion badge
+            const userDetails = document.querySelector('.user-details');
+            let badge = userDetails.querySelector('.profile-completion-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.className = 'profile-completion-badge';
+                userDetails.appendChild(badge);
+            }
+            
+            if (userData.profileComplete) {
+                badge.className = 'profile-completion-badge complete';
+                badge.textContent = '✓ Profile Complete';
+            } else {
+                badge.className = 'profile-completion-badge incomplete';
+                badge.textContent = 'Profile Incomplete';
+            }
+        }
+        
+        function showSuccessMessage(message) {
+            // Create temporary success notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: #d1fae5;
+                color: #065f46;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                border: 1px solid #a7f3d0;
+                z-index: 1001;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100px);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateY(-100px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 5000);
+        }
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('profile-modal');
+            if (event.target === modal) {
+                closeProfileModal();
+            }
+        });
         
         // Logout functionality
         function logout() {
@@ -266,6 +830,9 @@
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
             loadUserData();
+            
+            // Check and update profile completion status
+            updateDashboardAfterProfile();
             
             // Add entrance animation
             const elements = document.querySelectorAll('.user-info, .action-card');
