@@ -13,18 +13,102 @@
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Performance: Font optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=2.0">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
-    <!-- Analytics -->
-    <script src="https://cdn.amplitude.com/script/a4372cbb4f253cb0f020223f94e11289.js"></script><script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('a4372cbb4f253cb0f020223f94e11289', {"fetchRemoteConfig":true,"autocapture":true});</script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
-    <!-- GA4 Configuration -->
-    <script src="config/ga4.js"></script>
+    <!-- Critical CSS for above-the-fold content -->
+    <style>
+        :root {
+            --primary-color: #8B4B8A;
+            --secondary-color: #E8B4E3;
+            --accent-color: #F4D3F2;
+            --text-color: #2C2C2C;
+            --background-color: #FDFCF8;
+            --surface-color: #FFFFFF;
+            --border-color: #E5E5E5;
+        }
+        
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .site-header {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--accent-color) 100%);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .color-item {
+            /* GPU-accelerated animations for smooth performance */
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+    </style>
+    
+    <!-- Non-critical CSS loaded asynchronously -->
+    <link rel="preload" href="assets/css/style.css?v=2.1" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/style.css?v=2.1"></noscript>
+
+    <!-- Analytics - Load after page content -->
+    <script>
+        // Preload analytics for better performance
+        const amplitudeScript = document.createElement('script');
+        amplitudeScript.src = 'https://cdn.amplitude.com/script/a4372cbb4f253cb0f020223f94e11289.js';
+        amplitudeScript.async = true;
+        amplitudeScript.onload = function() {
+            window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));
+            window.amplitude.init('a4372cbb4f253cb0f020223f94e11289', {"fetchRemoteConfig":true,"autocapture":true});
+        };
+        document.head.appendChild(amplitudeScript);
+    </script>
+    
+    <!-- GA4 Configuration - Defer loading -->
+    <script defer src="config/ga4.js"></script>
 </head>
-<body>
+<body class="page-transition">
+    <!-- Journey Progress Indicator -->
+    <div class="journey-progress">
+        <div class="journey-progress-bar" style="width: 60%"></div>
+    </div>
+    
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="mobile-nav-scrim" class="hidden"></div>
     <header class="site-header">
         <div class="container">
@@ -248,88 +332,26 @@
         </section>
     </main>
 
-    <div id="contact-modal" class="contact-modal-overlay hidden">
-        <div class="contact-modal-content">
-            <button id="close-contact-btn" class="contact-close-button">&times;</button>
-            <div class="form-header">
-                <h2 id="contact-modal-title">Get in Touch</h2>
-                <p>We're so glad you're here. Please share a few details so we can connect personally.</p>
-            </div>
-            <form id="contact-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" placeholder="e.g., Jane" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" placeholder="e.g., Doe" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="e.g., jane.doe@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
-                </div>
-                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" name="city" placeholder="e.g., Toronto">
-                    </div>
-                    <div class="form-group">
-                        <label for="province">Province</label>
-                        <input type="text" id="province" name="province" placeholder="e.g., ON">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="notes">Notes</label>
-                    <textarea id="notes" name="notes" rows="4" placeholder="Tell us a bit about your goals..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="money-personality">Your Money Personality (Optional)</label>
-                    <select id="money-personality" name="money-personality">
-                        <option value="" disabled selected>Select your personality...</option>
-                        <option value="The Legacy Circle">The Legacy Circle (Secure Planner)</option>
-                        <option value="The Horizon Circle">The Horizon Circle (Free Spirit)</option>
-                        <option value="The Blueprint Circle">The Blueprint Circle (Strategist)</option>
-                        <option value="The Heartwood Circle">The Heartwood Circle (Nurturer)</option>
-                        <option value="The Catalyst Circle">The Catalyst Circle (Creator)</option>
-                        <option value="The Sanctuary Circle">The Sanctuary Circle (Peacekeeper)</option>
-                        <option value="The Summit Circle">The Summit Circle (Achiever)</option>
-                        <option value="Yet to explore">Yet to explore</option>
-                    </select>
-                    <small>Take our quiz to discover yours!</small>
-                </div>
-                <button type="submit" class="button button-primary">Submit</button>
-            </form>
-            <div id="form-success-message" class="hidden">
-                <p>Thank you! We've received your information and will be in touch shortly.</p>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-connect">
-                    <h4>Connect With Us</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                        <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-                    </div>
-                </div>
-                <div class="footer-copyright">
-                    <p>&copy; 2024 Polish + Bloom. All Rights Reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/js/script.js"></script>
-
+    <!-- Main JavaScript - Load with defer for optimal performance -->
+    <script defer src="assets/js/script.js?v=2.1"></script>
+    
+    <!-- Progressive enhancement script -->
+    <script>
+        // Remove loading placeholders when page is fully loaded
+        window.addEventListener('load', function() {
+            document.querySelectorAll('.loading-placeholder').forEach(function(el) {
+                el.classList.remove('loading-placeholder');
+            });
+        });
+        
+        // Preload critical pages for faster navigation
+        const criticalPages = ['/index.html', '/about.html', '/apply.html'];
+        criticalPages.forEach(page => {
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = page;
+            document.head.appendChild(link);
+        });
+    </script>
 </body>
 </html>

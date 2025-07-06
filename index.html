@@ -13,16 +13,124 @@
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Performance: Font optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=2.0">
-
-    <!-- Analytics -->
-    <script src="https://cdn.amplitude.com/script/a4372cbb4f253cb0f020223f94e11289.js"></script><script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('a4372cbb4f253cb0f020223f94e11289', {"fetchRemoteConfig":true,"autocapture":true});</script>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
-    <!-- GA4 Configuration -->
-    <script src="config/ga4.js"></script>
+    <!-- Optimized font loading with font-display -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Critical CSS inlined for faster render -->
+    <style>
+        /* Critical CSS for above-the-fold content */
+        :root {
+            --primary-color: #8B4B8A;
+            --secondary-color: #E8B4E3;
+            --accent-color: #F4D3F2;
+            --text-color: #2C2C2C;
+            --text-light: #666;
+            --background-color: #FDFCF8;
+            --surface-color: #FFFFFF;
+            --border-color: #E5E5E5;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .site-header {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--accent-color) 100%);
+            padding: 4rem 0;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .button-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        /* Loading spinner for progressive enhancement */
+        .loading-placeholder {
+            opacity: 0.7;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+    </style>
+    
+    <!-- Non-critical CSS loaded asynchronously -->
+    <link rel="preload" href="assets/css/style.css?v=2.1" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/style.css?v=2.1"></noscript>
+
+    <!-- Analytics - Load after page content -->
+    <script>
+        // Preload analytics for better performance
+        const amplitudeScript = document.createElement('script');
+        amplitudeScript.src = 'https://cdn.amplitude.com/script/a4372cbb4f253cb0f020223f94e11289.js';
+        amplitudeScript.async = true;
+        amplitudeScript.onload = function() {
+            window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));
+            window.amplitude.init('a4372cbb4f253cb0f020223f94e11289', {"fetchRemoteConfig":true,"autocapture":true});
+        };
+        document.head.appendChild(amplitudeScript);
+    </script>
+    
+    <!-- GA4 Configuration - Defer loading -->
+    <script defer src="config/ga4.js"></script>
 </head>
 <body class="page-transition">
     <!-- Journey Progress Indicator -->
@@ -265,7 +373,27 @@
         </div>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <!-- Main JavaScript - Load with defer for optimal performance -->
+    <script defer src="assets/js/script.js?v=2.1"></script>
+    
+    <!-- Progressive enhancement script -->
+    <script>
+        // Remove loading placeholders when page is fully loaded
+        window.addEventListener('load', function() {
+            document.querySelectorAll('.loading-placeholder').forEach(function(el) {
+                el.classList.remove('loading-placeholder');
+            });
+        });
+        
+        // Preload critical pages for faster navigation
+        const criticalPages = ['/about.html', '/apply.html', '/rainbow-cashflow.html'];
+        criticalPages.forEach(page => {
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = page;
+            document.head.appendChild(link);
+        });
+    </script>
 
     <!-- SEO Schema Markup -->
     <script type="application/ld+json">
