@@ -20,7 +20,15 @@
 
     <script src="https://cdn.amplitude.com/script/a4372cbb4f253cb0f02022]3f94e11289.js"></script><script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('a4372cbb4f253cb0f020223f94e11289', {"fetchRemoteConfig":true,"autocapture":true});</script>
 </head>
-<body>
+<body class="page-transition">
+    <!-- Journey Progress Indicator -->
+    <div class="journey-progress">
+        <div class="journey-progress-bar" style="width: 20%"></div>
+    </div>
+    
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <div id="mobile-nav-scrim" class="hidden"></div>
     <header class="site-header">
         <div class="container">
@@ -55,20 +63,31 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <section class="hero-section">
             <div class="container">
                 <div class="hero-content">
                     <h1 class="hero-title fade-in">Align Your Money With Your Life</h1>
                     <p class="hero-subtitle fade-in" style="transition-delay: 0.1s;">A financial wellness practice for women and gender-diverse people who are ready to build a life of purpose, joy, and financial peace.</p>
                     <div class="hero-cta fade-in" style="transition-delay: 0.2s;">
-                        <a href="join.html" class="button button-primary button-lg">Begin Your Journey</a>
-                        <a href="about.html" class="button button-secondary button-lg">Learn More</a>
+                        <a href="join.html" class="button button-primary button-lg js-smart-cta" data-context="hero-primary" data-loading-text="Getting Started...">Begin Your Journey</a>
+                        <a href="about.html" class="button button-secondary button-lg js-smart-cta" data-context="hero-secondary">Learn More</a>
                     </div>
                 </div>
             </div>
             <div class="hero-illustration">
                 <img src="assets/img/bloom-illustration.svg" alt="Floral illustration">
+            </div>
+        </section>
+
+        <!-- Quiz Prompt Section -->
+        <section class="quiz-section">
+            <div class="container">
+                <div class="quiz-prompt-card fade-in">
+                    <h3>Discover Your Financial Personality</h3>
+                    <p>Take our 2-minute quiz to find the Bloom Circle that's perfect for your journey. Understanding your money personality is the first step to financial alignment.</p>
+                    <button class="button button-cta js-open-quiz-modal js-smart-cta" data-context="quiz-prompt">Find Your Circle</button>
+                </div>
             </div>
         </section>
 
@@ -168,8 +187,45 @@
             <div id="form-success-message" class="hidden">
                 <p>Thank you! We've received your information and will be in touch shortly.</p>
             </div>
-        </div>
+                </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="quiz-modal-overlay hidden" style="align-items: flex-start !important; padding-top: 2vh !important; overflow-y: auto !important;">
+        <div class="quiz-modal-content" style="max-height: none !important; overflow: visible !important; margin-top: 0 !important;">
+            <button id="close-quiz-btn" class="quiz-close-button">&times;</button>
+            
+            <!-- Quiz Start Screen -->
+            <div id="quiz-start-screen" style="display: block !important; min-height: auto !important; overflow: visible !important; justify-content: flex-start !important;">
+                <h2 class="quiz-title">Discover Your Bloom Circle</h2>
+                <p class="quiz-subtitle">Answer a few quick questions to find the community that best aligns with your personality and goals.</p>
+                <button id="start-quiz-btn" class="button button-primary">Start the Quiz</button>
             </div>
+
+            <!-- Quiz Questions Screen -->
+            <div id="quiz-question-screen" class="hidden" style="display: block !important; min-height: auto !important; overflow: visible !important; justify-content: flex-start !important;">
+                <div id="quiz-progress"><div id="quiz-progress-bar"></div></div>
+                <p id="quiz-question-text"></p>
+                <div id="quiz-answers-grid" class="quiz-answers-grid">
+                    <!-- Answer buttons will be populated here by script.js -->
+                </div>
+            </div>
+
+            <!-- Quiz Results Screen -->
+            <div id="quiz-results-screen" class="hidden" style="display: block !important; min-height: auto !important; overflow: visible !important; justify-content: flex-start !important;">
+                <p class="result-badge">Your Recommended Circle</p>
+                <h2 id="result-title" class="result-title"></h2>
+                <p id="result-description" class="result-description"></p>
+                <div id="result-details" class="result-details">
+                    <!-- Details populated by script.js -->
+                </div>
+                <div class="quiz-cta">
+                    <p>Ready to join your circle?</p>
+                    <a href="join.html" class="button button-primary">Learn More & Apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <div class="container">

@@ -14,7 +14,15 @@
 
     <script src="https://cdn.amplitude.com/script/a4372cbb4f253cb0f02022]3f94e11289.js"></script><script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('a4372cbb4f253cb0f020223f94e11289', {"fetchRemoteConfig":true,"autocapture":true});</script>
 </head>
-<body class="about-page">
+<body class="about-page page-transition">
+    <!-- Journey Progress Indicator -->
+    <div class="journey-progress">
+        <div class="journey-progress-bar" style="width: 40%"></div>
+    </div>
+    
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <div id="mobile-nav-scrim" class="hidden"></div>
     <header class="site-header">
         <div class="container">
@@ -49,13 +57,14 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <section id="home" class="hero-section">
             <div class="container">
                 <h1 class="hero-title fade-in">Polish Your Finances. Bloom Your Confidence. Build a Life You Love.</h1>
                 <p class="hero-subtitle fade-in" style="transition-delay: 0.1s;">Our mission is to help you take control of your money, stand up for yourself, and step boldly into the future you deserve. Your journey to clarity, confidence, and financial freedom begins here.</p>
                 <div class="hero-actions fade-in" style="transition-delay: 0.2s;">
-                    <a href="bloom-circles.html" class="button button-primary">Find Your Bloom Circle</a>
+                    <a href="bloom-circles.html" class="button button-primary js-smart-cta" data-context="apply" data-loading-text="Loading...">Find Your Bloom Circle</a>
+                    <a href="rainbow-cashflow.html" class="button button-secondary js-smart-cta" data-context="hero-secondary">Explore Rainbow Cashflow</a>
                 </div>
             </div>
         </section>

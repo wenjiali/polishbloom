@@ -1,4 +1,255 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- UX IMPROVEMENTS: Smart CTA Management ---
+    const initSmartCTAs = () => {
+        // Track user journey state
+        const userJourney = {
+            hasVisitedAbout: sessionStorage.getItem('visited-about') === 'true',
+            hasSeenQuiz: sessionStorage.getItem('seen-quiz') === 'true',
+            hasOpenedContact: sessionStorage.getItem('opened-contact') === 'true',
+            entryPage: sessionStorage.getItem('entry-page') || window.location.pathname
+        };
+
+        // Set entry page if first visit
+        if (!sessionStorage.getItem('entry-page')) {
+            sessionStorage.setItem('entry-page', window.location.pathname);
+        }
+
+        // Update CTAs based on user journey
+        updateCTAMessaging(userJourney);
+        
+        // Track page visits
+        trackPageVisit();
+    };
+
+    const updateCTAMessaging = (journey) => {
+        const ctaButtons = document.querySelectorAll('.js-smart-cta');
+        ctaButtons.forEach(btn => {
+            const context = btn.dataset.context || 'general';
+            const smartText = getSmartCTAText(context, journey);
+            if (smartText && btn.textContent !== smartText) {
+                btn.textContent = smartText;
+            }
+        });
+    };
+
+    const getSmartCTAText = (context, journey) => {
+        switch (context) {
+            case 'hero-primary':
+                return journey.hasSeenQuiz ? 'Continue Your Journey' : 'Begin Your Journey';
+            case 'hero-secondary':
+                return journey.hasVisitedAbout ? 'Explore Programs' : 'Learn More';
+            case 'quiz-prompt':
+                return journey.hasSeenQuiz ? 'Retake Quiz' : 'Find Your Circle';
+            case 'contact-general':
+                return journey.hasOpenedContact ? 'Get in Touch Again' : 'Get in Touch';
+            case 'apply':
+                return journey.hasSeenQuiz ? 'Apply Now' : 'Take Quiz & Apply';
+            default:
+                return null;
+        }
+    };
+
+    const trackPageVisit = () => {
+        const currentPage = window.location.pathname;
+        if (currentPage.includes('about')) {
+            sessionStorage.setItem('visited-about', 'true');
+        }
+        if (document.getElementById('quiz-modal')) {
+            sessionStorage.setItem('seen-quiz', 'true');
+        }
+    };
+
+    // --- UX IMPROVEMENTS: Loading States ---
+    const addLoadingState = (element, duration = 1000) => {
+        const originalText = element.textContent;
+        const originalDisabled = element.disabled;
+        
+        element.disabled = true;
+        element.classList.add('loading');
+        
+        // Add loading animation
+        if (!element.querySelector('.loading-spinner')) {
+            const spinner = document.createElement('span');
+            spinner.className = 'loading-spinner';
+            spinner.innerHTML = '&nbsp;<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M14,6l-8.58,8.58"/><path d="M2,12l8.58,8.58"/></svg>';
+            element.appendChild(spinner);
+        }
+        
+        element.textContent = element.dataset.loadingText || 'Loading...';
+        
+        setTimeout(() => {
+            element.disabled = originalDisabled;
+            element.classList.remove('loading');
+            element.textContent = originalText;
+            const spinner = element.querySelector('.loading-spinner');
+            if (spinner) spinner.remove();
+        }, duration);
+    };
+
+    // --- UX IMPROVEMENTS: Enhanced Mobile Navigation ---
+    const enhanceMobileNavigation = () => {
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileNav = document.getElementById('mobile-nav');
+        const mobileNavScrim = document.getElementById('mobile-nav-scrim');
+
+        if (!hamburgerBtn || !mobileNav) return;
+
+        // Add breadcrumb to mobile nav
+        const breadcrumb = createMobileBreadcrumb();
+        if (breadcrumb) {
+            mobileNav.insertBefore(breadcrumb, mobileNav.firstChild);
+        }
+
+        // Enhance mobile nav with better gestures
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        mobileNav.addEventListener('touchstart', e => {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        mobileNav.addEventListener('touchend', e => {
+            touchEndY = e.changedTouches[0].screenY;
+            const swipeDistance = touchStartY - touchEndY;
+            
+            // Close on swipe right (only if significant swipe)
+            if (swipeDistance < -100) {
+                const isOpened = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+                if (isOpened) {
+                    toggleMobileMenu();
+                }
+            }
+        });
+
+        const toggleMobileMenu = () => {
+            const isOpened = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+            document.body.classList.toggle('mobile-nav-open');
+            hamburgerBtn.setAttribute('aria-expanded', !isOpened);
+            mobileNavScrim.classList.toggle('hidden');
+            
+            // Add analytics tracking
+            if (window.amplitude) {
+                window.amplitude.track('Mobile Menu Toggled', { opened: !isOpened });
+            }
+        };
+
+        hamburgerBtn.addEventListener('click', toggleMobileMenu);
+        mobileNavScrim.addEventListener('click', toggleMobileMenu);
+    };
+
+    const createMobileBreadcrumb = () => {
+        const currentPage = window.location.pathname;
+        const pageNames = {
+            '/index.html': 'Home',
+            '/about.html': 'About',
+            '/bloom-circles.html': 'Bloom Circles',
+            '/rainbow-cashflow.html': 'Rainbow Cashflow',
+            '/stories.html': 'Stories',
+            '/blog.html': 'Blog',
+            '/join.html': 'Join'
+        };
+
+        const pageName = pageNames[currentPage] || 'Polish + Bloom';
+        
+        const breadcrumb = document.createElement('div');
+        breadcrumb.className = 'mobile-breadcrumb';
+        breadcrumb.innerHTML = `
+            <div class="breadcrumb-content">
+                <span class="current-page">${pageName}</span>
+                <small>Swipe right to close</small>
+            </div>
+        `;
+        
+        return breadcrumb;
+    };
+
+    // --- UX IMPROVEMENTS: Form Enhancement ---
+    const enhanceFormExperience = () => {
+        // Add real-time validation
+        const formInputs = document.querySelectorAll('input[required], textarea[required]');
+        formInputs.forEach(input => {
+            input.addEventListener('blur', validateField);
+            input.addEventListener('input', clearFieldError);
+        });
+
+        // Enhance form submission with better feedback
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', handleFormSubmission);
+        });
+    };
+
+    const validateField = (e) => {
+        const field = e.target;
+        const value = field.value.trim();
+        
+        // Remove existing error state
+        clearFieldError(e);
+        
+        if (field.hasAttribute('required') && !value) {
+            showFieldError(field, 'This field is required');
+            return false;
+        }
+        
+        if (field.type === 'email' && value && !isValidEmail(value)) {
+            showFieldError(field, 'Please enter a valid email address');
+            return false;
+        }
+        
+        return true;
+    };
+
+    const showFieldError = (field, message) => {
+        field.classList.add('error');
+        field.setAttribute('aria-invalid', 'true');
+        
+        let errorMsg = field.parentNode.querySelector('.field-error');
+        if (!errorMsg) {
+            errorMsg = document.createElement('span');
+            errorMsg.className = 'field-error';
+            errorMsg.setAttribute('role', 'alert');
+            field.parentNode.appendChild(errorMsg);
+        }
+        errorMsg.textContent = message;
+    };
+
+    const clearFieldError = (e) => {
+        const field = e.target;
+        field.classList.remove('error');
+        field.removeAttribute('aria-invalid');
+        
+        const errorMsg = field.parentNode.querySelector('.field-error');
+        if (errorMsg) {
+            errorMsg.remove();
+        }
+    };
+
+    const isValidEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const handleFormSubmission = (e) => {
+        const form = e.target;
+        const submitBtn = form.querySelector('[type="submit"]');
+        
+        if (submitBtn) {
+            addLoadingState(submitBtn, 2000);
+        }
+        
+        // Track form submission
+        if (window.amplitude) {
+            window.amplitude.track('Form Submitted', { 
+                form_type: form.id || 'unknown',
+                page: window.location.pathname 
+            });
+        }
+    };
+
+    // Initialize all UX improvements
+    initSmartCTAs();
+    enhanceMobileNavigation();
+    enhanceFormExperience();
+
     // --- MINI-PLAN MODAL LOGIC (runs on Rainbow Cashflow page) ---
     const miniPlanModal = document.getElementById('mini-plan-modal');
     if (miniPlanModal) {

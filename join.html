@@ -316,12 +316,23 @@
         }
     </style>
 </head>
-<body>
-    <div class="auth-container">
+<body class="page-transition">
+    <!-- Journey Progress Indicator -->
+    <div class="journey-progress">
+        <div class="journey-progress-bar" style="width: 90%"></div>
+    </div>
+    
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="auth-container" id="main-content">
         <div class="auth-card">
             <div class="auth-header">
                 <h1>Welcome to Polish + Bloom</h1>
                 <p>Join our community of women focused on financial wellness and personal growth</p>
+                <div class="form-context">
+                    <p><strong>Almost there!</strong> Sign in to access your personalized dashboard and connect with your Bloom Circle.</p>
+                </div>
             </div>
             
             <div id="auth-message" class="auth-message hidden"></div>
