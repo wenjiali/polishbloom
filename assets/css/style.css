@@ -3830,3 +3830,348 @@ footer {
         max-width: 300px;
     }
 }
+
+/* Rainbow Cashflow specific styles */
+.color-system-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.color-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.color-item:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--color, var(--primary-color));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.color-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 100%);
+}
+
+.color-item:hover:before {
+    transform: scaleX(1);
+}
+
+.color-item-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--color, var(--primary-color));
+    margin-bottom: 1rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.color-item:hover .color-item-icon {
+    transform: scale(1.1);
+}
+
+.color-item h3 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.color-item[data-color="custom"] {
+    border-style: dashed;
+    border-color: var(--primary-color);
+    opacity: 0.8;
+}
+
+.color-item[data-color="custom"]:hover {
+    opacity: 1;
+}
+
+/* Value Benefits Section */
+.value-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+    transform: translateX(5px);
+}
+
+.benefit-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.benefit-item:hover .benefit-icon {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.benefit-item span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.value-cta {
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    border-radius: 16px;
+    border: 2px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.value-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+
+.cta-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-action {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cta-result {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.cta-pointer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    animation: bounceDown 2s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-5px);
+    }
+    60% {
+        transform: translateY(-2px);
+    }
+}
+
+.value-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.value-cta:hover::before {
+    left: 100%;
+}
+
+/* Mobile responsiveness for value benefits */
+@media (max-width: 768px) {
+    .value-benefits {
+        padding: 1rem;
+    }
+    
+    .benefit-item {
+        gap: 0.75rem;
+    }
+    
+    .benefit-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .benefit-item span {
+        font-size: 1rem;
+    }
+    
+    .value-cta {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+    
+    .cta-action {
+        font-size: 1.1rem;
+    }
+    
+    .cta-result {
+        font-size: 0.9rem;
+    }
+}
+
+/* Rainbow Details Container */
+.rainbow-details-container {
+    margin-top: 2rem;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+.rainbow-detail-card {
+    display: none;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.rainbow-detail-card.active {
+    display: block;
+}
+
+.rainbow-detail-card[data-color="initial"] {
+    display: block;
+}
+
+.rainbow-detail-card .card-content h3 {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+
+.rainbow-detail-card .card-content p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.rainbow-detail-card .card-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.rainbow-detail-card .card-content ul li {
+    padding: 0.5rem 0;
+    color: var(--text-color);
+    position: relative;
+    padding-left: 2rem;
+}
+
+.rainbow-detail-card .card-content ul li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Color specific styling for detail cards */
+.rainbow-detail-card[data-color="survival"] {
+    border-left: 4px solid var(--color-red);
+}
+
+.rainbow-detail-card[data-color="lifestyle"] {
+    border-left: 4px solid var(--color-orange);
+}
+
+.rainbow-detail-card[data-color="dreams"] {
+    border-left: 4px solid var(--color-yellow);
+}
+
+.rainbow-detail-card[data-color="growth"] {
+    border-left: 4px solid var(--color-green);
+}
+
+.rainbow-detail-card[data-color="security"] {
+    border-left: 4px solid var(--color-blue);
+}
+
+.rainbow-detail-card[data-color="education"] {
+    border-left: 4px solid var(--color-purple);
+}
+
+.rainbow-detail-card[data-color="giving"] {
+    border-left: 4px solid var(--color-pink);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Color variables for the rainbow system */
+:root {
+    --color-red: #e74c3c;
+    --color-orange: #f39c12;
+    --color-yellow: #f1c40f;
+    --color-green: #27ae60;
+    --color-blue: #3498db;
+    --color-purple: #9b59b6;
+    --color-pink: #e91e63;
+}
