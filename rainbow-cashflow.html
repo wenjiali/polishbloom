@@ -977,6 +977,60 @@
             sliderItem.style.boxShadow = `0 8px 32px ${color}40`;
         }
 
+        function setupPresetButtons() {
+            const presetButtons = document.querySelectorAll('.preset-btn');
+            presetButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const presetName = e.target.getAttribute('data-preset');
+                    const preset = rainbowCalculator.presets[presetName];
+                    
+                    if (preset) {
+                        // Apply preset allocations
+                        Object.keys(preset).forEach(category => {
+                            rainbowCalculator.allocations[category] = preset[category];
+                            
+                            // Update slider
+                            const slider = document.querySelector(`.financial-slider[data-category="${category}"]`);
+                            if (slider) {
+                                slider.value = preset[category];
+                            }
+                        });
+                        
+                        // Update display
+                        updateRainbowDisplay();
+                        updateSmartSuggestions();
+                        
+                        // Add visual feedback
+                        button.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            button.style.transform = 'scale(1)';
+                        }, 150);
+                        
+                        // Track analytics
+                        if (window.amplitude) {
+                            window.amplitude.track('Rainbow Preset Applied', {
+                                preset: presetName,
+                                total_allocated: getTotalAllocatedPercentage()
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        function setupColorSystemClicks() {
+            // Add click handlers for progress segments if needed
+            const progressSegments = document.querySelectorAll('.progress-segment');
+            progressSegments.forEach(segment => {
+                segment.addEventListener('click', function(e) {
+                    const color = e.target.getAttribute('data-color');
+                    if (color) {
+                        showColorDetail(color);
+                    }
+                });
+            });
+        }
+
         function getTotalAllocatedPercentage() {
             return Object.values(rainbowCalculator.allocations).reduce((sum, val) => sum + val, 0);
         }
@@ -1022,6 +1076,14 @@
         // Add CSS for percentage inputs
         const style = document.createElement('style');
         style.textContent = `
+            :root {
+                --color-border: #e5e7eb;
+                --color-primary: #f4a5b9;
+                --color-text: #374151;
+                --color-text-light: #6b7280;
+                --space-2: 0.5rem;
+            }
+            
             .percentage-input-container {
                 display: flex;
                 align-items: center;
