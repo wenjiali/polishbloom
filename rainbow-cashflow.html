@@ -551,17 +551,17 @@
                 <div class="testimonial-container">
                     <div class="testimonial-item fade-in">
                         <img src="https://xsgames.co/randomusers/assets/avatars/male/74.jpg" alt="Photo of Alex M." class="testimonial-avatar">
-                        <blockquote>“As a first-generation immigrant, I always felt behind when it came to money. Rainbow Cashflow gave me a clear, empowering structure to finally understand my finances and build a life on my terms. It helped me go from survival mode to dreaming again.”</blockquote>
+                        <blockquote>"As a first-generation immigrant, I always felt behind when it came to money. Rainbow Cashflow gave me a clear, empowering structure to finally understand my finances and build a life on my terms. It helped me go from survival mode to dreaming again."</blockquote>
                         <cite class="testimonial-author">Alex M.<span>Small Business Owner</span></cite>
                     </div>
                     <div class="testimonial-item fade-in" style="transition-delay: 0.1s;">
                         <img src="https://xsgames.co/randomusers/assets/avatars/female/71.jpg" alt="Photo of Jessica L." class="testimonial-avatar">
-                        <blockquote>“I used to think managing money meant sacrificing the things I loved. Rainbow Cashflow changed that. I'm investing in my future and booking the trip of a lifetime this year. It helped me align my values with my finances—without guilt.”</blockquote>
+                        <blockquote>"I used to think managing money meant sacrificing the things I loved. Rainbow Cashflow changed that. I'm investing in my future and booking the trip of a lifetime this year. It helped me align my values with my finances—without guilt."</blockquote>
                         <cite class="testimonial-author">Jessica L.<span>Marketing Professional</span></cite>
                     </div>
                     <div class="testimonial-item fade-in" style="transition-delay: 0.2s;">
                         <img src="https://xsgames.co/randomusers/assets/avatars/female/43.jpg" alt="Photo of Emily T." class="testimonial-avatar">
-                        <blockquote>“Before Rainbow Cashflow, I felt overwhelmed and unsure where my money was going. The 7-color system made everything click. For the first time, I'm spending with purpose, saving for joy, and finally feeling in control.”</blockquote>
+                        <blockquote>"Before Rainbow Cashflow, I felt overwhelmed and unsure where my money was going. The 7-color system made everything click. For the first time, I'm spending with purpose, saving for joy, and finally feeling in control."</blockquote>
                         <cite class="testimonial-author">Emily T.<span>Rainbow Cashflow Member</span></cite>
                     </div>
                 </div>
@@ -647,14 +647,122 @@
 
         // Initialize calculator when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            initializeRainbowCalculator();
+            console.log('🚀 DOM loaded, starting simple test...');
+            
+            // Simple test - just try to find and interact with inputs
+            const inputs = document.querySelectorAll('.amount-input');
+            console.log('Found inputs:', inputs.length);
+            
+            inputs.forEach((input, i) => {
+                console.log(`Input ${i}:`, input.getAttribute('data-category'));
+                
+                // Simple event listener test
+                input.addEventListener('click', function() {
+                    console.log('CLICK WORKS on', input.getAttribute('data-category'));
+                });
+                
+                input.addEventListener('input', function() {
+                    console.log('INPUT WORKS on', input.getAttribute('data-category'), 'value:', input.value);
+                    
+                    // Test the full update process
+                    const category = input.getAttribute('data-category');
+                    const amount = parseInt(input.value) || 0;
+                    console.log('💰 Processing amount:', amount, 'for category:', category);
+                    console.log('💰 Monthly income:', rainbowCalculator.monthlyIncome);
+                    
+                    // Calculate percentage
+                    const percentage = rainbowCalculator.monthlyIncome > 0 ? 
+                        Math.round((amount / rainbowCalculator.monthlyIncome) * 100) : 0;
+                    console.log('📊 Calculated percentage:', percentage, '(', amount, '/', rainbowCalculator.monthlyIncome, ')');
+                    
+                    // Update the allocations
+                    rainbowCalculator.allocations[category] = percentage;
+                    console.log('🎯 Updated allocations:', rainbowCalculator.allocations);
+                    
+                    // Try to update the percentage display
+                    const percentageDisplay = input.closest('.slider-item').querySelector('.percentage-display');
+                    if (percentageDisplay) {
+                        percentageDisplay.textContent = `${percentage}%`;
+                        console.log('✅ Updated percentage display to:', `${percentage}%`);
+                    }
+                    
+                    // Try to update the rainbow bar
+                    const progressBar = document.getElementById('rainbow-progress');
+                    if (progressBar) {
+                        console.log('🌈 Found progress bar, updating...');
+                        const segment = progressBar.querySelector(`[data-color="${category}"]`);
+                        if (segment) {
+                            segment.style.width = `${percentage}%`;
+                            console.log('✅ Updated segment width to:', `${percentage}%`);
+                        }
+                    }
+                    
+                    // Update the corresponding slider
+                    const slider = document.querySelector(`.financial-slider[data-category="${category}"]`);
+                    if (slider) {
+                        slider.value = percentage;
+                        console.log('🎚️ Updated slider to:', percentage);
+                    }
+                    
+                    // Update totals
+                    const totalAllocated = Object.values(rainbowCalculator.allocations).reduce((sum, val) => sum + val, 0);
+                    const totalAmount = Math.round((totalAllocated / 100) * rainbowCalculator.monthlyIncome);
+                    const remaining = rainbowCalculator.monthlyIncome - totalAmount;
+                    
+                    const totalAllocatedEl = document.getElementById('total-allocated');
+                    const remainingEl = document.getElementById('remaining-amount');
+                    
+                    if (totalAllocatedEl) {
+                        totalAllocatedEl.textContent = `$${totalAmount.toLocaleString()}`;
+                    }
+                    if (remainingEl) {
+                        if (remaining >= 0) {
+                            remainingEl.textContent = `($${remaining.toLocaleString()} remaining)`;
+                            remainingEl.className = 'remaining';
+                        } else {
+                            remainingEl.textContent = `($${Math.abs(remaining).toLocaleString()} over budget!)`;
+                            remainingEl.className = 'remaining over-budget';
+                        }
+                    }
+                });
+                
+                // Handle enter key and focus/blur
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.target.blur();
+                    }
+                });
+                
+                input.addEventListener('blur', function(e) {
+                    const amount = parseInt(e.target.value) || 0;
+                    e.target.value = Math.max(0, Math.min(rainbowCalculator.monthlyIncome, amount));
+                    
+                    // Don't format with commas - number inputs can't accept formatted values
+                    // if (amount > 0) {
+                    //     e.target.value = amount.toLocaleString();
+                    // }
+                });
+                
+                input.addEventListener('focus', function(e) {
+                    // No need to remove commas since we're not adding them
+                    // e.target.value = e.target.value.replace(/,/g, '');
+                    e.target.select(); // Select all text when focused
+                });
+            });
+            
+            // Try the old initialization too
+            try {
+                initializeRainbowCalculator();
+            } catch (error) {
+                console.error('Error in initialization:', error);
+            }
         });
 
         function initializeRainbowCalculator() {
             // Set up event listeners
             setupIncomeInput();
             setupSliders();
-            setupAmountInputs(); // Changed from setupPercentageInputs
+            // setupAmountInputs(); // DISABLED to prevent conflicts with simple test
             setupPresetButtons();
             setupColorSystemClicks();
             
@@ -666,6 +774,24 @@
             animateCalculatorEntrance();
             
             console.log('🌈 Rainbow Calculator initialized!');
+            
+            // Debug test - try to access first input
+            setTimeout(() => {
+                const firstInput = document.querySelector('.amount-input');
+                if (firstInput) {
+                    console.log('🔧 Testing first input:', firstInput);
+                    console.log('🔧 Input attributes:', {
+                        disabled: firstInput.disabled,
+                        readOnly: firstInput.readOnly,
+                        tabIndex: firstInput.tabIndex,
+                        style: firstInput.style.cssText
+                    });
+                    
+                    // Try to focus the input programmatically
+                    firstInput.focus();
+                    console.log('🔧 Tried to focus input');
+                }
+            }, 1000);
         }
 
         function setupIncomeInput() {
@@ -687,20 +813,34 @@
                 // Format input on blur
                 incomeInput.addEventListener('blur', function(e) {
                     const value = parseInt(e.target.value) || 0;
-                    e.target.value = value.toLocaleString();
+                    // Don't format with commas - number inputs can't accept formatted values
+                    e.target.value = value;
                 });
                 
                 // Remove formatting on focus
                 incomeInput.addEventListener('focus', function(e) {
-                    e.target.value = e.target.value.replace(/,/g, '');
+                    // No need to remove commas since we're not adding them
+                    // e.target.value = e.target.value.replace(/,/g, '');
                 });
             }
         }
 
         function setupAmountInputs() {
             const amountInputs = document.querySelectorAll('.amount-input');
-            amountInputs.forEach(input => {
+            console.log('🔍 Found', amountInputs.length, 'amount inputs');
+            amountInputs.forEach((input, index) => {
+                console.log('🎯 Setting up input', index, 'for category:', input.getAttribute('data-category'));
+                // Test if input is clickable/focusable
+                input.addEventListener('click', function(e) {
+                    console.log('✅ Input clicked!', e.target.getAttribute('data-category'));
+                });
+                
+                input.addEventListener('focus', function(e) {
+                    console.log('✅ Input focused!', e.target.getAttribute('data-category'));
+                });
+                
                 input.addEventListener('input', function(e) {
+                    console.log('✅ Input event fired!', e.target.getAttribute('data-category'), 'value:', e.target.value);
                     const category = e.target.getAttribute('data-category');
                     let amount = parseInt(e.target.value) || 0;
                     
@@ -752,15 +892,15 @@
                     const amount = parseInt(e.target.value) || 0;
                     e.target.value = Math.max(0, Math.min(rainbowCalculator.monthlyIncome, amount));
                     
-                    // Format with commas for display
-                    if (amount > 0) {
-                        e.target.value = amount.toLocaleString();
-                    }
+                    // Don't format with commas - number inputs can't accept formatted values
+                    // if (amount > 0) {
+                    //     e.target.value = amount.toLocaleString();
+                    // }
                 });
                 
                 input.addEventListener('focus', function(e) {
-                    // Remove commas for editing
-                    e.target.value = e.target.value.replace(/,/g, '');
+                    // No need to remove commas since we're not adding them
+                    // e.target.value = e.target.value.replace(/,/g, '');
                     e.target.select(); // Select all text when focused
                 });
             });
@@ -781,7 +921,8 @@
                     // Update corresponding amount input
                     const amountInput = document.querySelector(`.amount-input[data-category="${category}"]`);
                     if (amountInput) {
-                        amountInput.value = amount.toLocaleString();
+                        // Don't use toLocaleString() for number inputs
+                        amountInput.value = amount;
                     }
                     
                     updateRainbowDisplay();
@@ -832,17 +973,14 @@
                 const percentage = rainbowCalculator.allocations[category];
                 const width = totalPercentage > 0 ? (percentage / totalPercentage) * 100 : 0;
                 
-                // Animate width change
                 segment.style.width = `${width}%`;
                 
-                // Show percentage text if segment is large enough
                 if (width > 8) {
                     segment.textContent = `${percentage}%`;
                 } else {
                     segment.textContent = '';
                 }
                 
-                // Add shimmer effect for active segments
                 if (percentage > 0) {
                     segment.classList.add('active');
                 } else {
@@ -850,7 +988,6 @@
                 }
             });
             
-            // Add breathing animation to the progress bar
             if (totalPercentage > 95) {
                 progressBar.style.animation = 'breathe 2s ease-in-out infinite';
             } else {
@@ -875,7 +1012,8 @@
             const percentageDisplay = sliderItem.querySelector('.percentage-display');
             
             if (amountInput) {
-                amountInput.value = amount.toLocaleString();
+                // Don't use toLocaleString() for number inputs - they can't accept comma-formatted values
+                amountInput.value = amount;
             }
             if (percentageDisplay) {
                 percentageDisplay.textContent = `${percentage}%`;
@@ -1225,6 +1363,9 @@
                 text-align: right;
                 padding: 0;
                 margin-left: 0.25rem;
+                pointer-events: auto !important;
+                z-index: 10;
+                position: relative;
             }
             
             .amount-input::-webkit-outer-spin-button,
