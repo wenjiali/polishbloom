@@ -245,6 +245,232 @@
                     </div>
                 </div>
 
+                <!-- Interactive Rainbow Financial Calculator -->
+                <section id="rainbow-calculator" class="rainbow-calculator-section fade-in" style="transition-delay: 0.4s;">
+                    <div class="calculator-container">
+                        <div class="calculator-header">
+                            <h2>🌈 Interactive Rainbow Cashflow Calculator</h2>
+                            <p>Adjust the sliders below to see how your money flows across your values. Watch your personal rainbow come to life!</p>
+                        </div>
+                        
+                        <!-- Monthly Income Input -->
+                        <div class="income-input-section">
+                            <label for="monthly-income">Monthly Income ($)</label>
+                            <input type="number" id="monthly-income" value="5000" min="0" step="100" placeholder="Enter your monthly income">
+                        </div>
+                        
+                        <!-- Horizontal Rainbow Progress Bar -->
+                        <div class="rainbow-progress-container">
+                            <div class="rainbow-progress-header">
+                                <h3>Your Money Rainbow</h3>
+                                <div class="total-display">
+                                    <span id="total-allocated">$0</span> / <span id="total-income">$5,000</span>
+                                    <span class="remaining" id="remaining-amount">($5,000 remaining)</span>
+                                </div>
+                            </div>
+                            <div class="rainbow-progress-bar" id="rainbow-progress">
+                                <div class="progress-segment" data-color="survival" style="width: 0%; background-color: #FF6B6B;"></div>
+                                <div class="progress-segment" data-color="lifestyle" style="width: 0%; background-color: #FF9F43;"></div>
+                                <div class="progress-segment" data-color="dreams" style="width: 0%; background-color: #F7DC6F;"></div>
+                                <div class="progress-segment" data-color="growth" style="width: 0%; background-color: #58D68D;"></div>
+                                <div class="progress-segment" data-color="security" style="width: 0%; background-color: #5DADE2;"></div>
+                                <div class="progress-segment" data-color="education" style="width: 0%; background-color: #BB8FCE;"></div>
+                                <div class="progress-segment" data-color="giving" style="width: 0%; background-color: #F1948A;"></div>
+                            </div>
+                            <div class="progress-labels">
+                                <span class="label-survival">Survival</span>
+                                <span class="label-lifestyle">Lifestyle</span>
+                                <span class="label-dreams">Dreams</span>
+                                <span class="label-growth">Growth</span>
+                                <span class="label-security">Security</span>
+                                <span class="label-education">Education</span>
+                                <span class="label-giving">Giving</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Financial Category Sliders -->
+                        <div class="sliders-grid">
+                            <!-- Survival -->
+                            <div class="slider-item" data-color="survival">
+                                <div class="slider-header">
+                                    <div class="slider-icon" style="background-color: #FF6B6B;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                    </div>
+                                    <div class="slider-info">
+                                        <h4>Survival</h4>
+                                        <p>Rent, utilities, groceries, transportation</p>
+                                    </div>
+                                    <div class="slider-display">
+                                        <span class="amount">$0</span>
+                                        <span class="percentage">0%</span>
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="financial-slider" data-category="survival" min="0" max="100" value="0" step="1">
+                                    <div class="slider-track" style="background: linear-gradient(90deg, #FF6B6B, #ff8a8a);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Lifestyle -->
+                            <div class="slider-item" data-color="lifestyle">
+                                <div class="slider-header">
+                                    <div class="slider-icon" style="background-color: #FF9F43;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                                    </div>
+                                    <div class="slider-info">
+                                        <h4>Lifestyle</h4>
+                                        <p>Dining out, entertainment, hobbies, subscriptions</p>
+                                    </div>
+                                    <div class="slider-display">
+                                        <span class="amount">$0</span>
+                                        <span class="percentage">0%</span>
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="financial-slider" data-category="lifestyle" min="0" max="100" value="0" step="1">
+                                    <div class="slider-track" style="background: linear-gradient(90deg, #FF9F43, #ffb366);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dreams -->
+                            <div class="slider-item" data-color="dreams">
+                                <div class="slider-header">
+                                    <div class="slider-icon" style="background-color: #F7DC6F;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <div class="slider-info">
+                                        <h4>Dreams</h4>
+                                        <p>Travel, big purchases, passion projects</p>
+                                    </div>
+                                    <div class="slider-display">
+                                        <span class="amount">$0</span>
+                                        <span class="percentage">0%</span>
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="financial-slider" data-category="dreams" min="0" max="100" value="0" step="1">
+                                    <div class="slider-track" style="background: linear-gradient(90deg, #F7DC6F, #f9e79f);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Growth -->
+                            <div class="slider-item" data-color="growth">
+                                <div class="slider-header">
+                                    <div class="slider-icon" style="background-color: #58D68D;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                                    </div>
+                                    <div class="slider-info">
+                                        <h4>Growth</h4>
+                                        <p>Investments, business opportunities, side hustles</p>
+                                    </div>
+                                    <div class="slider-display">
+                                        <span class="amount">$0</span>
+                                        <span class="percentage">0%</span>
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="financial-slider" data-category="growth" min="0" max="100" value="0" step="1">
+                                    <div class="slider-track" style="background: linear-gradient(90deg, #58D68D, #7dd3a0);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Security -->
+                            <div class="slider-item" data-color="security">
+                                <div class="slider-header">
+                                    <div class="slider-icon" style="background-color: #5DADE2;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    </div>
+                                    <div class="slider-info">
+                                        <h4>Security</h4>
+                                        <p>Emergency fund, insurance, retirement savings</p>
+                                    </div>
+                                    <div class="slider-display">
+                                        <span class="amount">$0</span>
+                                        <span class="percentage">0%</span>
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="financial-slider" data-category="security" min="0" max="100" value="0" step="1">
+                                    <div class="slider-track" style="background: linear-gradient(90deg, #5DADE2, #7cbce8);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Education -->
+                            <div class="slider-item" data-color="education">
+                                <div class="slider-header">
+                                    <div class="slider-icon" style="background-color: #BB8FCE;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                    </div>
+                                    <div class="slider-info">
+                                        <h4>Education</h4>
+                                        <p>Courses, books, conferences, skill development</p>
+                                    </div>
+                                    <div class="slider-display">
+                                        <span class="amount">$0</span>
+                                        <span class="percentage">0%</span>
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="financial-slider" data-category="education" min="0" max="100" value="0" step="1">
+                                    <div class="slider-track" style="background: linear-gradient(90deg, #BB8FCE, #c9a6d6);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Giving Back -->
+                            <div class="slider-item" data-color="giving">
+                                <div class="slider-header">
+                                    <div class="slider-icon" style="background-color: #F1948A;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                    </div>
+                                    <div class="slider-info">
+                                        <h4>Giving Back</h4>
+                                        <p>Charity, helping family, community support</p>
+                                    </div>
+                                    <div class="slider-display">
+                                        <span class="amount">$0</span>
+                                        <span class="percentage">0%</span>
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="financial-slider" data-category="giving" min="0" max="100" value="0" step="1">
+                                    <div class="slider-track" style="background: linear-gradient(90deg, #F1948A, #f4a9a3);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Smart Suggestions -->
+                        <div class="smart-suggestions" id="smart-suggestions">
+                            <h3>💡 Smart Suggestions</h3>
+                            <div class="suggestions-content" id="suggestions-content">
+                                <p>Adjust your sliders above to get personalized recommendations for your financial rainbow!</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Preset Buttons -->
+                        <div class="preset-buttons">
+                            <h3>Quick Start Templates</h3>
+                            <div class="preset-grid">
+                                <button class="preset-btn" data-preset="conservative">
+                                    🛡️ Conservative
+                                    <small>Focus on security & survival</small>
+                                </button>
+                                <button class="preset-btn" data-preset="balanced">
+                                    ⚖️ Balanced
+                                    <small>Equal focus across all areas</small>
+                                </button>
+                                <button class="preset-btn" data-preset="growth">
+                                    📈 Growth-Focused
+                                    <small>Prioritize investments & dreams</small>
+                                </button>
+                                <button class="preset-btn" data-preset="dreamer">
+                                    ✨ The Dreamer
+                                    <small>Save big for your goals</small>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Detailed breakout view -->
                 <div class="rainbow-details-container fade-in" style="transition-delay: 0.3s;">
                     <div id="rainbow-details-content">

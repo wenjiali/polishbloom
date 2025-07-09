@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polish & Bloom Background Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2C2C2C;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .preview {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 2px solid #E8B4E3;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px solid #E8B4E3;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #8B4B8A, #E8B4E3);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 75, 138, 0.3);
+        }
+        
+        #canvas {
+            border: 2px solid #E8B4E3;
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .download-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #FDFCF8, #F4D3F2);
+            color: #2C2C2C;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 2px solid #E8B4E3;
+            transition: all 0.3s ease;
+        }
+        
+        .download-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 211, 242, 0.4);
+        }
+        
+        .info {
+            background: rgba(139, 75, 138, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #8B4B8A;
+        }
+        
+        .color-display {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            border: 2px solid #E8B4E3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Polish & Bloom Background Generator</h1>
+        
+        <div class="info">
+            <strong>About this gradient:</strong> This is the exact background from the "Align Your Money With Your Life" hero section. 
+            It creates a beautiful diagonal flow from warm cream to soft pink/lavender.
+        </div>
+        
+        <div class="preview" id="preview"></div>
+        
+        <div class="controls">
+            <div>
+                <label for="startColor">
+                    <span class="color-display" style="background: #FDFCF8;"></span>
+                    Start Color (Warm Cream):
+                </label>
+                <input type="color" id="startColor" value="#FDFCF8">
+            </div>
+            
+            <div>
+                <label for="endColor">
+                    <span class="color-display" style="background: #F4D3F2;"></span>
+                    End Color (Soft Pink):
+                </label>
+                <input type="color" id="endColor" value="#F4D3F2">
+            </div>
+            
+            <div>
+                <label for="width">Width (pixels):</label>
+                <select id="width">
+                    <option value="1920">1920 (Desktop HD)</option>
+                    <option value="2560">2560 (Desktop QHD)</option>
+                    <option value="3840">3840 (Desktop 4K)</option>
+                    <option value="1080">1080 (Mobile)</option>
+                    <option value="1200" selected>1200 (Standard)</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="height">Height (pixels):</label>
+                <select id="height">
+                    <option value="1080">1080 (Desktop HD)</option>
+                    <option value="1440">1440 (Desktop QHD)</option>
+                    <option value="2160">2160 (Desktop 4K)</option>
+                    <option value="1920">1920 (Mobile)</option>
+                    <option value="800" selected>800 (Standard)</option>
+                </select>
+            </div>
+        </div>
+        
+        <button onclick="generateBackground()">Generate High-Resolution Background</button>
+        
+        <canvas id="canvas" style="display: none;"></canvas>
+        
+        <div id="downloadSection" style="display: none; text-align: center; margin-top: 2rem;">
+            <p><strong>Your background is ready!</strong></p>
+            <a id="downloadLink" class="download-link" download="polish-bloom-background.png">
+                💾 Download PNG Background
+            </a>
+        </div>
+        
+        <div class="info" style="margin-top: 2rem;">
+            <h3>💡 How to Use:</h3>
+            <ul>
+                <li><strong>As CSS:</strong> Copy the gradient code from the CSS file</li>
+                <li><strong>As Image:</strong> Download the PNG and use as background image</li>
+                <li><strong>As SVG:</strong> Use the SVG files for scalable backgrounds</li>
+                <li><strong>Print:</strong> High-resolution versions work great for print materials</li>
+            </ul>
+            
+            <h3>🎨 Perfect For:</h3>
+            <ul>
+                <li>Website headers and hero sections</li>
+                <li>Social media graphics</li>
+                <li>Presentation backgrounds</li>
+                <li>Print materials (business cards, flyers)</li>
+                <li>Mobile app backgrounds</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function updatePreview() {
+            const startColor = document.getElementById('startColor').value;
+            const endColor = document.getElementById('endColor').value;
+            const preview = document.getElementById('preview');
+            
+            preview.style.background = `linear-gradient(135deg, ${startColor} 0%, ${endColor} 100%)`;
+        }
+        
+        function generateBackground() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const startColor = document.getElementById('startColor').value;
+            const endColor = document.getElementById('endColor').value;
+            const width = parseInt(document.getElementById('width').value);
+            const height = parseInt(document.getElementById('height').value);
+            
+            // Set canvas size
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, startColor);
+            gradient.addColorStop(1, endColor);
+            
+            // Fill canvas with gradient
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Generate download link
+            const dataURL = canvas.toDataURL('image/png', 1.0);
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = dataURL;
+            downloadLink.download = `polish-bloom-background-${width}x${height}.png`;
+            
+            // Show download section
+            document.getElementById('downloadSection').style.display = 'block';
+            canvas.style.display = 'block';
+            
+            // Update canvas display size for preview
+            canvas.style.maxWidth = '100%';
+            canvas.style.height = 'auto';
+        }
+        
+        // Update preview when colors change
+        document.getElementById('startColor').addEventListener('input', updatePreview);
+        document.getElementById('endColor').addEventListener('input', updatePreview);
+        
+        // Initialize preview
+        updatePreview();
+    </script>
+</body>
+</html> 

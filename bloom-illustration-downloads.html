@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polish & Bloom Floral Illustration Downloads</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #F7D7DA 0%, #D7E6F2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2C2C2C;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .original-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 16px;
+            border: 3px solid #EBA6A9;
+        }
+        
+        .original-preview svg {
+            width: 300px;
+            height: 225px;
+        }
+        
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .download-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px solid #EBA6A9;
+            transition: all 0.3s ease;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(235, 166, 169, 0.3);
+        }
+        
+        .download-card h3 {
+            color: #D3B88C;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            background: rgba(247, 215, 218, 0.3);
+            border-radius: 12px;
+            margin: 1rem 0;
+            border: 2px solid #F7D7DA;
+        }
+        
+        .preview-container svg {
+            max-width: 200px;
+            max-height: 130px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #EBA6A9, #D3B88C);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(235, 166, 169, 0.4);
+        }
+        
+        .download-btn.secondary {
+            background: linear-gradient(135deg, #F7D7DA, #D7E6F2);
+            color: #2C2C2C;
+            border: 2px solid #EBA6A9;
+        }
+        
+        .specs {
+            background: rgba(235, 166, 169, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .color-info {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid #EBA6A9;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .color-group {
+            background: rgba(255,255,255,0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #EBA6A9;
+        }
+        
+        .color-swatch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+        
+        .color-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #EBA6A9;
+        }
+        
+        .usage-examples {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid #EBA6A9;
+        }
+        
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .usage-item {
+            background: rgba(247, 215, 218, 0.4);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .generator-section {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid #C8B9D6;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .original-preview svg {
+                width: 250px;
+                height: 187px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 Bloom Illustration Collection</h1>
+            <p>Beautiful floral illustrations from your Polish & Bloom website</p>
+            <div class="original-preview">
+                <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#F7D7DA;stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#D7E6F2;stop-opacity:1" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M 10,10 C 20,0 180,0 190,10 L 190,130 C 180,145 20,145 10,130 Z" fill="url(#grad1)" opacity="0.2"/>
+                  <path d="M 20 140 C 60 80, 80 40, 100 20 C 120 40, 140 80, 180 140" stroke="#A7C6A1" stroke-width="2" fill="none" opacity="0.5"/>
+                  <path d="M 30 140 C 70 90, 85 50, 100 20 C 115 50, 130 90, 170 140" stroke="#A7C6A1" stroke-width="1.5" fill="none" opacity="0.4"/>
+                  <g transform="translate(45 55)">
+                    <circle cx="0" cy="0" r="15" fill="#D3B88C"/>
+                    <path d="M -15 15 C -15 45, 15 45, 15 15" fill="#D3B88C" />
+                  </g>
+                  <g transform="translate(100 50)">
+                    <circle cx="0" cy="0" r="20" fill="#EBA6A9"/>
+                    <path d="M -20 20 C -20 60, 20 60, 20 20" fill="#EBA6A9" />
+                  </g>
+                  <g transform="translate(155 55)">
+                    <circle cx="0" cy="0" r="15" fill="#C8B9D6"/>
+                    <path d="M -15 15 C -15 45, 15 45, 15 15" fill="#C8B9D6" />
+                  </g>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="downloads-grid">
+            <div class="download-card">
+                <h3>🎯 Original Illustration</h3>
+                <div class="preview-container">
+                    <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="orig" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style="stop-color:#F7D7DA;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#D7E6F2;stop-opacity:1" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M 10,10 C 20,0 180,0 190,10 L 190,130 C 180,145 20,145 10,130 Z" fill="url(#orig)" opacity="0.2"/>
+                      <path d="M 20 140 C 60 80, 80 40, 100 20 C 120 40, 140 80, 180 140" stroke="#A7C6A1" stroke-width="2" fill="none" opacity="0.5"/>
+                      <g transform="translate(45 55)">
+                        <circle cx="0" cy="0" r="15" fill="#D3B88C"/>
+                        <path d="M -15 15 C -15 45, 15 45, 15 15" fill="#D3B88C" />
+                      </g>
+                      <g transform="translate(100 50)">
+                        <circle cx="0" cy="0" r="20" fill="#EBA6A9"/>
+                        <path d="M -20 20 C -20 60, 20 60, 20 20" fill="#EBA6A9" />
+                      </g>
+                      <g transform="translate(155 55)">
+                        <circle cx="0" cy="0" r="15" fill="#C8B9D6"/>
+                        <path d="M -15 15 C -15 45, 15 45, 15 15" fill="#C8B9D6" />
+                      </g>
+                    </svg>
+                </div>
+                <p>The exact illustration from your website hero section. Soft peachy, pink, and lavender blooms.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Maintaining brand consistency<br>
+                    <strong>Colors:</strong> Peachy, Pink, Lavender<br>
+                    <strong>Format:</strong> Scalable SVG
+                </div>
+                <a href="assets/img/bloom-illustration.svg" download class="download-btn">
+                    💾 Download Original SVG
+                </a>
+            </div>
+            
+            <div class="download-card">
+                <h3>✨ HD Enhanced Version</h3>
+                <div class="preview-container">
+                    <svg viewBox="0 0 800 600" style="max-width: 160px; max-height: 120px;">
+                      <defs>
+                        <linearGradient id="hdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style="stop-color:#F7D7DA;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#D7E6F2;stop-opacity:1" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M 40,40 C 80,0 720,0 760,40 L 760,520 C 720,580 80,580 40,520 Z" fill="url(#hdGrad)" opacity="0.25"/>
+                      <path d="M 80 560 C 240 320, 320 160, 400 80 C 480 160, 560 320, 720 560" stroke="#A7C6A1" stroke-width="3" fill="none" opacity="0.6"/>
+                      <circle cx="180" cy="220" r="60" fill="#D3B88C"/>
+                      <circle cx="400" cy="200" r="80" fill="#EBA6A9"/>
+                      <circle cx="620" cy="220" r="60" fill="#C8B9D6"/>
+                    </svg>
+                </div>
+                <p>High-resolution version with enhanced details, textures, and subtle sparkle effects.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Print materials, large displays<br>
+                    <strong>Size:</strong> 800×600 (high resolution)<br>
+                    <strong>Features:</strong> Enhanced gradients, textures
+                </div>
+                <a href="assets/img/bloom-illustration-hd.svg" download class="download-btn">
+                    💾 Download HD Version
+                </a>
+            </div>
+            
+            <div class="download-card">
+                <h3>🌸 Spring Color Variant</h3>
+                <div class="preview-container">
+                    <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="spring" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style="stop-color:#E8F5E8;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#F0E8FF;stop-opacity:1" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M 10,10 C 20,0 180,0 190,10 L 190,130 C 180,145 20,145 10,130 Z" fill="url(#spring)" opacity="0.3"/>
+                      <path d="M 20 140 C 60 80, 80 40, 100 20 C 120 40, 140 80, 180 140" stroke="#7CB95F" stroke-width="2" fill="none" opacity="0.6"/>
+                      <g transform="translate(45 55)">
+                        <circle cx="0" cy="0" r="15" fill="#FF8A80"/>
+                        <path d="M -15 15 C -15 45, 15 45, 15 15" fill="#FF8A80" />
+                      </g>
+                      <g transform="translate(100 50)">
+                        <circle cx="0" cy="0" r="20" fill="#B39DDB"/>
+                        <path d="M -20 20 C -20 60, 20 60, 20 20" fill="#B39DDB" />
+                      </g>
+                      <g transform="translate(155 55)">
+                        <circle cx="0" cy="0" r="15" fill="#A5D6A7"/>
+                        <path d="M -15 15 C -15 45, 15 45, 15 15" fill="#A5D6A7" />
+                      </g>
+                    </svg>
+                </div>
+                <p>Fresh spring colors with coral pink, lavender, and sage green blooms.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Seasonal campaigns, variety<br>
+                    <strong>Colors:</strong> Coral, Lavender, Sage Green<br>
+                    <strong>Mood:</strong> Fresh, energetic, spring-like
+                </div>
+                <a href="assets/img/bloom-illustration-variant.svg" download class="download-btn">
+                    💾 Download Spring Variant
+                </a>
+            </div>
+            
+            <div class="download-card">
+                <h3>🛠️ Custom PNG Generator</h3>
+                <div class="preview-container" style="background: linear-gradient(135deg, #F7D7DA, #D7E6F2); display: flex; align-items: center; justify-content: center;">
+                    <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 8px; text-align: center;">
+                        <strong>🎨 Create Custom Sizes</strong><br>
+                        <small>High-resolution PNG files</small>
+                    </div>
+                </div>
+                <p>Interactive tool to generate custom PNG versions in any size with adjustable colors.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Specific dimensions, print<br>
+                    <strong>Output:</strong> PNG up to 4K resolution<br>
+                    <strong>Features:</strong> Color customization
+                </div>
+                <a href="generate-bloom-illustration.html" class="download-btn secondary">
+                    🚀 Open PNG Generator
+                </a>
+            </div>
+        </div>
+        
+        <div class="color-info">
+            <h2>🎨 Color Palettes</h2>
+            <div class="color-palette">
+                <div class="color-group">
+                    <h4>Original Palette</h4>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #D3B88C;"></div>
+                        <span><strong>Peachy:</strong> #D3B88C</span>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #EBA6A9;"></div>
+                        <span><strong>Pink:</strong> #EBA6A9</span>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #C8B9D6;"></div>
+                        <span><strong>Lavender:</strong> #C8B9D6</span>
+                    </div>
+                </div>
+                
+                <div class="color-group">
+                    <h4>Spring Variant</h4>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #FF8A80;"></div>
+                        <span><strong>Coral:</strong> #FF8A80</span>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #B39DDB;"></div>
+                        <span><strong>Lavender:</strong> #B39DDB</span>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #A5D6A7;"></div>
+                        <span><strong>Sage:</strong> #A5D6A7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="usage-examples">
+            <h2>🌟 Perfect For</h2>
+            <div class="usage-grid">
+                <div class="usage-item">
+                    <strong>🌐 Website Graphics</strong><br>
+                    Headers, hero sections, dividers
+                </div>
+                <div class="usage-item">
+                    <strong>📱 Social Media</strong><br>
+                    Instagram posts, story highlights
+                </div>
+                <div class="usage-item">
+                    <strong>🖼️ Print Materials</strong><br>
+                    Business cards, brochures, stickers
+                </div>
+                <div class="usage-item">
+                    <strong>📧 Email Design</strong><br>
+                    Newsletter headers, signatures
+                </div>
+                <div class="usage-item">
+                    <strong>💌 Invitations</strong><br>
+                    Wedding, baby shower, events
+                </div>
+                <div class="usage-item">
+                    <strong>📖 Brand Materials</strong><br>
+                    Logos, watermarks, patterns
+                </div>
+            </div>
+        </div>
+        
+        <div class="generator-section">
+            <h2>📋 Quick Usage Guide</h2>
+            <ol>
+                <li><strong>For Web:</strong> Use SVG files directly in HTML or as CSS background-image</li>
+                <li><strong>For Graphics Software:</strong> Open SVG in Photoshop, Illustrator, Figma, or Canva</li>
+                <li><strong>For Print:</strong> Use the PNG Generator for high-resolution (300 DPI recommended)</li>
+                <li><strong>For Branding:</strong> All versions maintain the same design language and proportions</li>
+            </ol>
+            
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(200, 185, 214, 0.2); border-radius: 8px;">
+                <strong>💡 Design Tip:</strong> These illustrations work beautifully as:
+                <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                    <li>Decorative elements alongside text</li>
+                    <li>Page dividers or section breaks</li>
+                    <li>Watermarks with reduced opacity</li>
+                    <li>Social media profile decorations</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

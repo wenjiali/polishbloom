@@ -1,0 +1,127 @@
+/**
+ * Polish & Bloom Hero Background Gradient
+ * Beautiful diagonal gradient from warm cream to soft pink/lavender
+ */
+
+/* The exact gradient from your "Align Your Money With Your Life" section */
+.polish-bloom-gradient {
+    background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+}
+
+/* Alternative: Using CSS custom properties for easier customization */
+:root {
+    --polish-bloom-start: #FDFCF8;  /* Warm cream */
+    --polish-bloom-end: #F4D3F2;    /* Soft pink/lavender */
+}
+
+.hero-background {
+    background: linear-gradient(135deg, var(--polish-bloom-start) 0%, var(--polish-bloom-end) 100%);
+}
+
+/* Variations of the gradient for different use cases */
+
+/* Vertical gradient */
+.polish-bloom-vertical {
+    background: linear-gradient(180deg, #FDFCF8 0%, #F4D3F2 100%);
+}
+
+/* Horizontal gradient */
+.polish-bloom-horizontal {
+    background: linear-gradient(90deg, #FDFCF8 0%, #F4D3F2 100%);
+}
+
+/* Radial gradient version */
+.polish-bloom-radial {
+    background: radial-gradient(ellipse at center, #FDFCF8 0%, #F4D3F2 100%);
+}
+
+/* With subtle texture overlay (optional) */
+.polish-bloom-textured {
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 60% 40%, rgba(255,255,255,0.08) 1px, transparent 1px),
+        radial-gradient(circle at 40% 70%, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+    background-size: 100px 100px, 80px 80px, 120px 120px, cover;
+}
+
+/* Full page background example */
+.fullscreen-polish-bloom {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+    background-attachment: fixed; /* Parallax effect */
+}
+
+/* Card/section background example */
+.card-polish-bloom {
+    background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+/* Button with Polish & Bloom gradient */
+.button-polish-bloom {
+    background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    color: #2C2C2C;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(244, 211, 242, 0.3);
+}
+
+.button-polish-bloom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 211, 242, 0.4);
+}
+
+/* Usage Examples */
+
+/*
+Example 1: Full page hero section
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+}
+
+Example 2: Card component
+.testimonial-card {
+    background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+    padding: 2rem;
+    border-radius: 16px;
+    margin: 1rem;
+}
+
+Example 3: Header/navigation
+.site-header {
+    background: linear-gradient(90deg, #FDFCF8 0%, #F4D3F2 100%);
+    padding: 1rem 0;
+}
+*/
+
+/* Color palette for matching elements */
+/*
+Primary Colors:
+- Start: #FDFCF8 (Warm Cream)
+- End: #F4D3F2 (Soft Pink/Lavender)
+
+Complementary Colors:
+- Text: #2C2C2C (Dark Gray)
+- Accent: #8B4B8A (Deep Purple)
+- Secondary: #E8B4E3 (Medium Pink)
+
+Usage:
+These colors work beautifully for:
+- Wellness and lifestyle brands
+- Beauty and spa websites
+- Feminine product lines
+- Creative portfolios
+- Wedding and event planning
+- Fashion and lifestyle blogs
+*/ 

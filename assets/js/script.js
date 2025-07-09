@@ -990,121 +990,422 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFormSteps();
         updateProgressBar();
     }
+
+    // --- QUIZ DATA ---
+    const quizQuestions = [
+        {
+            question: "When it comes to money, what's most important to you?",
+            answers: [
+                { text: "Building something lasting for future generations", points: { "The Legacy Circle": 3, "The Blueprint Circle": 1 } },
+                { text: "Having freedom to do what I want, when I want", points: { "The Horizon Circle": 3, "The Sanctuary Circle": 1 } },
+                { text: "Creating systems that work efficiently", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+                { text: "Taking care of others and making a difference", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
+                { text: "Building something new and exciting", points: { "The Catalyst Circle": 3, "The Horizon Circle": 1 } },
+                { text: "Feeling secure and at peace", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
+                { text: "Achieving my goals and reaching new heights", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
+            ]
+        },
+        {
+            question: "How do you prefer to make financial decisions?",
+            answers: [
+                { text: "With careful planning and family input", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
+                { text: "Quickly, based on what feels right", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
+                { text: "With detailed analysis and research", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+                { text: "By considering how it affects others", points: { "The Heartwood Circle": 3, "The Sanctuary Circle": 1 } },
+                { text: "By weighing risks and potential rewards", points: { "The Catalyst Circle": 3, "The Summit Circle": 1 } },
+                { text: "With plenty of time to think it through", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
+                { text: "By setting clear goals and metrics", points: { "The Summit Circle": 3, "The Blueprint Circle": 1 } }
+            ]
+        },
+        {
+            question: "What's your biggest financial fear?",
+            answers: [
+                { text: "Not leaving enough for my family", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
+                { text: "Being tied down by financial obligations", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
+                { text: "Making a mistake due to lack of planning", points: { "The Blueprint Circle": 3, "The Sanctuary Circle": 1 } },
+                { text: "Not being able to help others when they need it", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
+                { text: "Missing out on a great opportunity", points: { "The Catalyst Circle": 3, "The Summit Circle": 1 } },
+                { text: "Financial stress affecting my peace of mind", points: { "The Sanctuary Circle": 3, "The Heartwood Circle": 1 } },
+                { text: "Not achieving my financial goals", points: { "The Summit Circle": 3, "The Blueprint Circle": 1 } }
+            ]
+        },
+        {
+            question: "How do you view debt?",
+            answers: [
+                { text: "Something to avoid to protect family stability", points: { "The Legacy Circle": 3, "The Sanctuary Circle": 1 } },
+                { text: "A tool that shouldn't limit my experiences", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
+                { text: "Something that requires careful management", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+                { text: "Stressful, especially if it affects my ability to help others", points: { "The Heartwood Circle": 3, "The Sanctuary Circle": 1 } },
+                { text: "Worth it if it helps me build something valuable", points: { "The Catalyst Circle": 3, "The Blueprint Circle": 1 } },
+                { text: "Something that keeps me up at night", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
+                { text: "A strategic tool for achieving bigger goals", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
+            ]
+        },
+        {
+            question: "What motivates you most about building wealth?",
+            answers: [
+                { text: "Creating a legacy that lasts beyond me", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
+                { text: "Having the freedom to live life on my terms", points: { "The Horizon Circle": 3, "The Sanctuary Circle": 1 } },
+                { text: "The satisfaction of a well-executed plan", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
+                { text: "Being able to support causes I care about", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
+                { text: "Funding my next big idea or venture", points: { "The Catalyst Circle": 3, "The Horizon Circle": 1 } },
+                { text: "The peace of mind that comes with security", points: { "The Sanctuary Circle": 3, "The Blueprint Circle": 1 } },
+                { text: "The thrill of reaching new financial milestones", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
+            ]
+        }
+    ];
+
+    const quizResultsData = {
+        "The Legacy Circle": {
+            title: "The Legacy Circle",
+            circle: "Secure Planner",
+            description: "You're driven by the desire to create lasting security and build something meaningful for future generations.",
+            strengths: "Long-term thinking, family focus, stability-minded",
+            growth: "Balancing security with growth opportunities"
+        },
+        "The Horizon Circle": {
+            title: "The Horizon Circle",
+            circle: "Free Spirit",
+            description: "You value freedom and flexibility, wanting your money to enable experiences and adventures.",
+            strengths: "Adaptable, experiential, spontaneous",
+            growth: "Creating structure while maintaining flexibility"
+        },
+        "The Blueprint Circle": {
+            title: "The Blueprint Circle",
+            circle: "Strategist",
+            description: "You love systems, planning, and having detailed strategies for your financial future.",
+            strengths: "Analytical, organized, detail-oriented",
+            growth: "Balancing planning with adaptability"
+        },
+        "The Heartwood Circle": {
+            title: "The Heartwood Circle",
+            circle: "Nurturer",
+            description: "You're motivated by taking care of others and making a positive impact with your resources.",
+            strengths: "Generous, caring, values-driven",
+            growth: "Balancing giving with personal financial health"
+        },
+        "The Catalyst Circle": {
+            title: "The Catalyst Circle",
+            circle: "Creator",
+            description: "You're an innovator and risk-taker, excited about using money to build and create new things.",
+            strengths: "Innovative, entrepreneurial, opportunity-focused",
+            growth: "Managing risk while pursuing opportunities"
+        },
+        "The Sanctuary Circle": {
+            title: "The Sanctuary Circle",
+            circle: "Peacekeeper",
+            description: "You prioritize peace of mind and emotional well-being in your financial decisions.",
+            strengths: "Thoughtful, patient, security-focused",
+            growth: "Building confidence for bigger financial moves"
+        },
+        "The Summit Circle": {
+            title: "The Summit Circle",
+            circle: "Achiever",
+            description: "You're goal-oriented and motivated by reaching new heights in your financial journey.",
+            strengths: "Ambitious, goal-oriented, performance-driven",
+            growth: "Balancing achievement with well-being"
+        }
+    };
+
+    // --- RAINBOW CALCULATOR FUNCTIONALITY ---
+    const initializeRainbowCalculator = () => {
+        const calculatorSection = document.getElementById('rainbow-calculator');
+        if (!calculatorSection) return;
+
+        // Financial calculator state
+        const calculatorState = {
+            monthlyIncome: 5000,
+            allocations: {
+                survival: 0,
+                lifestyle: 0,
+                dreams: 0,
+                growth: 0,
+                security: 0,
+                education: 0,
+                giving: 0
+            }
+        };
+
+        // Color mapping for rainbow segments
+        const colorMapping = {
+            survival: '#FF6B6B',
+            lifestyle: '#FF9F43',
+            dreams: '#F7DC6F',
+            growth: '#58D68D',
+            security: '#5DADE2',
+            education: '#BB8FCE',
+            giving: '#F1948A'
+        };
+
+        // Preset configurations
+        const presets = {
+            conservative: {
+                survival: 50,
+                security: 20,
+                lifestyle: 15,
+                growth: 10,
+                education: 3,
+                dreams: 2,
+                giving: 0
+            },
+            balanced: {
+                survival: 35,
+                lifestyle: 20,
+                security: 15,
+                growth: 15,
+                education: 8,
+                dreams: 5,
+                giving: 2
+            },
+            growth: {
+                survival: 30,
+                growth: 25,
+                dreams: 15,
+                lifestyle: 15,
+                education: 10,
+                security: 3,
+                giving: 2
+            },
+            dreamer: {
+                survival: 25,
+                dreams: 30,
+                lifestyle: 20,
+                growth: 15,
+                education: 5,
+                security: 3,
+                giving: 2
+            }
+        };
+
+        // Initialize calculator
+        const setupCalculator = () => {
+            const incomeInput = document.getElementById('monthly-income');
+            const sliders = document.querySelectorAll('.financial-slider');
+            const presetButtons = document.querySelectorAll('.preset-btn');
+
+            // Income input handler
+            if (incomeInput) {
+                incomeInput.addEventListener('input', handleIncomeChange);
+                incomeInput.addEventListener('blur', formatIncomeDisplay);
+            }
+
+            // Slider handlers
+            sliders.forEach(slider => {
+                slider.addEventListener('input', handleSliderChange);
+                slider.addEventListener('change', () => {
+                    // Track slider usage
+                    if (window.amplitude) {
+                        window.amplitude.track('Rainbow Calculator Slider Used', {
+                            category: slider.dataset.category,
+                            value: slider.value,
+                            income: calculatorState.monthlyIncome
+                        });
+                    }
+                });
+            });
+
+            // Preset button handlers
+            presetButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const presetName = button.dataset.preset;
+                    applyPreset(presetName);
+                    
+                    // Analytics tracking
+                    if (window.amplitude) {
+                        window.amplitude.track('Rainbow Calculator Preset Applied', {
+                            preset: presetName,
+                            income: calculatorState.monthlyIncome
+                        });
+                    }
+                });
+            });
+
+            // Initialize with default values
+            updateAllDisplays();
+        };
+
+        const handleIncomeChange = (e) => {
+            const value = parseFloat(e.target.value) || 0;
+            calculatorState.monthlyIncome = Math.max(0, value);
+            updateAllDisplays();
+        };
+
+        const formatIncomeDisplay = (e) => {
+            const value = parseFloat(e.target.value) || 0;
+            e.target.value = Math.round(value);
+        };
+
+        const handleSliderChange = (e) => {
+            const category = e.target.dataset.category;
+            const value = parseFloat(e.target.value) || 0;
+            
+            calculatorState.allocations[category] = value;
+            updateAllDisplays();
+            updateSmartSuggestions();
+        };
+
+        const updateAllDisplays = () => {
+            updateSliderDisplays();
+            updateRainbowProgressBar();
+            updateTotalDisplay();
+        };
+
+        const updateSliderDisplays = () => {
+            Object.keys(calculatorState.allocations).forEach(category => {
+                const percentage = calculatorState.allocations[category];
+                const amount = (calculatorState.monthlyIncome * percentage) / 100;
+                
+                const slider = document.querySelector(`[data-category="${category}"]`);
+                const sliderItem = slider?.closest('.slider-item');
+                
+                if (sliderItem) {
+                    const amountDisplay = sliderItem.querySelector('.amount');
+                    const percentageDisplay = sliderItem.querySelector('.percentage');
+                    
+                    if (amountDisplay) amountDisplay.textContent = `$${Math.round(amount).toLocaleString()}`;
+                    if (percentageDisplay) percentageDisplay.textContent = `${percentage}%`;
+                }
+            });
+        };
+
+        const updateRainbowProgressBar = () => {
+            const progressBar = document.getElementById('rainbow-progress');
+            if (!progressBar) return;
+
+            const segments = progressBar.querySelectorAll('.progress-segment');
+            const totalAllocated = Object.values(calculatorState.allocations).reduce((sum, val) => sum + val, 0);
+            
+            segments.forEach(segment => {
+                const category = segment.dataset.color;
+                const percentage = calculatorState.allocations[category] || 0;
+                const width = Math.max(0, Math.min(percentage, 100));
+                
+                segment.style.width = `${width}%`;
+                
+                // Show percentage if segment is large enough
+                if (width > 8) {
+                    segment.textContent = `${Math.round(percentage)}%`;
+                } else {
+                    segment.textContent = '';
+                }
+                
+                // Add visual feedback for interaction
+                segment.style.transition = 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+
+            // Add overflow warning
+            if (totalAllocated > 100) {
+                progressBar.style.borderColor = '#e74c3c';
+                progressBar.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
+            } else {
+                progressBar.style.borderColor = 'var(--color-border)';
+                progressBar.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.1)';
+            }
+        };
+
+        const updateTotalDisplay = () => {
+            const totalAllocatedElement = document.getElementById('total-allocated');
+            const totalIncomeElement = document.getElementById('total-income');
+            const remainingElement = document.getElementById('remaining-amount');
+            
+            if (!totalAllocatedElement || !totalIncomeElement || !remainingElement) return;
+
+            const totalPercentage = Object.values(calculatorState.allocations).reduce((sum, val) => sum + val, 0);
+            const totalAllocated = (calculatorState.monthlyIncome * totalPercentage) / 100;
+            const remaining = calculatorState.monthlyIncome - totalAllocated;
+            
+            totalAllocatedElement.textContent = `$${Math.round(totalAllocated).toLocaleString()}`;
+            totalIncomeElement.textContent = `$${Math.round(calculatorState.monthlyIncome).toLocaleString()}`;
+            
+            if (remaining >= 0) {
+                remainingElement.textContent = `($${Math.round(remaining).toLocaleString()} remaining)`;
+                remainingElement.className = 'remaining';
+            } else {
+                remainingElement.textContent = `($${Math.round(Math.abs(remaining)).toLocaleString()} over budget)`;
+                remainingElement.className = 'remaining over-budget';
+            }
+        };
+
+        const updateSmartSuggestions = () => {
+            const suggestionsContent = document.getElementById('suggestions-content');
+            if (!suggestionsContent) return;
+
+            const totalPercentage = Object.values(calculatorState.allocations).reduce((sum, val) => sum + val, 0);
+            const allocations = calculatorState.allocations;
+            
+            let suggestions = [];
+
+            // Generate contextual suggestions
+            if (totalPercentage > 100) {
+                suggestions.push("💡 You're over budget! Try reducing some categories to balance your rainbow.");
+            } else if (totalPercentage < 50) {
+                suggestions.push("🌱 You have room to grow! Consider allocating more towards your priorities.");
+            }
+
+            if (allocations.survival < 25) {
+                suggestions.push("🏠 <strong>Consider increasing Survival funds</strong> - experts recommend 25-50% for essential needs.");
+            }
+
+            if (allocations.security === 0 && totalPercentage > 70) {
+                suggestions.push("🛡️ <strong>Don't forget your emergency fund!</strong> Even 5-10% for Security can provide peace of mind.");
+            }
+
+            if (allocations.dreams === 0 && allocations.lifestyle > 20) {
+                suggestions.push("✨ <strong>Make room for dreams!</strong> Try moving some Lifestyle funds to Dreams for future goals.");
+            }
+
+            if (allocations.growth > 0 && allocations.education === 0) {
+                suggestions.push("📚 <strong>Invest in yourself!</strong> Consider adding Education funds to accelerate your growth.");
+            }
+
+            if (allocations.giving > 5) {
+                suggestions.push("❤️ <strong>Beautiful generosity!</strong> Your giving spirit is inspiring.");
+            }
+
+            // Default encouragement
+            if (suggestions.length === 0) {
+                suggestions.push("🌈 <strong>Great balance!</strong> Your rainbow is looking beautiful. Adjust sliders to explore different possibilities.");
+            }
+
+            suggestionsContent.innerHTML = suggestions.join('<br><br>');
+        };
+
+        const applyPreset = (presetName) => {
+            const preset = presets[presetName];
+            if (!preset) return;
+
+            // Animate preset application
+            const sliders = document.querySelectorAll('.financial-slider');
+            sliders.forEach(slider => {
+                const category = slider.dataset.category;
+                if (preset.hasOwnProperty(category)) {
+                    // Add loading state
+                    slider.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        calculatorState.allocations[category] = preset[category];
+                        slider.value = preset[category];
+                        updateAllDisplays();
+                        updateSmartSuggestions();
+                    }, Math.random() * 200 + 100); // Stagger the updates
+                }
+            });
+
+            // Show visual feedback
+            const button = document.querySelector(`[data-preset="${presetName}"]`);
+            if (button) {
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 150);
+            }
+        };
+
+        // Initialize calculator when page loads
+        setupCalculator();
+    };
+
+    // Initialize rainbow calculator
+    initializeRainbowCalculator();
 });
-
-// --- QUIZ DATA ---
-const quizQuestions = [
-    {
-        question: "When it comes to money, what's most important to you?",
-        answers: [
-            { text: "Building something lasting for future generations", points: { "The Legacy Circle": 3, "The Blueprint Circle": 1 } },
-            { text: "Having freedom to do what I want, when I want", points: { "The Horizon Circle": 3, "The Sanctuary Circle": 1 } },
-            { text: "Creating systems that work efficiently", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
-            { text: "Taking care of others and making a difference", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
-            { text: "Building something new and exciting", points: { "The Catalyst Circle": 3, "The Horizon Circle": 1 } },
-            { text: "Feeling secure and at peace", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
-            { text: "Achieving my goals and reaching new heights", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
-        ]
-    },
-    {
-        question: "How do you prefer to make financial decisions?",
-        answers: [
-            { text: "With careful planning and family input", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
-            { text: "Quickly, based on what feels right", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
-            { text: "With detailed analysis and research", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
-            { text: "By considering how it affects others", points: { "The Heartwood Circle": 3, "The Sanctuary Circle": 1 } },
-            { text: "By weighing risks and potential rewards", points: { "The Catalyst Circle": 3, "The Summit Circle": 1 } },
-            { text: "With plenty of time to think it through", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
-            { text: "By setting clear goals and metrics", points: { "The Summit Circle": 3, "The Blueprint Circle": 1 } }
-        ]
-    },
-    {
-        question: "What's your biggest financial fear?",
-        answers: [
-            { text: "Not leaving enough for my family", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
-            { text: "Being tied down by financial obligations", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
-            { text: "Making a mistake due to lack of planning", points: { "The Blueprint Circle": 3, "The Sanctuary Circle": 1 } },
-            { text: "Not being able to help others when they need it", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
-            { text: "Missing out on a great opportunity", points: { "The Catalyst Circle": 3, "The Summit Circle": 1 } },
-            { text: "Financial stress affecting my peace of mind", points: { "The Sanctuary Circle": 3, "The Heartwood Circle": 1 } },
-            { text: "Not achieving my financial goals", points: { "The Summit Circle": 3, "The Blueprint Circle": 1 } }
-        ]
-    },
-    {
-        question: "How do you view debt?",
-        answers: [
-            { text: "Something to avoid to protect family stability", points: { "The Legacy Circle": 3, "The Sanctuary Circle": 1 } },
-            { text: "A tool that shouldn't limit my experiences", points: { "The Horizon Circle": 3, "The Catalyst Circle": 1 } },
-            { text: "Something that requires careful management", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
-            { text: "Stressful, especially if it affects my ability to help others", points: { "The Heartwood Circle": 3, "The Sanctuary Circle": 1 } },
-            { text: "Worth it if it helps me build something valuable", points: { "The Catalyst Circle": 3, "The Blueprint Circle": 1 } },
-            { text: "Something that keeps me up at night", points: { "The Sanctuary Circle": 3, "The Legacy Circle": 1 } },
-            { text: "A strategic tool for achieving bigger goals", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
-        ]
-    },
-    {
-        question: "What motivates you most about building wealth?",
-        answers: [
-            { text: "Creating a legacy that lasts beyond me", points: { "The Legacy Circle": 3, "The Heartwood Circle": 1 } },
-            { text: "Having the freedom to live life on my terms", points: { "The Horizon Circle": 3, "The Sanctuary Circle": 1 } },
-            { text: "The satisfaction of a well-executed plan", points: { "The Blueprint Circle": 3, "The Summit Circle": 1 } },
-            { text: "Being able to support causes I care about", points: { "The Heartwood Circle": 3, "The Legacy Circle": 1 } },
-            { text: "Funding my next big idea or venture", points: { "The Catalyst Circle": 3, "The Horizon Circle": 1 } },
-            { text: "The peace of mind that comes with security", points: { "The Sanctuary Circle": 3, "The Blueprint Circle": 1 } },
-            { text: "The thrill of reaching new financial milestones", points: { "The Summit Circle": 3, "The Catalyst Circle": 1 } }
-        ]
-    }
-];
-
-const quizResultsData = {
-    "The Legacy Circle": {
-        title: "The Legacy Circle",
-        circle: "Secure Planner",
-        description: "You're driven by the desire to create lasting security and build something meaningful for future generations.",
-        strengths: "Long-term thinking, family focus, stability-minded",
-        growth: "Balancing security with growth opportunities"
-    },
-    "The Horizon Circle": {
-        title: "The Horizon Circle",
-        circle: "Free Spirit",
-        description: "You value freedom and flexibility, wanting your money to enable experiences and adventures.",
-        strengths: "Adaptable, experiential, spontaneous",
-        growth: "Creating structure while maintaining flexibility"
-    },
-    "The Blueprint Circle": {
-        title: "The Blueprint Circle",
-        circle: "Strategist",
-        description: "You love systems, planning, and having detailed strategies for your financial future.",
-        strengths: "Analytical, organized, detail-oriented",
-        growth: "Balancing planning with adaptability"
-    },
-    "The Heartwood Circle": {
-        title: "The Heartwood Circle",
-        circle: "Nurturer",
-        description: "You're motivated by taking care of others and making a positive impact with your resources.",
-        strengths: "Generous, caring, values-driven",
-        growth: "Balancing giving with personal financial health"
-    },
-    "The Catalyst Circle": {
-        title: "The Catalyst Circle",
-        circle: "Creator",
-        description: "You're an innovator and risk-taker, excited about using money to build and create new things.",
-        strengths: "Innovative, entrepreneurial, opportunity-focused",
-        growth: "Managing risk while pursuing opportunities"
-    },
-    "The Sanctuary Circle": {
-        title: "The Sanctuary Circle",
-        circle: "Peacekeeper",
-        description: "You prioritize peace of mind and emotional well-being in your financial decisions.",
-        strengths: "Thoughtful, patient, security-focused",
-        growth: "Building confidence for bigger financial moves"
-    },
-    "The Summit Circle": {
-        title: "The Summit Circle",
-        circle: "Achiever",
-        description: "You're goal-oriented and motivated by reaching new heights in your financial journey.",
-        strengths: "Ambitious, goal-oriented, performance-driven",
-        growth: "Balancing achievement with well-being"
-    }
-};
 

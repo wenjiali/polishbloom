@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polish & Bloom Background Downloads</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: rgba(255,255,255,0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2C2C2C;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .gradient-preview {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #FDFCF8 0%, #F4D3F2 100%);
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 3px solid #E8B4E3;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gradient-preview::after {
+            content: 'Your Beautiful Background';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+        
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .download-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px solid #E8B4E3;
+            transition: all 0.3s ease;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(139, 75, 138, 0.2);
+        }
+        
+        .download-card h3 {
+            color: #8B4B8A;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .download-card p {
+            color: #2C2C2C;
+            margin-bottom: 1.5rem;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B4B8A, #E8B4E3);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 75, 138, 0.4);
+        }
+        
+        .download-btn.secondary {
+            background: linear-gradient(135deg, #FDFCF8, #F4D3F2);
+            color: #2C2C2C;
+            border: 2px solid #E8B4E3;
+        }
+        
+        .specs {
+            background: rgba(139, 75, 138, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .color-info {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid #E8B4E3;
+        }
+        
+        .color-swatches {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .color-swatch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #E8B4E3;
+        }
+        
+        .color-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #E8B4E3;
+        }
+        
+        .usage-examples {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid #E8B4E3;
+        }
+        
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .usage-item {
+            background: rgba(244, 211, 242, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 Your Beautiful Background</h1>
+            <p>Download the gorgeous gradient from your "Align Your Money With Your Life" section</p>
+            <div class="gradient-preview"></div>
+        </div>
+        
+        <div class="color-info">
+            <h2>🎨 Gradient Colors</h2>
+            <div class="color-swatches">
+                <div class="color-swatch">
+                    <div class="color-circle" style="background: #FDFCF8;"></div>
+                    <span><strong>Start:</strong> #FDFCF8 (Warm Cream)</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-circle" style="background: #F4D3F2;"></div>
+                    <span><strong>End:</strong> #F4D3F2 (Soft Pink)</span>
+                </div>
+            </div>
+            <p><strong>Direction:</strong> 135° diagonal (top-left to bottom-right)</p>
+        </div>
+        
+        <div class="downloads-grid">
+            <div class="download-card">
+                <h3>🎯 Simple SVG</h3>
+                <p>Clean gradient background. Perfect for most uses. Scales to any size without quality loss.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Web, print, graphics<br>
+                    <strong>Format:</strong> Scalable SVG<br>
+                    <strong>Size:</strong> ~1KB
+                </div>
+                <a href="assets/img/hero-background-simple.svg" download class="download-btn">
+                    💾 Download Simple SVG
+                </a>
+            </div>
+            
+            <div class="download-card">
+                <h3>✨ Enhanced SVG</h3>
+                <p>Gradient with subtle decorative elements and texture. More elegant and sophisticated look.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Premium designs, presentations<br>
+                    <strong>Format:</strong> Scalable SVG<br>
+                    <strong>Size:</strong> ~3KB
+                </div>
+                <a href="assets/img/hero-background.svg" download class="download-btn">
+                    💾 Download Enhanced SVG
+                </a>
+            </div>
+            
+            <div class="download-card">
+                <h3>💻 CSS Code</h3>
+                <p>Ready-to-use CSS with multiple gradient variations, color palette, and usage examples.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Web development<br>
+                    <strong>Format:</strong> CSS file<br>
+                    <strong>Includes:</strong> 10+ variations
+                </div>
+                <a href="polish-bloom-gradient.css" download class="download-btn">
+                    💾 Download CSS File
+                </a>
+            </div>
+            
+            <div class="download-card">
+                <h3>🛠️ PNG Generator</h3>
+                <p>Interactive tool to create custom PNG backgrounds in any size, from mobile to 4K resolution.</p>
+                <div class="specs">
+                    <strong>Best for:</strong> Custom sizes, print<br>
+                    <strong>Format:</strong> High-res PNG<br>
+                    <strong>Sizes:</strong> Up to 4K (3840×2160)
+                </div>
+                <a href="generate-background.html" class="download-btn secondary">
+                    🚀 Open PNG Generator
+                </a>
+            </div>
+        </div>
+        
+        <div class="usage-examples">
+            <h2>🌟 Perfect For</h2>
+            <div class="usage-grid">
+                <div class="usage-item">
+                    <strong>🌐 Websites</strong><br>
+                    Headers, hero sections, cards
+                </div>
+                <div class="usage-item">
+                    <strong>📱 Social Media</strong><br>
+                    Instagram, Facebook, LinkedIn
+                </div>
+                <div class="usage-item">
+                    <strong>🖼️ Print Materials</strong><br>
+                    Business cards, flyers, posters
+                </div>
+                <div class="usage-item">
+                    <strong>📊 Presentations</strong><br>
+                    PowerPoint, Keynote, Google Slides
+                </div>
+                <div class="usage-item">
+                    <strong>💌 Invitations</strong><br>
+                    Weddings, events, announcements
+                </div>
+                <div class="usage-item">
+                    <strong>📱 Apps</strong><br>
+                    Mobile app backgrounds
+                </div>
+            </div>
+        </div>
+        
+        <div class="color-info">
+            <h2>📋 Quick Instructions</h2>
+            <ol>
+                <li><strong>For Web:</strong> Use the CSS file or SVG as background-image</li>
+                <li><strong>For Graphics:</strong> Open SVG in Photoshop, Illustrator, or Figma</li>
+                <li><strong>For Print:</strong> Generate high-resolution PNG (300 DPI recommended)</li>
+                <li><strong>For Custom Sizes:</strong> Use the PNG Generator tool</li>
+            </ol>
+            
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(139, 75, 138, 0.1); border-radius: 8px;">
+                <strong>💡 Pro Tip:</strong> The SVG versions scale infinitely and are perfect for responsive designs. 
+                Use PNG only when you need a specific size or your software doesn't support SVG.
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

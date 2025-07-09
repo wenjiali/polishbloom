@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom Illustration PNG Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #F7D7DA 0%, #D7E6F2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .generator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .controls-panel {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .preview-panel {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+        
+        .control-group input, .control-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #EBA6A9;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .color-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .color-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .color-input input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: 2px solid #EBA6A9;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .preview-container {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 4/3;
+            border: 3px solid #EBA6A9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(247, 215, 218, 0.2);
+            margin-bottom: 1rem;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #EBA6A9, #D3B88C);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(235, 166, 169, 0.4);
+        }
+        
+        .download-info {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+            border: 2px solid #EBA6A9;
+        }
+        
+        .size-presets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .size-preset {
+            background: rgba(235, 166, 169, 0.2);
+            border: 2px solid #EBA6A9;
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .size-preset:hover {
+            background: rgba(235, 166, 169, 0.3);
+        }
+        
+        .size-preset.active {
+            background: #EBA6A9;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .generator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 Bloom Illustration PNG Generator</h1>
+            <p>Create custom PNG versions of your bloom illustration with any size and colors</p>
+        </div>
+        
+        <div class="generator-grid">
+            <div class="controls-panel">
+                <h2>🎨 Customization Options</h2>
+                
+                <div class="control-group">
+                    <label for="width">Width (px)</label>
+                    <input type="number" id="width" value="400" min="100" max="4000">
+                </div>
+                
+                <div class="control-group">
+                    <label for="height">Height (px)</label>
+                    <input type="number" id="height" value="300" min="100" max="4000">
+                </div>
+                
+                <div class="control-group">
+                    <label>Size Presets</label>
+                    <div class="size-presets">
+                        <div class="size-preset active" data-width="400" data-height="300">Web Small</div>
+                        <div class="size-preset" data-width="800" data-height="600">Web Large</div>
+                        <div class="size-preset" data-width="1200" data-height="900">HD Print</div>
+                        <div class="size-preset" data-width="2000" data-height="1500">4K Print</div>
+                        <div class="size-preset" data-width="1080" data-height="1080">Instagram</div>
+                        <div class="size-preset" data-width="1920" data-height="1080">YouTube</div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Bloom Colors</label>
+                    <div class="color-inputs">
+                        <div class="color-input">
+                            <label for="color1">Left Bloom</label>
+                            <input type="color" id="color1" value="#D3B88C">
+                        </div>
+                        <div class="color-input">
+                            <label for="color2">Center Bloom</label>
+                            <input type="color" id="color2" value="#EBA6A9">
+                        </div>
+                        <div class="color-input">
+                            <label for="color3">Right Bloom</label>
+                            <input type="color" id="color3" value="#C8B9D6">
+                        </div>
+                        <div class="color-input">
+                            <label for="stemColor">Stem Color</label>
+                            <input type="color" id="stemColor" value="#A7C6A1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="quality">Quality</label>
+                    <select id="quality">
+                        <option value="0.8">Standard (80%)</option>
+                        <option value="0.9">High (90%)</option>
+                        <option value="1.0" selected>Maximum (100%)</option>
+                    </select>
+                </div>
+                
+                <button class="generate-btn" onclick="generatePNG()">
+                    🎨 Generate & Download PNG
+                </button>
+            </div>
+            
+            <div class="preview-panel">
+                <h3>🖼️ Live Preview</h3>
+                <div class="preview-container">
+                    <svg id="previewSVG" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <defs>
+                            <linearGradient id="previewGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#F7D7DA;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#D7E6F2;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M 10,10 C 20,0 180,0 190,10 L 190,130 C 180,145 20,145 10,130 Z" fill="url(#previewGrad)" opacity="0.2"/>
+                        <path id="stem1" d="M 20 140 C 60 80, 80 40, 100 20 C 120 40, 140 80, 180 140" stroke="#A7C6A1" stroke-width="2" fill="none" opacity="0.5"/>
+                        <path id="stem2" d="M 30 140 C 70 90, 85 50, 100 20 C 115 50, 130 90, 170 140" stroke="#A7C6A1" stroke-width="1.5" fill="none" opacity="0.4"/>
+                        <g transform="translate(45 55)">
+                            <circle id="bloom1" cx="0" cy="0" r="15" fill="#D3B88C"/>
+                            <path id="bloomBody1" d="M -15 15 C -15 45, 15 45, 15 15" fill="#D3B88C" />
+                        </g>
+                        <g transform="translate(100 50)">
+                            <circle id="bloom2" cx="0" cy="0" r="20" fill="#EBA6A9"/>
+                            <path id="bloomBody2" d="M -20 20 C -20 60, 20 60, 20 20" fill="#EBA6A9" />
+                        </g>
+                        <g transform="translate(155 55)">
+                            <circle id="bloom3" cx="0" cy="0" r="15" fill="#C8B9D6"/>
+                            <path id="bloomBody3" d="M -15 15 C -15 45, 15 45, 15 15" fill="#C8B9D6" />
+                        </g>
+                    </svg>
+                </div>
+                <div style="text-align: center; color: #666; font-size: 0.9rem;">
+                    <span id="previewSize">400 × 300 pixels</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="download-info">
+            <h2>📋 Download Information</h2>
+            <ul>
+                <li><strong>Format:</strong> PNG with transparent background</li>
+                <li><strong>Quality:</strong> Lossless compression</li>
+                <li><strong>Use Cases:</strong> Web graphics, print materials, social media</li>
+                <li><strong>Browser Support:</strong> All modern browsers</li>
+            </ul>
+            
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(235, 166, 169, 0.2); border-radius: 8px;">
+                <strong>💡 Pro Tips:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                    <li>For print: Use 300 DPI (multiply dimensions by 3.75)</li>
+                    <li>For web: Keep under 1200px width for fast loading</li>
+                    <li>For social media: Use platform-specific presets</li>
+                    <li>Higher quality = larger file size</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Update preview colors in real-time
+        function updatePreview() {
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            const color3 = document.getElementById('color3').value;
+            const stemColor = document.getElementById('stemColor').value;
+            
+            document.getElementById('bloom1').setAttribute('fill', color1);
+            document.getElementById('bloomBody1').setAttribute('fill', color1);
+            document.getElementById('bloom2').setAttribute('fill', color2);
+            document.getElementById('bloomBody2').setAttribute('fill', color2);
+            document.getElementById('bloom3').setAttribute('fill', color3);
+            document.getElementById('bloomBody3').setAttribute('fill', color3);
+            document.getElementById('stem1').setAttribute('stroke', stemColor);
+            document.getElementById('stem2').setAttribute('stroke', stemColor);
+            
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            document.getElementById('previewSize').textContent = `${width} × ${height} pixels`;
+        }
+        
+        // Size preset handling
+        document.querySelectorAll('.size-preset').forEach(preset => {
+            preset.addEventListener('click', function() {
+                document.querySelectorAll('.size-preset').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                
+                const width = this.dataset.width;
+                const height = this.dataset.height;
+                document.getElementById('width').value = width;
+                document.getElementById('height').value = height;
+                updatePreview();
+            });
+        });
+        
+        // Add event listeners for real-time preview updates
+        ['color1', 'color2', 'color3', 'stemColor', 'width', 'height'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePreview);
+        });
+        
+        // Generate PNG function
+        function generatePNG() {
+            const width = parseInt(document.getElementById('width').value);
+            const height = parseInt(document.getElementById('height').value);
+            const quality = parseFloat(document.getElementById('quality').value);
+            
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            const color3 = document.getElementById('color3').value;
+            const stemColor = document.getElementById('stemColor').value;
+            
+            // Create SVG with custom colors and size
+            const svgData = `
+                <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#F7D7DA;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#D7E6F2;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 10,10 C 20,0 180,0 190,10 L 190,130 C 180,145 20,145 10,130 Z" fill="url(#grad1)" opacity="0.2"/>
+                    <path d="M 20 140 C 60 80, 80 40, 100 20 C 120 40, 140 80, 180 140" stroke="${stemColor}" stroke-width="2" fill="none" opacity="0.5"/>
+                    <path d="M 30 140 C 70 90, 85 50, 100 20 C 115 50, 130 90, 170 140" stroke="${stemColor}" stroke-width="1.5" fill="none" opacity="0.4"/>
+                    <g transform="translate(45 55)">
+                        <circle cx="0" cy="0" r="15" fill="${color1}"/>
+                        <path d="M -15 15 C -15 45, 15 45, 15 15" fill="${color1}" />
+                    </g>
+                    <g transform="translate(100 50)">
+                        <circle cx="0" cy="0" r="20" fill="${color2}"/>
+                        <path d="M -20 20 C -20 60, 20 60, 20 20" fill="${color2}" />
+                    </g>
+                    <g transform="translate(155 55)">
+                        <circle cx="0" cy="0" r="15" fill="${color3}"/>
+                        <path d="M -15 15 C -15 45, 15 45, 15 15" fill="${color3}" />
+                    </g>
+                </svg>
+            `;
+            
+            // Create canvas and convert to PNG
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            
+            const img = new Image();
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(svgBlob);
+            
+            img.onload = function() {
+                // Draw with transparent background
+                ctx.clearRect(0, 0, width, height);
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Convert to PNG and download
+                canvas.toBlob(function(blob) {
+                    const a = document.createElement('a');
+                    a.download = `bloom-illustration-${width}x${height}.png`;
+                    a.href = URL.createObjectURL(blob);
+                    a.click();
+                    URL.revokeObjectURL(a.href);
+                }, 'image/png', quality);
+                
+                URL.revokeObjectURL(url);
+            };
+            
+            img.src = url;
+        }
+        
+        // Initialize preview
+        updatePreview();
+    </script>
+</body>
+</html> 
