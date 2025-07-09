@@ -460,7 +460,7 @@
                         </div>
                         
                         <!-- Personalized Reflection Report -->
-                        <div class="reflection-report" id="reflection-report" style="display: none;">
+                        <div class="reflection-report" id="reflection-report">
                             <div class="reflection-header">
                                 <h3>✨ Your Personalized Rainbow Reflection</h3>
                                 <p class="reflection-subtitle">Insights crafted just for you</p>
@@ -468,7 +468,8 @@
                             
                             <div class="reflection-content">
                                 <div class="reflection-text" id="reflection-text">
-                                    <!-- Generated reflection will appear here -->
+                                    <p>🌱 Welcome to your Rainbow Cashflow journey! As you allocate your income across the categories above, I'll create a personalized reflection just for you.</p>
+                                    <p>💡 <strong>Get started:</strong> Try typing dollar amounts in the category inputs above (like $2000 for Survival), and watch your personalized insights bloom here!</p>
                                 </div>
                                 
                                 <div class="reflection-actions">
@@ -486,7 +487,7 @@
                         </div>
 
                         <!-- Rainbow Comparison (Previous vs Current) -->
-                        <div class="rainbow-comparison" id="rainbow-comparison" style="display: none;">
+                        <div class="rainbow-comparison" id="rainbow-comparison">
                             <div class="comparison-header">
                                 <h3>🌱 Your Rainbow Growth Journey</h3>
                                 <p class="comparison-subtitle">See how your financial garden is blooming</p>
@@ -497,38 +498,46 @@
                                     <div class="comparison-item">
                                         <h4>Previous Month</h4>
                                         <div class="mini-rainbow-bar" id="previous-rainbow">
-                                            <!-- Previous rainbow segments -->
+                                            <div class="mini-progress-segment" style="background-color: #f3f4f6; width: 100%; color: #6b7280; font-size: 0.9rem;">No data yet</div>
                                         </div>
                                     </div>
                                     <div class="comparison-arrow">➡️</div>
                                     <div class="comparison-item">
                                         <h4>Current Rainbow</h4>
                                         <div class="mini-rainbow-bar" id="current-rainbow">
-                                            <!-- Current rainbow segments -->
+                                            <div class="mini-progress-segment" style="background-color: #f3f4f6; width: 100%; color: #6b7280; font-size: 0.9rem;">Start allocating above</div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="growth-celebrations" id="growth-celebrations">
-                                    <!-- Celebration messages will appear here -->
+                                    <div class="celebration-item">🌱 Start allocating your income above to see your growth journey!</div>
+                                    <div class="celebration-item">📊 Your progress will be saved and compared month-to-month</div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Gentle Rebalancing Tips -->
-                        <div class="rebalancing-tips" id="rebalancing-tips" style="display: none;">
+                        <div class="rebalancing-tips" id="rebalancing-tips">
                             <div class="tips-header">
                                 <h3>🌿 Gentle Rebalancing Suggestions</h3>
                                 <p class="tips-subtitle">Small shifts, beautiful growth</p>
                             </div>
                             
                             <div class="tips-content" id="tips-content">
-                                <!-- Generated tips will appear here -->
+                                <div class="tip-item">
+                                    <div class="tip-title">🌟 Getting Started</div>
+                                    <div class="tip-description">Begin by allocating amounts to each category above. I'll provide personalized suggestions based on your unique rainbow!</div>
+                                </div>
+                                <div class="tip-item">
+                                    <div class="tip-title">💡 Pro Tip</div>
+                                    <div class="tip-description">Try the preset buttons above for quick starting templates, then customize to match your values.</div>
+                                </div>
                             </div>
                             
                             <div class="monthly-challenge" id="monthly-challenge">
                                 <h4>🎯 This Month's Rainbow Challenge</h4>
-                                <p id="challenge-text"></p>
+                                <p id="challenge-text">Complete your rainbow allocation above to unlock your personalized monthly challenge!</p>
                             </div>
                         </div>
                         
@@ -799,8 +808,11 @@
                     }
                     
                     // Show advanced features when they have a meaningful rainbow
-                    if (totalAllocated >= 50) {
+                    if (totalAllocated >= 15) {  // Lowered to 15 for easier access
                         showAdvancedFeatures();
+                    } else if (totalAllocated >= 10) {
+                        // Show preview of features
+                        showFeaturePreview();
                     }
                 });
                 
@@ -818,6 +830,9 @@
             } catch (error) {
                 console.error('Error in initialization:', error);
             }
+            
+            // Show features immediately so users can see what's available
+            showAdvancedFeatures();
         });
 
         function showAdvancedFeatures() {
