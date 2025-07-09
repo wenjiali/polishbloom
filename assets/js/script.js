@@ -1224,8 +1224,30 @@ document.addEventListener('DOMContentLoaded', () => {
             updateAllDisplays();
         };
 
+        const parseIncomeValue = (input) => {
+            if (!input) return 0;
+            
+            // Convert to string and clean up
+            const cleanInput = input.toString().replace(/[\$,\s]/g, '').toLowerCase();
+            
+            // Handle K notation (e.g., "15k" = 15000)
+            if (cleanInput.includes('k')) {
+                const numericPart = parseFloat(cleanInput.replace('k', ''));
+                return numericPart * 1000;
+            }
+            
+            // Handle M notation (e.g., "1.5m" = 1500000)
+            if (cleanInput.includes('m')) {
+                const numericPart = parseFloat(cleanInput.replace('m', ''));
+                return numericPart * 1000000;
+            }
+            
+            // Regular number
+            return parseFloat(cleanInput) || 0;
+        };
+
         const handleIncomeChange = (e) => {
-            const value = parseFloat(e.target.value) || 0;
+            const value = parseIncomeValue(e.target.value);
             calculatorState.monthlyIncome = Math.max(0, value);
             updateAllDisplays();
         };

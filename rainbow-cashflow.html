@@ -727,9 +727,47 @@
             }
         };
 
+        // Helper function to parse income values like "15K" = 15000
+        function parseIncomeValue(input) {
+            if (!input) return 0;
+            
+            // Convert to string and clean up
+            const cleanInput = input.toString().replace(/[\$,\s]/g, '').toLowerCase();
+            
+            // Handle K notation (e.g., "15k" = 15000)
+            if (cleanInput.includes('k')) {
+                const numericPart = parseFloat(cleanInput.replace('k', ''));
+                return numericPart * 1000;
+            }
+            
+            // Handle M notation (e.g., "1.5m" = 1500000)
+            if (cleanInput.includes('m')) {
+                const numericPart = parseFloat(cleanInput.replace('m', ''));
+                return numericPart * 1000000;
+            }
+            
+            // Regular number
+            return parseFloat(cleanInput) || 0;
+        }
+
         // Initialize calculator when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 DOM loaded, starting simple test...');
+            
+            // Set up monthly income input listener
+            const monthlyIncomeInput = document.getElementById('monthly-income');
+            if (monthlyIncomeInput) {
+                monthlyIncomeInput.addEventListener('input', function() {
+                    const newIncome = parseIncomeValue(monthlyIncomeInput.value);
+                    rainbowCalculator.monthlyIncome = newIncome;
+                    console.log('💰 Updated monthly income to:', newIncome);
+                });
+                
+                // Initialize from current input value if any
+                if (monthlyIncomeInput.value) {
+                    rainbowCalculator.monthlyIncome = parseIncomeValue(monthlyIncomeInput.value);
+                }
+            }
             
             // Simple test - just try to find and interact with inputs
             const inputs = document.querySelectorAll('.amount-input');
