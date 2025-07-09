@@ -301,11 +301,11 @@
                                         <p>Rent, utilities, groceries, transportation</p>
                                     </div>
                                     <div class="slider-display">
-                                        <span class="amount">$0</span>
-                                        <div class="percentage-input-container">
-                                            <input type="number" class="percentage-input" data-category="survival" min="0" max="100" value="0" step="1">
-                                            <span class="percentage-symbol">%</span>
+                                        <div class="amount-input-container">
+                                            <span class="dollar-symbol">$</span>
+                                            <input type="number" class="amount-input" data-category="survival" min="0" value="0" step="50" placeholder="0">
                                         </div>
+                                        <span class="percentage-display">0%</span>
                                     </div>
                                 </div>
                                 <div class="slider-container">
@@ -325,11 +325,11 @@
                                         <p>Dining out, entertainment, hobbies, subscriptions</p>
                                     </div>
                                     <div class="slider-display">
-                                        <span class="amount">$0</span>
-                                        <div class="percentage-input-container">
-                                            <input type="number" class="percentage-input" data-category="lifestyle" min="0" max="100" value="0" step="1">
-                                            <span class="percentage-symbol">%</span>
+                                        <div class="amount-input-container">
+                                            <span class="dollar-symbol">$</span>
+                                            <input type="number" class="amount-input" data-category="lifestyle" min="0" value="0" step="50" placeholder="0">
                                         </div>
+                                        <span class="percentage-display">0%</span>
                                     </div>
                                 </div>
                                 <div class="slider-container">
@@ -349,11 +349,11 @@
                                         <p>Travel, big purchases, passion projects</p>
                                     </div>
                                     <div class="slider-display">
-                                        <span class="amount">$0</span>
-                                        <div class="percentage-input-container">
-                                            <input type="number" class="percentage-input" data-category="dreams" min="0" max="100" value="0" step="1">
-                                            <span class="percentage-symbol">%</span>
+                                        <div class="amount-input-container">
+                                            <span class="dollar-symbol">$</span>
+                                            <input type="number" class="amount-input" data-category="dreams" min="0" value="0" step="50" placeholder="0">
                                         </div>
+                                        <span class="percentage-display">0%</span>
                                     </div>
                                 </div>
                                 <div class="slider-container">
@@ -373,11 +373,11 @@
                                         <p>Investments, business opportunities, side hustles</p>
                                     </div>
                                     <div class="slider-display">
-                                        <span class="amount">$0</span>
-                                        <div class="percentage-input-container">
-                                            <input type="number" class="percentage-input" data-category="growth" min="0" max="100" value="0" step="1">
-                                            <span class="percentage-symbol">%</span>
+                                        <div class="amount-input-container">
+                                            <span class="dollar-symbol">$</span>
+                                            <input type="number" class="amount-input" data-category="growth" min="0" value="0" step="50" placeholder="0">
                                         </div>
+                                        <span class="percentage-display">0%</span>
                                     </div>
                                 </div>
                                 <div class="slider-container">
@@ -397,11 +397,11 @@
                                         <p>Emergency fund, insurance, retirement savings</p>
                                     </div>
                                     <div class="slider-display">
-                                        <span class="amount">$0</span>
-                                        <div class="percentage-input-container">
-                                            <input type="number" class="percentage-input" data-category="security" min="0" max="100" value="0" step="1">
-                                            <span class="percentage-symbol">%</span>
+                                        <div class="amount-input-container">
+                                            <span class="dollar-symbol">$</span>
+                                            <input type="number" class="amount-input" data-category="security" min="0" value="0" step="50" placeholder="0">
                                         </div>
+                                        <span class="percentage-display">0%</span>
                                     </div>
                                 </div>
                                 <div class="slider-container">
@@ -421,11 +421,11 @@
                                         <p>Courses, books, conferences, skill development</p>
                                     </div>
                                     <div class="slider-display">
-                                        <span class="amount">$0</span>
-                                        <div class="percentage-input-container">
-                                            <input type="number" class="percentage-input" data-category="education" min="0" max="100" value="0" step="1">
-                                            <span class="percentage-symbol">%</span>
+                                        <div class="amount-input-container">
+                                            <span class="dollar-symbol">$</span>
+                                            <input type="number" class="amount-input" data-category="education" min="0" value="0" step="50" placeholder="0">
                                         </div>
+                                        <span class="percentage-display">0%</span>
                                     </div>
                                 </div>
                                 <div class="slider-container">
@@ -445,11 +445,11 @@
                                         <p>Charity, helping family, community support</p>
                                     </div>
                                     <div class="slider-display">
-                                        <span class="amount">$0</span>
-                                        <div class="percentage-input-container">
-                                            <input type="number" class="percentage-input" data-category="giving" min="0" max="100" value="0" step="1">
-                                            <span class="percentage-symbol">%</span>
+                                        <div class="amount-input-container">
+                                            <span class="dollar-symbol">$</span>
+                                            <input type="number" class="amount-input" data-category="giving" min="0" value="0" step="50" placeholder="0">
                                         </div>
+                                        <span class="percentage-display">0%</span>
                                     </div>
                                 </div>
                                 <div class="slider-container">
@@ -654,7 +654,7 @@
             // Set up event listeners
             setupIncomeInput();
             setupSliders();
-            setupPercentageInputs(); // Add this new function
+            setupAmountInputs(); // Changed from setupPercentageInputs
             setupPresetButtons();
             setupColorSystemClicks();
             
@@ -697,6 +697,75 @@
             }
         }
 
+        function setupAmountInputs() {
+            const amountInputs = document.querySelectorAll('.amount-input');
+            amountInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    const category = e.target.getAttribute('data-category');
+                    let amount = parseInt(e.target.value) || 0;
+                    
+                    // Ensure amount doesn't exceed income
+                    amount = Math.max(0, Math.min(rainbowCalculator.monthlyIncome, amount));
+                    e.target.value = amount;
+                    
+                    // Calculate percentage from dollar amount
+                    const percentage = rainbowCalculator.monthlyIncome > 0 ? 
+                        Math.round((amount / rainbowCalculator.monthlyIncome) * 100) : 0;
+                    
+                    rainbowCalculator.allocations[category] = percentage;
+                    
+                    // Update corresponding slider
+                    const slider = document.querySelector(`.financial-slider[data-category="${category}"]`);
+                    if (slider) {
+                        slider.value = percentage;
+                    }
+                    
+                    updateRainbowDisplay();
+                    updateSmartSuggestions();
+                    
+                    // Add glow effect to the input container
+                    const inputContainer = e.target.closest('.amount-input-container');
+                    inputContainer.style.boxShadow = '0 0 10px rgba(244, 165, 185, 0.5)';
+                    setTimeout(() => {
+                        inputContainer.style.boxShadow = '';
+                    }, 300);
+                    
+                    // Track analytics
+                    if (window.amplitude) {
+                        window.amplitude.track('Rainbow Amount Typed', {
+                            category: category,
+                            amount: amount,
+                            percentage: percentage,
+                            total_allocated: getTotalAllocatedPercentage()
+                        });
+                    }
+                });
+                
+                // Handle enter key and focus/blur
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.target.blur();
+                    }
+                });
+                
+                input.addEventListener('blur', function(e) {
+                    const amount = parseInt(e.target.value) || 0;
+                    e.target.value = Math.max(0, Math.min(rainbowCalculator.monthlyIncome, amount));
+                    
+                    // Format with commas for display
+                    if (amount > 0) {
+                        e.target.value = amount.toLocaleString();
+                    }
+                });
+                
+                input.addEventListener('focus', function(e) {
+                    // Remove commas for editing
+                    e.target.value = e.target.value.replace(/,/g, '');
+                    e.target.select(); // Select all text when focused
+                });
+            });
+        }
+
         function setupSliders() {
             const sliders = document.querySelectorAll('.financial-slider');
             sliders.forEach(slider => {
@@ -706,10 +775,13 @@
                     
                     rainbowCalculator.allocations[category] = percentage;
                     
-                    // Update corresponding number input
-                    const numberInput = document.querySelector(`.percentage-input[data-category="${category}"]`);
-                    if (numberInput) {
-                        numberInput.value = percentage;
+                    // Calculate dollar amount from percentage
+                    const amount = Math.round((percentage / 100) * rainbowCalculator.monthlyIncome);
+                    
+                    // Update corresponding amount input
+                    const amountInput = document.querySelector(`.amount-input[data-category="${category}"]`);
+                    if (amountInput) {
+                        amountInput.value = amount.toLocaleString();
                     }
                     
                     updateRainbowDisplay();
@@ -727,6 +799,7 @@
                         window.amplitude.track('Rainbow Slider Adjusted', {
                             category: category,
                             percentage: percentage,
+                            amount: amount,
                             total_allocated: getTotalAllocatedPercentage()
                         });
                     }
@@ -739,163 +812,6 @@
                     }
                 });
             });
-        }
-
-        function setupPercentageInputs() {
-            const percentageInputs = document.querySelectorAll('.percentage-input');
-            percentageInputs.forEach(input => {
-                input.addEventListener('input', function(e) {
-                    const category = e.target.getAttribute('data-category');
-                    let percentage = parseInt(e.target.value) || 0;
-                    
-                    // Clamp value between 0 and 100
-                    percentage = Math.max(0, Math.min(100, percentage));
-                    e.target.value = percentage;
-                    
-                    rainbowCalculator.allocations[category] = percentage;
-                    
-                    // Update corresponding slider
-                    const slider = document.querySelector(`.financial-slider[data-category="${category}"]`);
-                    if (slider) {
-                        slider.value = percentage;
-                    }
-                    
-                    updateRainbowDisplay();
-                    updateSmartSuggestions();
-                    
-                    // Add glow effect to the input container
-                    const inputContainer = e.target.closest('.percentage-input-container');
-                    inputContainer.style.boxShadow = '0 0 10px rgba(244, 165, 185, 0.5)';
-                    setTimeout(() => {
-                        inputContainer.style.boxShadow = '';
-                    }, 300);
-                    
-                    // Track analytics
-                    if (window.amplitude) {
-                        window.amplitude.track('Rainbow Input Typed', {
-                            category: category,
-                            percentage: percentage,
-                            total_allocated: getTotalAllocatedPercentage()
-                        });
-                    }
-                });
-                
-                // Handle enter key and focus/blur
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        e.target.blur();
-                    }
-                });
-                
-                input.addEventListener('blur', function(e) {
-                    const percentage = parseInt(e.target.value) || 0;
-                    e.target.value = Math.max(0, Math.min(100, percentage));
-                });
-                
-                input.addEventListener('focus', function(e) {
-                    e.target.select(); // Select all text when focused
-                });
-            });
-        }
-
-        function setupPresetButtons() {
-            const presetButtons = document.querySelectorAll('.preset-btn');
-            presetButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const presetType = e.target.getAttribute('data-preset');
-                    if (rainbowCalculator.presets[presetType]) {
-                        applyPreset(presetType);
-                        
-                        // Visual feedback
-                        button.style.transform = 'scale(0.95)';
-                        button.style.background = 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))';
-                        button.style.color = 'white';
-                        
-                        setTimeout(() => {
-                            button.style.transform = '';
-                            button.style.background = '';
-                            button.style.color = '';
-                        }, 200);
-                        
-                        // Track analytics
-                        if (window.amplitude) {
-                            window.amplitude.track('Rainbow Preset Applied', {
-                                preset_type: presetType
-                            });
-                        }
-                    }
-                });
-            });
-        }
-
-        function setupColorSystemClicks() {
-            const colorItems = document.querySelectorAll('.color-item');
-            colorItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const color = item.getAttribute('data-color');
-                    
-                    // Remove active state from all items
-                    colorItems.forEach(ci => ci.classList.remove('active'));
-                    
-                    // Add active state to clicked item
-                    item.classList.add('active');
-                    
-                    // Show corresponding detail card
-                    showColorDetail(color);
-                    
-                    // Smooth scroll to calculator
-                    const calculator = document.getElementById('rainbow-calculator');
-                    if (calculator) {
-                        calculator.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
-            });
-        }
-
-        function applyPreset(presetType) {
-            const preset = rainbowCalculator.presets[presetType];
-            
-            // Animate the application of preset values
-            Object.keys(preset).forEach((category, index) => {
-                setTimeout(() => {
-                    const slider = document.querySelector(`[data-category="${category}"]`);
-                    if (slider) {
-                        // Animate slider movement
-                        animateSliderToValue(slider, preset[category]);
-                        rainbowCalculator.allocations[category] = preset[category];
-                    }
-                }, index * 100); // Stagger the animations
-            });
-            
-            // Update display after animations
-            setTimeout(() => {
-                updateRainbowDisplay();
-                updateSmartSuggestions();
-            }, Object.keys(preset).length * 100 + 100);
-        }
-
-        function animateSliderToValue(slider, targetValue) {
-            const currentValue = parseInt(slider.value);
-            const difference = targetValue - currentValue;
-            const steps = 20;
-            const stepSize = difference / steps;
-            let currentStep = 0;
-            
-            const animationInterval = setInterval(() => {
-                currentStep++;
-                const newValue = Math.round(currentValue + (stepSize * currentStep));
-                slider.value = Math.min(Math.max(newValue, 0), 100);
-                
-                // Update display during animation
-                updateSliderDisplay(slider);
-                
-                if (currentStep >= steps) {
-                    clearInterval(animationInterval);
-                    slider.value = targetValue;
-                    updateSliderDisplay(slider);
-                }
-            }, 30);
         }
 
         function updateRainbowDisplay() {
@@ -955,14 +871,14 @@
             const amount = Math.round((percentage / 100) * rainbowCalculator.monthlyIncome);
             
             const sliderItem = slider.closest('.slider-item');
-            const amountDisplay = sliderItem.querySelector('.amount');
-            const percentageInput = sliderItem.querySelector('.percentage-input');
+            const amountInput = sliderItem.querySelector('.amount-input');
+            const percentageDisplay = sliderItem.querySelector('.percentage-display');
             
-            if (amountDisplay) {
-                amountDisplay.textContent = `$${amount.toLocaleString()}`;
+            if (amountInput) {
+                amountInput.value = amount.toLocaleString();
             }
-            if (percentageInput) {
-                percentageInput.value = percentage;
+            if (percentageDisplay) {
+                percentageDisplay.textContent = `${percentage}%`;
             }
             
             // Update slider track fill
@@ -1209,6 +1125,132 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Update CSS for amount inputs
+        const style2 = document.createElement('style');
+        style2.textContent = `
+            .amount-input-container {
+                display: flex;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid var(--color-border);
+                border-radius: 8px;
+                padding: 0.25rem 0.5rem;
+                transition: all 0.3s ease;
+                min-width: 100px;
+                max-width: 140px;
+            }
+            
+            .amount-input-container:hover {
+                border-color: var(--color-primary);
+                background: white;
+            }
+            
+            .amount-input-container:focus-within {
+                border-color: var(--color-primary);
+                background: white;
+                box-shadow: 0 0 0 3px rgba(244, 165, 185, 0.1);
+            }
+            
+            .amount-input {
+                border: none;
+                background: transparent;
+                outline: none;
+                font-size: 1rem;
+                font-weight: 600;
+                color: var(--color-text);
+                width: 100%;
+                text-align: right;
+                padding: 0;
+                margin-left: 0.25rem;
+            }
+            
+            .amount-input::-webkit-outer-spin-button,
+            .amount-input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            
+            .amount-input[type=number] {
+                -moz-appearance: textfield;
+            }
+            
+            .dollar-symbol {
+                font-size: 1rem;
+                color: var(--color-text-light);
+                font-weight: 600;
+            }
+            
+            .percentage-display {
+                font-size: 1rem;
+                color: var(--color-text-light);
+                font-weight: 500;
+                margin-top: 0.25rem;
+            }
+            
+            .slider-display {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.25rem;
+            }
+            
+            @keyframes breathe {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+            }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .progress-segment.active::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                animation: shimmer 2s infinite;
+            }
+            
+            @keyframes shimmer {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+            
+            /* Mobile responsive for amount inputs */
+            @media (max-width: 768px) {
+                .slider-header {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: var(--space-2);
+                }
+                
+                .slider-display {
+                    align-items: center;
+                    text-align: center;
+                    gap: var(--space-2);
+                }
+                
+                .amount-input-container {
+                    min-width: 90px;
+                    max-width: 120px;
+                }
+                
+                .amount-input {
+                    font-size: 0.9rem;
+                }
+                
+                .percentage-display {
+                    font-size: 0.9rem;
+                }
+            }
+        `;
+        document.head.appendChild(style2);
     </script>
     
     <!-- Progressive enhancement script -->
