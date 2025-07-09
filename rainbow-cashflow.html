@@ -561,6 +561,496 @@
     <!-- Main JavaScript - Load with defer for optimal performance -->
     <script defer src="assets/js/script.js?v=2.1"></script>
     
+    <!-- Rainbow Calculator Interactive Functionality -->
+    <script>
+        // Rainbow Calculator State
+        const rainbowCalculator = {
+            monthlyIncome: 5000,
+            allocations: {
+                survival: 0,
+                lifestyle: 0,
+                dreams: 0,
+                growth: 0,
+                security: 0,
+                education: 0,
+                giving: 0
+            },
+            colors: {
+                survival: '#FF6B6B',
+                lifestyle: '#FF9F43', 
+                dreams: '#F7DC6F',
+                growth: '#58D68D',
+                security: '#5DADE2',
+                education: '#BB8FCE',
+                giving: '#F1948A'
+            },
+            presets: {
+                conservative: {
+                    survival: 50,
+                    lifestyle: 15,
+                    dreams: 5,
+                    growth: 10,
+                    security: 15,
+                    education: 3,
+                    giving: 2
+                },
+                balanced: {
+                    survival: 40,
+                    lifestyle: 20,
+                    dreams: 15,
+                    growth: 10,
+                    security: 10,
+                    education: 3,
+                    giving: 2
+                },
+                growth: {
+                    survival: 35,
+                    lifestyle: 15,
+                    dreams: 20,
+                    growth: 20,
+                    security: 5,
+                    education: 3,
+                    giving: 2
+                },
+                dreamer: {
+                    survival: 30,
+                    lifestyle: 10,
+                    dreams: 35,
+                    growth: 15,
+                    security: 5,
+                    education: 3,
+                    giving: 2
+                }
+            }
+        };
+
+        // Initialize calculator when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeRainbowCalculator();
+        });
+
+        function initializeRainbowCalculator() {
+            // Set up event listeners
+            setupIncomeInput();
+            setupSliders();
+            setupPresetButtons();
+            setupColorSystemClicks();
+            
+            // Initial update
+            updateRainbowDisplay();
+            updateSmartSuggestions();
+            
+            // Add entrance animations
+            animateCalculatorEntrance();
+            
+            console.log('🌈 Rainbow Calculator initialized!');
+        }
+
+        function setupIncomeInput() {
+            const incomeInput = document.getElementById('monthly-income');
+            if (incomeInput) {
+                incomeInput.addEventListener('input', function(e) {
+                    const newIncome = parseInt(e.target.value) || 0;
+                    rainbowCalculator.monthlyIncome = newIncome;
+                    updateRainbowDisplay();
+                    updateSmartSuggestions();
+                    
+                    // Add visual feedback
+                    incomeInput.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        incomeInput.style.transform = 'scale(1)';
+                    }, 150);
+                });
+                
+                // Format input on blur
+                incomeInput.addEventListener('blur', function(e) {
+                    const value = parseInt(e.target.value) || 0;
+                    e.target.value = value.toLocaleString();
+                });
+                
+                // Remove formatting on focus
+                incomeInput.addEventListener('focus', function(e) {
+                    e.target.value = e.target.value.replace(/,/g, '');
+                });
+            }
+        }
+
+        function setupSliders() {
+            const sliders = document.querySelectorAll('.financial-slider');
+            sliders.forEach(slider => {
+                slider.addEventListener('input', function(e) {
+                    const category = e.target.getAttribute('data-category');
+                    const percentage = parseInt(e.target.value);
+                    
+                    rainbowCalculator.allocations[category] = percentage;
+                    
+                    updateRainbowDisplay();
+                    updateSmartSuggestions();
+                    
+                    // Add slider glow effect
+                    const sliderItem = e.target.closest('.slider-item');
+                    sliderItem.style.boxShadow = '0 8px 32px rgba(244, 165, 185, 0.3)';
+                    setTimeout(() => {
+                        sliderItem.style.boxShadow = '';
+                    }, 300);
+                    
+                    // Track analytics
+                    if (window.amplitude) {
+                        window.amplitude.track('Rainbow Slider Adjusted', {
+                            category: category,
+                            percentage: percentage,
+                            total_allocated: getTotalAllocatedPercentage()
+                        });
+                    }
+                });
+                
+                // Real-time visual feedback during drag
+                slider.addEventListener('mousemove', function(e) {
+                    if (e.buttons === 1) { // Mouse is being held down
+                        updateSliderGlow(e.target);
+                    }
+                });
+            });
+        }
+
+        function setupPresetButtons() {
+            const presetButtons = document.querySelectorAll('.preset-btn');
+            presetButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const presetType = e.target.getAttribute('data-preset');
+                    if (rainbowCalculator.presets[presetType]) {
+                        applyPreset(presetType);
+                        
+                        // Visual feedback
+                        button.style.transform = 'scale(0.95)';
+                        button.style.background = 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))';
+                        button.style.color = 'white';
+                        
+                        setTimeout(() => {
+                            button.style.transform = '';
+                            button.style.background = '';
+                            button.style.color = '';
+                        }, 200);
+                        
+                        // Track analytics
+                        if (window.amplitude) {
+                            window.amplitude.track('Rainbow Preset Applied', {
+                                preset_type: presetType
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        function setupColorSystemClicks() {
+            const colorItems = document.querySelectorAll('.color-item');
+            colorItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const color = item.getAttribute('data-color');
+                    
+                    // Remove active state from all items
+                    colorItems.forEach(ci => ci.classList.remove('active'));
+                    
+                    // Add active state to clicked item
+                    item.classList.add('active');
+                    
+                    // Show corresponding detail card
+                    showColorDetail(color);
+                    
+                    // Smooth scroll to calculator
+                    const calculator = document.getElementById('rainbow-calculator');
+                    if (calculator) {
+                        calculator.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+
+        function applyPreset(presetType) {
+            const preset = rainbowCalculator.presets[presetType];
+            
+            // Animate the application of preset values
+            Object.keys(preset).forEach((category, index) => {
+                setTimeout(() => {
+                    const slider = document.querySelector(`[data-category="${category}"]`);
+                    if (slider) {
+                        // Animate slider movement
+                        animateSliderToValue(slider, preset[category]);
+                        rainbowCalculator.allocations[category] = preset[category];
+                    }
+                }, index * 100); // Stagger the animations
+            });
+            
+            // Update display after animations
+            setTimeout(() => {
+                updateRainbowDisplay();
+                updateSmartSuggestions();
+            }, Object.keys(preset).length * 100 + 100);
+        }
+
+        function animateSliderToValue(slider, targetValue) {
+            const currentValue = parseInt(slider.value);
+            const difference = targetValue - currentValue;
+            const steps = 20;
+            const stepSize = difference / steps;
+            let currentStep = 0;
+            
+            const animationInterval = setInterval(() => {
+                currentStep++;
+                const newValue = Math.round(currentValue + (stepSize * currentStep));
+                slider.value = Math.min(Math.max(newValue, 0), 100);
+                
+                // Update display during animation
+                updateSliderDisplay(slider);
+                
+                if (currentStep >= steps) {
+                    clearInterval(animationInterval);
+                    slider.value = targetValue;
+                    updateSliderDisplay(slider);
+                }
+            }, 30);
+        }
+
+        function updateRainbowDisplay() {
+            updateProgressBar();
+            updateSliderDisplays();
+            updateTotalDisplay();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('rainbow-progress');
+            if (!progressBar) return;
+            
+            const totalPercentage = getTotalAllocatedPercentage();
+            const segments = progressBar.querySelectorAll('.progress-segment');
+            
+            segments.forEach(segment => {
+                const category = segment.getAttribute('data-color');
+                const percentage = rainbowCalculator.allocations[category];
+                const width = totalPercentage > 0 ? (percentage / totalPercentage) * 100 : 0;
+                
+                // Animate width change
+                segment.style.width = `${width}%`;
+                
+                // Show percentage text if segment is large enough
+                if (width > 8) {
+                    segment.textContent = `${percentage}%`;
+                } else {
+                    segment.textContent = '';
+                }
+                
+                // Add shimmer effect for active segments
+                if (percentage > 0) {
+                    segment.classList.add('active');
+                } else {
+                    segment.classList.remove('active');
+                }
+            });
+            
+            // Add breathing animation to the progress bar
+            if (totalPercentage > 95) {
+                progressBar.style.animation = 'breathe 2s ease-in-out infinite';
+            } else {
+                progressBar.style.animation = '';
+            }
+        }
+
+        function updateSliderDisplays() {
+            const sliders = document.querySelectorAll('.financial-slider');
+            sliders.forEach(slider => {
+                updateSliderDisplay(slider);
+            });
+        }
+
+        function updateSliderDisplay(slider) {
+            const category = slider.getAttribute('data-category');
+            const percentage = rainbowCalculator.allocations[category] || parseInt(slider.value);
+            const amount = Math.round((percentage / 100) * rainbowCalculator.monthlyIncome);
+            
+            const sliderItem = slider.closest('.slider-item');
+            const amountDisplay = sliderItem.querySelector('.amount');
+            const percentageDisplay = sliderItem.querySelector('.percentage');
+            
+            if (amountDisplay) {
+                amountDisplay.textContent = `$${amount.toLocaleString()}`;
+            }
+            if (percentageDisplay) {
+                percentageDisplay.textContent = `${percentage}%`;
+            }
+            
+            // Update slider track fill
+            const sliderTrack = sliderItem.querySelector('.slider-track');
+            if (sliderTrack) {
+                const fillWidth = percentage;
+                sliderTrack.style.background = `linear-gradient(90deg, 
+                    ${rainbowCalculator.colors[category]} ${fillWidth}%, 
+                    #e5e7eb ${fillWidth}%)`;
+            }
+        }
+
+        function updateTotalDisplay() {
+            const totalAllocated = getTotalAllocatedAmount();
+            const totalPercentage = getTotalAllocatedPercentage();
+            const remaining = rainbowCalculator.monthlyIncome - totalAllocated;
+            
+            const totalAllocatedEl = document.getElementById('total-allocated');
+            const totalIncomeEl = document.getElementById('total-income');
+            const remainingEl = document.getElementById('remaining-amount');
+            
+            if (totalAllocatedEl) {
+                totalAllocatedEl.textContent = `$${totalAllocated.toLocaleString()}`;
+            }
+            if (totalIncomeEl) {
+                totalIncomeEl.textContent = `$${rainbowCalculator.monthlyIncome.toLocaleString()}`;
+            }
+            if (remainingEl) {
+                if (remaining >= 0) {
+                    remainingEl.textContent = `($${remaining.toLocaleString()} remaining)`;
+                    remainingEl.className = 'remaining';
+                } else {
+                    remainingEl.textContent = `($${Math.abs(remaining).toLocaleString()} over budget!)`;
+                    remainingEl.className = 'remaining over-budget';
+                }
+            }
+        }
+
+        function updateSmartSuggestions() {
+            const suggestionsContent = document.getElementById('suggestions-content');
+            if (!suggestionsContent) return;
+            
+            const totalPercentage = getTotalAllocatedPercentage();
+            const allocations = rainbowCalculator.allocations;
+            
+            let suggestions = [];
+            
+            // Analyze allocations and provide suggestions
+            if (totalPercentage === 0) {
+                suggestions.push("🌟 <strong>Ready to start?</strong> Try one of our quick presets below, or start by setting your survival expenses (rent, utilities, groceries).");
+            } else if (totalPercentage < 50) {
+                suggestions.push("💡 <strong>Great start!</strong> Consider allocating to your essential categories first: survival and security.");
+            } else if (totalPercentage > 100) {
+                suggestions.push("⚠️ <strong>Over budget!</strong> Your allocations exceed 100%. Consider reducing some categories or increasing your income target.");
+            } else if (totalPercentage >= 95 && totalPercentage <= 100) {
+                suggestions.push("🎉 <strong>Perfect balance!</strong> Your rainbow is complete! This allocation aligns well with your income.");
+            } else {
+                // Specific category suggestions
+                if (allocations.survival < 30) {
+                    suggestions.push("🏠 Consider increasing your <strong>Survival</strong> allocation - experts recommend 30-50% for essential expenses.");
+                }
+                if (allocations.security < 10 && allocations.survival > 30) {
+                    suggestions.push("🛡️ Building your <strong>Security</strong> fund is crucial - aim for at least 10-20% for emergency funds and insurance.");
+                }
+                if (allocations.dreams === 0 && totalPercentage < 80) {
+                    suggestions.push("✨ Don't forget your <strong>Dreams</strong>! Even 5-10% towards your goals can make a big difference.");
+                }
+                if (allocations.growth < 5 && allocations.survival > 40) {
+                    suggestions.push("📈 Consider allocating to <strong>Growth</strong> - investments and skill building compound over time.");
+                }
+                
+                if (suggestions.length === 0) {
+                    suggestions.push(`💚 <strong>Looking good!</strong> You have ${(100 - totalPercentage).toFixed(1)}% remaining to allocate. Consider your priorities and values.`);
+                }
+            }
+            
+            // Add motivational element
+            if (totalPercentage > 80) {
+                suggestions.push("🌈 <strong>You're creating a beautiful rainbow!</strong> Each color represents a part of your financial wellness journey.");
+            }
+            
+            suggestionsContent.innerHTML = suggestions.join('<br><br>');
+            
+            // Add pulse animation for new suggestions
+            suggestionsContent.style.animation = 'pulse 0.5s ease-in-out';
+            setTimeout(() => {
+                suggestionsContent.style.animation = '';
+            }, 500);
+        }
+
+        function updateSliderGlow(slider) {
+            const sliderItem = slider.closest('.slider-item');
+            const category = slider.getAttribute('data-category');
+            const color = rainbowCalculator.colors[category];
+            
+            sliderItem.style.boxShadow = `0 8px 32px ${color}40`;
+        }
+
+        function getTotalAllocatedPercentage() {
+            return Object.values(rainbowCalculator.allocations).reduce((sum, val) => sum + val, 0);
+        }
+
+        function getTotalAllocatedAmount() {
+            const totalPercentage = getTotalAllocatedPercentage();
+            return Math.round((totalPercentage / 100) * rainbowCalculator.monthlyIncome);
+        }
+
+        function showColorDetail(color) {
+            const detailCards = document.querySelectorAll('.rainbow-detail-card');
+            detailCards.forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            const targetCard = document.querySelector(`[data-color="${color}"]`);
+            if (targetCard) {
+                targetCard.classList.add('active');
+            }
+        }
+
+        function animateCalculatorEntrance() {
+            const elements = [
+                document.querySelector('.income-input-section'),
+                document.querySelector('.rainbow-progress-container'),
+                ...document.querySelectorAll('.slider-item'),
+                document.querySelector('.smart-suggestions'),
+                document.querySelector('.preset-buttons')
+            ].filter(el => el !== null);
+            
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes breathe {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+            }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .progress-segment.active::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                animation: shimmer 2s infinite;
+            }
+            
+            @keyframes shimmer {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+    
     <!-- Progressive enhancement script -->
     <script>
         // Remove loading placeholders when page is fully loaded
