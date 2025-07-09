@@ -259,35 +259,6 @@
                             <input type="number" id="monthly-income" value="5000" min="0" step="100" placeholder="Enter your monthly income">
                         </div>
                         
-                        <!-- Horizontal Rainbow Progress Bar -->
-                        <div class="rainbow-progress-container">
-                            <div class="rainbow-progress-header">
-                                <h3>Your Money Rainbow</h3>
-                                <div class="total-display">
-                                    <span id="total-allocated">$0</span> / <span id="total-income">$5,000</span>
-                                    <span class="remaining" id="remaining-amount">($5,000 remaining)</span>
-                                </div>
-                            </div>
-                            <div class="rainbow-progress-bar" id="rainbow-progress">
-                                <div class="progress-segment" data-color="survival" style="width: 0%; background-color: #FF6B6B;"></div>
-                                <div class="progress-segment" data-color="lifestyle" style="width: 0%; background-color: #FF9F43;"></div>
-                                <div class="progress-segment" data-color="dreams" style="width: 0%; background-color: #F7DC6F;"></div>
-                                <div class="progress-segment" data-color="growth" style="width: 0%; background-color: #58D68D;"></div>
-                                <div class="progress-segment" data-color="security" style="width: 0%; background-color: #5DADE2;"></div>
-                                <div class="progress-segment" data-color="education" style="width: 0%; background-color: #BB8FCE;"></div>
-                                <div class="progress-segment" data-color="giving" style="width: 0%; background-color: #F1948A;"></div>
-                            </div>
-                            <div class="progress-labels">
-                                <span class="label-survival">Survival</span>
-                                <span class="label-lifestyle">Lifestyle</span>
-                                <span class="label-dreams">Dreams</span>
-                                <span class="label-growth">Growth</span>
-                                <span class="label-security">Security</span>
-                                <span class="label-education">Education</span>
-                                <span class="label-giving">Giving</span>
-                            </div>
-                        </div>
-                        
                         <!-- Financial Category Sliders -->
                         <div class="sliders-grid">
                             <!-- Survival -->
@@ -456,6 +427,35 @@
                                     <input type="range" class="financial-slider" data-category="giving" min="0" max="100" value="0" step="1">
                                     <div class="slider-track" style="background: linear-gradient(90deg, #F1948A, #f4a9a3);"></div>
                                 </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Your Money Rainbow (moved after sliders) -->
+                        <div class="rainbow-progress-container">
+                            <div class="rainbow-progress-header">
+                                <h3>Your Money Rainbow</h3>
+                                <div class="total-display">
+                                    <span id="total-allocated">$0</span> / <span id="total-income">$5,000</span>
+                                    <span class="remaining" id="remaining-amount">($5,000 remaining)</span>
+                                </div>
+                            </div>
+                            <div class="rainbow-progress-bar" id="rainbow-progress">
+                                <div class="progress-segment" data-color="survival" style="width: 0%; background-color: #FF6B6B;"></div>
+                                <div class="progress-segment" data-color="lifestyle" style="width: 0%; background-color: #FF9F43;"></div>
+                                <div class="progress-segment" data-color="dreams" style="width: 0%; background-color: #F7DC6F;"></div>
+                                <div class="progress-segment" data-color="growth" style="width: 0%; background-color: #58D68D;"></div>
+                                <div class="progress-segment" data-color="security" style="width: 0%; background-color: #5DADE2;"></div>
+                                <div class="progress-segment" data-color="education" style="width: 0%; background-color: #BB8FCE;"></div>
+                                <div class="progress-segment" data-color="giving" style="width: 0%; background-color: #F1948A;"></div>
+                            </div>
+                            <div class="progress-labels">
+                                <span class="label-survival">Survival</span>
+                                <span class="label-lifestyle">Lifestyle</span>
+                                <span class="label-dreams">Dreams</span>
+                                <span class="label-growth">Growth</span>
+                                <span class="label-security">Security</span>
+                                <span class="label-education">Education</span>
+                                <span class="label-giving">Giving</span>
                             </div>
                         </div>
                         
