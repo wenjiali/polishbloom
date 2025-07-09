@@ -459,6 +459,79 @@
                             </div>
                         </div>
                         
+                        <!-- Personalized Reflection Report -->
+                        <div class="reflection-report" id="reflection-report" style="display: none;">
+                            <div class="reflection-header">
+                                <h3>✨ Your Personalized Rainbow Reflection</h3>
+                                <p class="reflection-subtitle">Insights crafted just for you</p>
+                            </div>
+                            
+                            <div class="reflection-content">
+                                <div class="reflection-text" id="reflection-text">
+                                    <!-- Generated reflection will appear here -->
+                                </div>
+                                
+                                <div class="reflection-actions">
+                                    <button class="button button-secondary" id="email-rainbow">
+                                        📧 Email My Rainbow
+                                    </button>
+                                    <a href="https://calendly.com/polish-bloom/clarity-call" class="button button-primary" target="_blank">
+                                        💫 Schedule Clarity Call
+                                    </a>
+                                    <a href="apply.html" class="button button-outline">
+                                        🌸 Join Inner Bloom Circle
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rainbow Comparison (Previous vs Current) -->
+                        <div class="rainbow-comparison" id="rainbow-comparison" style="display: none;">
+                            <div class="comparison-header">
+                                <h3>🌱 Your Rainbow Growth Journey</h3>
+                                <p class="comparison-subtitle">See how your financial garden is blooming</p>
+                            </div>
+                            
+                            <div class="comparison-content">
+                                <div class="comparison-bars">
+                                    <div class="comparison-item">
+                                        <h4>Previous Month</h4>
+                                        <div class="mini-rainbow-bar" id="previous-rainbow">
+                                            <!-- Previous rainbow segments -->
+                                        </div>
+                                    </div>
+                                    <div class="comparison-arrow">➡️</div>
+                                    <div class="comparison-item">
+                                        <h4>Current Rainbow</h4>
+                                        <div class="mini-rainbow-bar" id="current-rainbow">
+                                            <!-- Current rainbow segments -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="growth-celebrations" id="growth-celebrations">
+                                    <!-- Celebration messages will appear here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gentle Rebalancing Tips -->
+                        <div class="rebalancing-tips" id="rebalancing-tips" style="display: none;">
+                            <div class="tips-header">
+                                <h3>🌿 Gentle Rebalancing Suggestions</h3>
+                                <p class="tips-subtitle">Small shifts, beautiful growth</p>
+                            </div>
+                            
+                            <div class="tips-content" id="tips-content">
+                                <!-- Generated tips will appear here -->
+                            </div>
+                            
+                            <div class="monthly-challenge" id="monthly-challenge">
+                                <h4>🎯 This Month's Rainbow Challenge</h4>
+                                <p id="challenge-text"></p>
+                            </div>
+                        </div>
+                        
                         <!-- Smart Suggestions -->
                         <div class="smart-suggestions" id="smart-suggestions">
                             <h3>💡 Smart Suggestions</h3>
@@ -724,30 +797,19 @@
                             remainingEl.className = 'remaining over-budget';
                         }
                     }
-                });
-                
-                // Handle enter key and focus/blur
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        e.target.blur();
+                    
+                    // Show advanced features when they have a meaningful rainbow
+                    if (totalAllocated >= 50) {
+                        showAdvancedFeatures();
                     }
                 });
                 
-                input.addEventListener('blur', function(e) {
-                    const amount = parseInt(e.target.value) || 0;
-                    e.target.value = Math.max(0, Math.min(rainbowCalculator.monthlyIncome, amount));
-                    
-                    // Don't format with commas - number inputs can't accept formatted values
-                    // if (amount > 0) {
-                    //     e.target.value = amount.toLocaleString();
-                    // }
-                });
-                
-                input.addEventListener('focus', function(e) {
-                    // No need to remove commas since we're not adding them
-                    // e.target.value = e.target.value.replace(/,/g, '');
-                    e.target.select(); // Select all text when focused
-                });
+                // Make sure it's not disabled
+                input.disabled = false;
+                input.readOnly = false;
+                input.style.pointerEvents = 'auto';
+                input.style.zIndex = '999';
+                input.style.position = 'relative';
             });
             
             // Try the old initialization too
@@ -758,457 +820,337 @@
             }
         });
 
-        function initializeRainbowCalculator() {
-            // Set up event listeners
-            setupIncomeInput();
-            setupSliders();
-            // setupAmountInputs(); // DISABLED to prevent conflicts with simple test
-            setupPresetButtons();
-            setupColorSystemClicks();
-            
-            // Initial update
-            updateRainbowDisplay();
-            updateSmartSuggestions();
-            
-            // Add entrance animations
-            animateCalculatorEntrance();
-            
-            console.log('🌈 Rainbow Calculator initialized!');
-            
-            // Debug test - try to access first input
-            setTimeout(() => {
-                const firstInput = document.querySelector('.amount-input');
-                if (firstInput) {
-                    console.log('🔧 Testing first input:', firstInput);
-                    console.log('🔧 Input attributes:', {
-                        disabled: firstInput.disabled,
-                        readOnly: firstInput.readOnly,
-                        tabIndex: firstInput.tabIndex,
-                        style: firstInput.style.cssText
-                    });
-                    
-                    // Try to focus the input programmatically
-                    firstInput.focus();
-                    console.log('🔧 Tried to focus input');
-                }
-            }, 1000);
+        function showAdvancedFeatures() {
+            generatePersonalizedReflection();
+            showRainbowComparison();
+            generateRebalancingTips();
         }
 
-        function setupIncomeInput() {
-            const incomeInput = document.getElementById('monthly-income');
-            if (incomeInput) {
-                incomeInput.addEventListener('input', function(e) {
-                    const newIncome = parseInt(e.target.value) || 0;
-                    rainbowCalculator.monthlyIncome = newIncome;
-                    updateRainbowDisplay();
-                    updateSmartSuggestions();
-                    
-                    // Add visual feedback
-                    incomeInput.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        incomeInput.style.transform = 'scale(1)';
-                    }, 150);
-                });
-                
-                // Format input on blur
-                incomeInput.addEventListener('blur', function(e) {
-                    const value = parseInt(e.target.value) || 0;
-                    // Don't format with commas - number inputs can't accept formatted values
-                    e.target.value = value;
-                });
-                
-                // Remove formatting on focus
-                incomeInput.addEventListener('focus', function(e) {
-                    // No need to remove commas since we're not adding them
-                    // e.target.value = e.target.value.replace(/,/g, '');
-                });
-            }
-        }
-
-        function setupAmountInputs() {
-            const amountInputs = document.querySelectorAll('.amount-input');
-            console.log('🔍 Found', amountInputs.length, 'amount inputs');
-            amountInputs.forEach((input, index) => {
-                console.log('🎯 Setting up input', index, 'for category:', input.getAttribute('data-category'));
-                // Test if input is clickable/focusable
-                input.addEventListener('click', function(e) {
-                    console.log('✅ Input clicked!', e.target.getAttribute('data-category'));
-                });
-                
-                input.addEventListener('focus', function(e) {
-                    console.log('✅ Input focused!', e.target.getAttribute('data-category'));
-                });
-                
-                input.addEventListener('input', function(e) {
-                    console.log('✅ Input event fired!', e.target.getAttribute('data-category'), 'value:', e.target.value);
-                    const category = e.target.getAttribute('data-category');
-                    let amount = parseInt(e.target.value) || 0;
-                    
-                    // Ensure amount doesn't exceed income
-                    amount = Math.max(0, Math.min(rainbowCalculator.monthlyIncome, amount));
-                    e.target.value = amount;
-                    
-                    // Calculate percentage from dollar amount
-                    const percentage = rainbowCalculator.monthlyIncome > 0 ? 
-                        Math.round((amount / rainbowCalculator.monthlyIncome) * 100) : 0;
-                    
-                    rainbowCalculator.allocations[category] = percentage;
-                    
-                    // Update corresponding slider
-                    const slider = document.querySelector(`.financial-slider[data-category="${category}"]`);
-                    if (slider) {
-                        slider.value = percentage;
-                    }
-                    
-                    updateRainbowDisplay();
-                    updateSmartSuggestions();
-                    
-                    // Add glow effect to the input container
-                    const inputContainer = e.target.closest('.amount-input-container');
-                    inputContainer.style.boxShadow = '0 0 10px rgba(244, 165, 185, 0.5)';
-                    setTimeout(() => {
-                        inputContainer.style.boxShadow = '';
-                    }, 300);
-                    
-                    // Track analytics
-                    if (window.amplitude) {
-                        window.amplitude.track('Rainbow Amount Typed', {
-                            category: category,
-                            amount: amount,
-                            percentage: percentage,
-                            total_allocated: getTotalAllocatedPercentage()
-                        });
-                    }
-                });
-                
-                // Handle enter key and focus/blur
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        e.target.blur();
-                    }
-                });
-                
-                input.addEventListener('blur', function(e) {
-                    const amount = parseInt(e.target.value) || 0;
-                    e.target.value = Math.max(0, Math.min(rainbowCalculator.monthlyIncome, amount));
-                    
-                    // Don't format with commas - number inputs can't accept formatted values
-                    // if (amount > 0) {
-                    //     e.target.value = amount.toLocaleString();
-                    // }
-                });
-                
-                input.addEventListener('focus', function(e) {
-                    // No need to remove commas since we're not adding them
-                    // e.target.value = e.target.value.replace(/,/g, '');
-                    e.target.select(); // Select all text when focused
-                });
-            });
-        }
-
-        function setupSliders() {
-            const sliders = document.querySelectorAll('.financial-slider');
-            sliders.forEach(slider => {
-                slider.addEventListener('input', function(e) {
-                    const category = e.target.getAttribute('data-category');
-                    const percentage = parseInt(e.target.value);
-                    
-                    rainbowCalculator.allocations[category] = percentage;
-                    
-                    // Calculate dollar amount from percentage
-                    const amount = Math.round((percentage / 100) * rainbowCalculator.monthlyIncome);
-                    
-                    // Update corresponding amount input
-                    const amountInput = document.querySelector(`.amount-input[data-category="${category}"]`);
-                    if (amountInput) {
-                        // Don't use toLocaleString() for number inputs
-                        amountInput.value = amount;
-                    }
-                    
-                    updateRainbowDisplay();
-                    updateSmartSuggestions();
-                    
-                    // Add slider glow effect
-                    const sliderItem = e.target.closest('.slider-item');
-                    sliderItem.style.boxShadow = '0 8px 32px rgba(244, 165, 185, 0.3)';
-                    setTimeout(() => {
-                        sliderItem.style.boxShadow = '';
-                    }, 300);
-                    
-                    // Track analytics
-                    if (window.amplitude) {
-                        window.amplitude.track('Rainbow Slider Adjusted', {
-                            category: category,
-                            percentage: percentage,
-                            amount: amount,
-                            total_allocated: getTotalAllocatedPercentage()
-                        });
-                    }
-                });
-                
-                // Real-time visual feedback during drag
-                slider.addEventListener('mousemove', function(e) {
-                    if (e.buttons === 1) { // Mouse is being held down
-                        updateSliderGlow(e.target);
-                    }
-                });
-            });
-        }
-
-        function updateRainbowDisplay() {
-            updateProgressBar();
-            updateSliderDisplays();
-            updateTotalDisplay();
-        }
-
-        function updateProgressBar() {
-            const progressBar = document.getElementById('rainbow-progress');
-            if (!progressBar) return;
+        function generatePersonalizedReflection() {
+            const reflectionEl = document.getElementById('reflection-report');
+            const reflectionTextEl = document.getElementById('reflection-text');
             
-            const totalPercentage = getTotalAllocatedPercentage();
-            const segments = progressBar.querySelectorAll('.progress-segment');
+            if (!reflectionEl || !reflectionTextEl) return;
             
-            segments.forEach(segment => {
-                const category = segment.getAttribute('data-color');
-                const percentage = rainbowCalculator.allocations[category];
-                const width = totalPercentage > 0 ? (percentage / totalPercentage) * 100 : 0;
-                
-                segment.style.width = `${width}%`;
-                
-                if (width > 8) {
-                    segment.textContent = `${percentage}%`;
-                } else {
-                    segment.textContent = '';
-                }
-                
-                if (percentage > 0) {
-                    segment.classList.add('active');
-                } else {
-                    segment.classList.remove('active');
-                }
-            });
-            
-            if (totalPercentage > 95) {
-                progressBar.style.animation = 'breathe 2s ease-in-out infinite';
-            } else {
-                progressBar.style.animation = '';
-            }
-        }
-
-        function updateSliderDisplays() {
-            const sliders = document.querySelectorAll('.financial-slider');
-            sliders.forEach(slider => {
-                updateSliderDisplay(slider);
-            });
-        }
-
-        function updateSliderDisplay(slider) {
-            const category = slider.getAttribute('data-category');
-            const percentage = rainbowCalculator.allocations[category] || parseInt(slider.value);
-            const amount = Math.round((percentage / 100) * rainbowCalculator.monthlyIncome);
-            
-            const sliderItem = slider.closest('.slider-item');
-            const amountInput = sliderItem.querySelector('.amount-input');
-            const percentageDisplay = sliderItem.querySelector('.percentage-display');
-            
-            if (amountInput) {
-                // Don't use toLocaleString() for number inputs - they can't accept comma-formatted values
-                amountInput.value = amount;
-            }
-            if (percentageDisplay) {
-                percentageDisplay.textContent = `${percentage}%`;
-            }
-            
-            // Update slider track fill
-            const sliderTrack = sliderItem.querySelector('.slider-track');
-            if (sliderTrack) {
-                const fillWidth = percentage;
-                sliderTrack.style.background = `linear-gradient(90deg, 
-                    ${rainbowCalculator.colors[category]} ${fillWidth}%, 
-                    #e5e7eb ${fillWidth}%)`;
-            }
-        }
-
-        function updateTotalDisplay() {
-            const totalAllocated = getTotalAllocatedAmount();
-            const totalPercentage = getTotalAllocatedPercentage();
-            const remaining = rainbowCalculator.monthlyIncome - totalAllocated;
-            
-            const totalAllocatedEl = document.getElementById('total-allocated');
-            const totalIncomeEl = document.getElementById('total-income');
-            const remainingEl = document.getElementById('remaining-amount');
-            
-            if (totalAllocatedEl) {
-                totalAllocatedEl.textContent = `$${totalAllocated.toLocaleString()}`;
-            }
-            if (totalIncomeEl) {
-                totalIncomeEl.textContent = `$${rainbowCalculator.monthlyIncome.toLocaleString()}`;
-            }
-            if (remainingEl) {
-                if (remaining >= 0) {
-                    remainingEl.textContent = `($${remaining.toLocaleString()} remaining)`;
-                    remainingEl.className = 'remaining';
-                } else {
-                    remainingEl.textContent = `($${Math.abs(remaining).toLocaleString()} over budget!)`;
-                    remainingEl.className = 'remaining over-budget';
-                }
-            }
-        }
-
-        function updateSmartSuggestions() {
-            const suggestionsContent = document.getElementById('suggestions-content');
-            if (!suggestionsContent) return;
-            
-            const totalPercentage = getTotalAllocatedPercentage();
             const allocations = rainbowCalculator.allocations;
+            const totalAllocated = Object.values(allocations).reduce((sum, val) => sum + val, 0);
             
-            let suggestions = [];
+            // Generate personalized reflection based on their rainbow
+            let reflection = generateReflectionText(allocations, totalAllocated);
             
-            // Analyze allocations and provide suggestions
-            if (totalPercentage === 0) {
-                suggestions.push("🌟 <strong>Ready to start?</strong> Try one of our quick presets below, or start by setting your survival expenses (rent, utilities, groceries).");
-            } else if (totalPercentage < 50) {
-                suggestions.push("💡 <strong>Great start!</strong> Consider allocating to your essential categories first: survival and security.");
-            } else if (totalPercentage > 100) {
-                suggestions.push("⚠️ <strong>Over budget!</strong> Your allocations exceed 100%. Consider reducing some categories or increasing your income target.");
-            } else if (totalPercentage >= 95 && totalPercentage <= 100) {
-                suggestions.push("🎉 <strong>Perfect balance!</strong> Your rainbow is complete! This allocation aligns well with your income.");
-            } else {
-                // Specific category suggestions
-                if (allocations.survival < 30) {
-                    suggestions.push("🏠 Consider increasing your <strong>Survival</strong> allocation - experts recommend 30-50% for essential expenses.");
-                }
-                if (allocations.security < 10 && allocations.survival > 30) {
-                    suggestions.push("🛡️ Building your <strong>Security</strong> fund is crucial - aim for at least 10-20% for emergency funds and insurance.");
-                }
-                if (allocations.dreams === 0 && totalPercentage < 80) {
-                    suggestions.push("✨ Don't forget your <strong>Dreams</strong>! Even 5-10% towards your goals can make a big difference.");
-                }
-                if (allocations.growth < 5 && allocations.survival > 40) {
-                    suggestions.push("📈 Consider allocating to <strong>Growth</strong> - investments and skill building compound over time.");
-                }
-                
-                if (suggestions.length === 0) {
-                    suggestions.push(`💚 <strong>Looking good!</strong> You have ${(100 - totalPercentage).toFixed(1)}% remaining to allocate. Consider your priorities and values.`);
-                }
-            }
+            reflectionTextEl.innerHTML = reflection;
+            reflectionEl.style.display = 'block';
             
-            // Add motivational element
-            if (totalPercentage > 80) {
-                suggestions.push("🌈 <strong>You're creating a beautiful rainbow!</strong> Each color represents a part of your financial wellness journey.");
-            }
-            
-            suggestionsContent.innerHTML = suggestions.join('<br><br>');
-            
-            // Add pulse animation for new suggestions
-            suggestionsContent.style.animation = 'pulse 0.5s ease-in-out';
+            // Animate in
             setTimeout(() => {
-                suggestionsContent.style.animation = '';
-            }, 500);
+                reflectionEl.style.opacity = '0';
+                reflectionEl.style.transform = 'translateY(20px)';
+                reflectionEl.style.transition = 'all 0.6s ease';
+                setTimeout(() => {
+                    reflectionEl.style.opacity = '1';
+                    reflectionEl.style.transform = 'translateY(0)';
+                }, 100);
+            }, 100);
         }
 
-        function updateSliderGlow(slider) {
-            const sliderItem = slider.closest('.slider-item');
-            const category = slider.getAttribute('data-category');
-            const color = rainbowCalculator.colors[category];
+        function generateReflectionText(allocations, totalAllocated) {
+            const categories = {
+                survival: { name: 'Foundation', color: 'stability' },
+                lifestyle: { name: 'Joy Fund', color: 'warmth' },
+                dreams: { name: 'Dreams', color: 'sunshine' },
+                growth: { name: 'Growth Garden', color: 'prosperity' },
+                security: { name: 'Freedom Fund', color: 'peace' },
+                education: { name: 'Wisdom Well', color: 'depth' },
+                giving: { name: 'Heart Space', color: 'love' }
+            };
             
-            sliderItem.style.boxShadow = `0 8px 32px ${color}40`;
-        }
-
-        function setupPresetButtons() {
-            const presetButtons = document.querySelectorAll('.preset-btn');
-            presetButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const presetName = e.target.getAttribute('data-preset');
-                    const preset = rainbowCalculator.presets[presetName];
-                    
-                    if (preset) {
-                        // Apply preset allocations
-                        Object.keys(preset).forEach(category => {
-                            rainbowCalculator.allocations[category] = preset[category];
-                            
-                            // Update slider
-                            const slider = document.querySelector(`.financial-slider[data-category="${category}"]`);
-                            if (slider) {
-                                slider.value = preset[category];
-                            }
-                        });
-                        
-                        // Update display
-                        updateRainbowDisplay();
-                        updateSmartSuggestions();
-                        
-                        // Add visual feedback
-                        button.style.transform = 'scale(0.95)';
-                        setTimeout(() => {
-                            button.style.transform = 'scale(1)';
-                        }, 150);
-                        
-                        // Track analytics
-                        if (window.amplitude) {
-                            window.amplitude.track('Rainbow Preset Applied', {
-                                preset: presetName,
-                                total_allocated: getTotalAllocatedPercentage()
-                            });
-                        }
-                    }
-                });
-            });
-        }
-
-        function setupColorSystemClicks() {
-            // Add click handlers for progress segments if needed
-            const progressSegments = document.querySelectorAll('.progress-segment');
-            progressSegments.forEach(segment => {
-                segment.addEventListener('click', function(e) {
-                    const color = e.target.getAttribute('data-color');
-                    if (color) {
-                        showColorDetail(color);
-                    }
-                });
-            });
-        }
-
-        function getTotalAllocatedPercentage() {
-            return Object.values(rainbowCalculator.allocations).reduce((sum, val) => sum + val, 0);
-        }
-
-        function getTotalAllocatedAmount() {
-            const totalPercentage = getTotalAllocatedPercentage();
-            return Math.round((totalPercentage / 100) * rainbowCalculator.monthlyIncome);
-        }
-
-        function showColorDetail(color) {
-            const detailCards = document.querySelectorAll('.rainbow-detail-card');
-            detailCards.forEach(card => {
-                card.classList.remove('active');
-            });
+            // Find strongest and weakest areas
+            const sorted = Object.entries(allocations).sort((a, b) => b[1] - a[1]);
+            const strongest = sorted[0];
+            const weakest = sorted[sorted.length - 1];
             
-            const targetCard = document.querySelector(`[data-color="${color}"]`);
-            if (targetCard) {
-                targetCard.classList.add('active');
+            let reflection = [];
+            
+            // Opening statement
+            if (totalAllocated > 95) {
+                reflection.push("✨ Your rainbow is beautifully complete — a full spectrum of financial consciousness!");
+            } else if (totalAllocated > 70) {
+                reflection.push("🌈 Your rainbow is taking gorgeous shape, with vibrant colors emerging across your financial landscape.");
+            } else {
+                reflection.push("🌱 Your rainbow is beginning to bloom — what a beautiful start to your financial garden!");
+            }
+            
+            // Strength recognition
+            if (strongest[1] > 0) {
+                const categoryName = categories[strongest[0]].name;
+                const categoryColor = categories[strongest[0]].color;
+                reflection.push(`Your ${categoryName} is glowing with ${categoryColor} — this shows beautiful prioritization of your ${strongest[0] === 'survival' ? 'foundation' : strongest[0] === 'giving' ? 'generous heart' : 'growth mindset'}.`);
+            }
+            
+            // Gentle suggestion for growth
+            if (weakest[1] === 0 && weakest[0] !== 'giving') {
+                const categoryName = categories[weakest[0]].name;
+                if (weakest[0] === 'security') {
+                    reflection.push("Your Freedom Fund could use a gentle ray of sunshine — building this pillar will bring such peace to your journey.");
+                } else if (weakest[0] === 'dreams') {
+                    reflection.push("Your Dreams section is waiting to sparkle — even a small allocation here can light up your whole rainbow!");
+                } else {
+                    reflection.push(`Your ${categoryName} is ready to flourish — consider adding a touch of color here to complete your beautiful spectrum.`);
+                }
+            }
+            
+            // Encouraging closure
+            if (allocations.lifestyle > 15 && allocations.security > 10) {
+                reflection.push("You're creating a beautiful balance between joy and security — this is the essence of conscious money flow! 🌸");
+            } else if (allocations.giving > 0) {
+                reflection.push("Your giving heart shines through your rainbow — this generosity will create ripples of abundance in your life. 💕");
+            } else {
+                reflection.push("Every rainbow tells a story, and yours is one of intentional growth and beautiful possibilities. Keep nurturing your colors! 🌺");
+            }
+            
+            return reflection.join(' ');
+        }
+
+        function showRainbowComparison() {
+            const comparisonEl = document.getElementById('rainbow-comparison');
+            if (!comparisonEl) return;
+            
+            // Get previous rainbow from localStorage
+            const previousRainbow = getPreviousRainbow();
+            const currentRainbow = rainbowCalculator.allocations;
+            
+            if (previousRainbow) {
+                displayRainbowComparison(previousRainbow, currentRainbow);
+                comparisonEl.style.display = 'block';
+            }
+            
+            // Save current rainbow
+            saveCurrentRainbow();
+        }
+
+        function getPreviousRainbow() {
+            try {
+                const saved = localStorage.getItem('previousRainbow');
+                return saved ? JSON.parse(saved) : null;
+            } catch (error) {
+                console.log('No previous rainbow found');
+                return null;
             }
         }
 
-        function animateCalculatorEntrance() {
-            const elements = [
-                document.querySelector('.income-input-section'),
-                document.querySelector('.rainbow-progress-container'),
-                ...document.querySelectorAll('.slider-item'),
-                document.querySelector('.smart-suggestions'),
-                document.querySelector('.preset-buttons')
-            ].filter(el => el !== null);
+        function saveCurrentRainbow() {
+            try {
+                localStorage.setItem('previousRainbow', JSON.stringify(rainbowCalculator.allocations));
+            } catch (error) {
+                console.log('Could not save rainbow');
+            }
+        }
+
+        function displayRainbowComparison(previous, current) {
+            const previousBar = document.getElementById('previous-rainbow');
+            const currentBar = document.getElementById('current-rainbow');
+            const celebrationsEl = document.getElementById('growth-celebrations');
             
-            elements.forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                
-                setTimeout(() => {
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, index * 150);
+            if (previousBar) createMiniRainbow(previousBar, previous);
+            if (currentBar) createMiniRainbow(currentBar, current);
+            
+            // Generate celebrations
+            const celebrations = generateCelebrations(previous, current);
+            if (celebrationsEl && celebrations.length > 0) {
+                celebrationsEl.innerHTML = celebrations.map(c => `<div class="celebration-item">${c}</div>`).join('');
+            }
+        }
+
+        function createMiniRainbow(container, allocations) {
+            const total = Object.values(allocations).reduce((sum, val) => sum + val, 0);
+            const colors = rainbowCalculator.colors;
+            
+            container.innerHTML = '';
+            
+            Object.entries(allocations).forEach(([category, percentage]) => {
+                if (percentage > 0) {
+                    const segment = document.createElement('div');
+                    segment.className = 'mini-progress-segment';
+                    segment.style.backgroundColor = colors[category];
+                    segment.style.width = total > 0 ? `${(percentage / total) * 100}%` : '0%';
+                    
+                    if (percentage > 8) {
+                        segment.textContent = `${percentage}%`;
+                    }
+                    
+                    container.appendChild(segment);
+                }
             });
+        }
+
+        function generateCelebrations(previous, current) {
+            const celebrations = [];
+            const categoryNames = {
+                survival: 'Foundation',
+                lifestyle: 'Joy Fund',
+                dreams: 'Dreams',
+                growth: 'Growth Garden',
+                security: 'Freedom Fund',
+                education: 'Wisdom Well',
+                giving: 'Heart Space'
+            };
+            
+            Object.entries(current).forEach(([category, currentValue]) => {
+                const previousValue = previous[category] || 0;
+                const growth = currentValue - previousValue;
+                
+                if (growth >= 5) {
+                    celebrations.push(`🌟 Your ${categoryNames[category]} grew by ${growth}% — beautiful progress!`);
+                } else if (growth > 0) {
+                    celebrations.push(`🌱 Your ${categoryNames[category]} is blooming — up ${growth}%!`);
+                }
+            });
+            
+            if (celebrations.length === 0) {
+                celebrations.push('🌈 Your rainbow is taking shape beautifully — every journey starts with a single step!');
+            }
+            
+            return celebrations;
+        }
+
+        function generateRebalancingTips() {
+            const tipsEl = document.getElementById('rebalancing-tips');
+            const tipsContentEl = document.getElementById('tips-content');
+            const challengeEl = document.getElementById('challenge-text');
+            
+            if (!tipsEl || !tipsContentEl) return;
+            
+            const allocations = rainbowCalculator.allocations;
+            const tips = generateTipsBasedOnRainbow(allocations);
+            const challenge = generateMonthlyChallenge(allocations);
+            
+            if (tips.length > 0) {
+                tipsContentEl.innerHTML = tips.map(tip => 
+                    `<div class="tip-item">
+                        <div class="tip-title">${tip.title}</div>
+                        <div class="tip-description">${tip.description}</div>
+                    </div>`
+                ).join('');
+                
+                if (challengeEl) {
+                    challengeEl.textContent = challenge;
+                }
+                
+                tipsEl.style.display = 'block';
+            }
+        }
+
+        function generateTipsBasedOnRainbow(allocations) {
+            const tips = [];
+            
+            // Check for imbalances and suggest gentle shifts
+            if (allocations.survival > 60) {
+                tips.push({
+                    title: "🌸 Gentle Expansion Opportunity",
+                    description: "You're beautifully focused on your foundation! Consider shifting 5% from Survival to Dreams — you deserve to nurture your aspirations too."
+                });
+            }
+            
+            if (allocations.lifestyle > 30 && allocations.security < 10) {
+                tips.push({
+                    title: "🛡️ Balance Joy with Peace",
+                    description: "Your Joy Fund is vibrant! Try moving 5% to your Freedom Fund — future you will thank present you for this gift of security."
+                });
+            }
+            
+            if (allocations.security === 0 && Object.values(allocations).reduce((sum, val) => sum + val, 0) > 50) {
+                tips.push({
+                    title: "☀️ Sunshine for Your Freedom Fund",
+                    description: "Your rainbow is missing its protective glow! Even 5% in your Freedom Fund creates a beautiful safety net."
+                });
+            }
+            
+            if (allocations.education === 0) {
+                tips.push({
+                    title: "📚 Feed Your Wisdom Well",
+                    description: "Consider adding 2-3% to your Wisdom Well — investing in yourself always pays the highest dividends!"
+                });
+            }
+            
+            if (allocations.giving === 0 && allocations.lifestyle > 20) {
+                tips.push({
+                    title: "💕 Share Your Abundance",
+                    description: "Your generous heart is ready to bloom! Even 1-2% in your Heart Space creates beautiful ripples of connection."
+                });
+            }
+            
+            return tips.slice(0, 3); // Show max 3 tips
+        }
+
+        function generateMonthlyChallenge(allocations) {
+            const challenges = [
+                "Grow your Freedom Fund by reading one free personal finance article this week",
+                "Boost your Joy Fund by finding one free activity that brings you happiness",
+                "Expand your Wisdom Well by watching one educational YouTube video",
+                "Nurture your Dreams by writing down three specific goals",
+                "Strengthen your Foundation by reviewing and optimizing one monthly expense",
+                "Open your Heart Space by performing one small act of kindness",
+                "Tend your Growth Garden by researching one simple investment option"
+            ];
+            
+            // Find the lowest allocation and suggest a related challenge
+            const sorted = Object.entries(allocations).sort((a, b) => a[1] - b[1]);
+            const lowest = sorted[0][0];
+            
+            const challengeMap = {
+                survival: challenges[4],
+                lifestyle: challenges[1],
+                dreams: challenges[3],
+                growth: challenges[6],
+                security: challenges[0],
+                education: challenges[2],
+                giving: challenges[5]
+            };
+            
+            return challengeMap[lowest] || challenges[Math.floor(Math.random() * challenges.length)];
+        }
+
+        // Email functionality
+        setTimeout(() => {
+            const emailButton = document.getElementById('email-rainbow');
+            if (emailButton) {
+                emailButton.addEventListener('click', function() {
+                    emailRainbowResults();
+                });
+            }
+        }, 1000);
+
+        function emailRainbowResults() {
+            const allocations = rainbowCalculator.allocations;
+            const monthlyIncome = rainbowCalculator.monthlyIncome;
+            const totalAllocated = Object.values(allocations).reduce((sum, val) => sum + val, 0);
+            
+            const subject = "My Rainbow Cashflow Results 🌈";
+            const body = `Hi there!
+
+I just completed my Rainbow Cashflow allocation and wanted to share my results:
+
+💰 Monthly Income: $${monthlyIncome.toLocaleString()}
+🌈 Total Allocated: ${totalAllocated}%
+
+My Rainbow Breakdown:
+🏠 Survival (Foundation): ${allocations.survival}% ($${Math.round((allocations.survival/100) * monthlyIncome).toLocaleString()})
+🎉 Lifestyle (Joy Fund): ${allocations.lifestyle}% ($${Math.round((allocations.lifestyle/100) * monthlyIncome).toLocaleString()})
+⭐ Dreams: ${allocations.dreams}% ($${Math.round((allocations.dreams/100) * monthlyIncome).toLocaleString()})
+📈 Growth Garden: ${allocations.growth}% ($${Math.round((allocations.growth/100) * monthlyIncome).toLocaleString()})
+🛡️ Security (Freedom Fund): ${allocations.security}% ($${Math.round((allocations.security/100) * monthlyIncome).toLocaleString()})
+📚 Education (Wisdom Well): ${allocations.education}% ($${Math.round((allocations.education/100) * monthlyIncome).toLocaleString()})
+💕 Giving (Heart Space): ${allocations.giving}% ($${Math.round((allocations.giving/100) * monthlyIncome).toLocaleString()})
+
+This Rainbow Cashflow system is helping me align my money with my values in such a beautiful way!
+
+Learn more: ${window.location.href}
+
+With gratitude,
+[Your name]`;
+
+            const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink);
         }
 
         // Add CSS for percentage inputs
@@ -1450,6 +1392,217 @@
                 
                 .percentage-display {
                     font-size: 0.9rem;
+                }
+            }
+            
+            /* New reflection report styles */
+            .reflection-report {
+                background: linear-gradient(135deg, #f8f9ff 0%, #fff5f8 100%);
+                border-radius: 16px;
+                padding: 2rem;
+                margin: 2rem 0;
+                border: 1px solid #e5e7eb;
+                box-shadow: 0 4px 20px rgba(244, 165, 185, 0.1);
+            }
+            
+            .reflection-header {
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
+            
+            .reflection-header h3 {
+                color: #374151;
+                margin-bottom: 0.5rem;
+            }
+            
+            .reflection-subtitle {
+                color: #6b7280;
+                font-style: italic;
+            }
+            
+            .reflection-text {
+                background: white;
+                padding: 1.5rem;
+                border-radius: 12px;
+                margin-bottom: 2rem;
+                font-size: 1.1rem;
+                line-height: 1.6;
+                color: #374151;
+                border-left: 4px solid var(--color-primary);
+            }
+            
+            .reflection-actions {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .reflection-actions .button {
+                min-width: 150px;
+            }
+            
+            /* Rainbow comparison styles */
+            .rainbow-comparison {
+                background: linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%);
+                border-radius: 16px;
+                padding: 2rem;
+                margin: 2rem 0;
+                border: 1px solid #e5e7eb;
+            }
+            
+            .comparison-header {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            
+            .comparison-bars {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+                margin-bottom: 2rem;
+                justify-content: center;
+            }
+            
+            .comparison-item {
+                text-align: center;
+                flex: 1;
+                max-width: 300px;
+            }
+            
+            .comparison-item h4 {
+                margin-bottom: 1rem;
+                color: #374151;
+            }
+            
+            .mini-rainbow-bar {
+                height: 40px;
+                border-radius: 20px;
+                display: flex;
+                overflow: hidden;
+                background: #f3f4f6;
+                position: relative;
+            }
+            
+            .mini-progress-segment {
+                height: 100%;
+                transition: all 0.5s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: white;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            }
+            
+            .comparison-arrow {
+                font-size: 2rem;
+                color: var(--color-primary);
+                animation: bounce 2s infinite;
+            }
+            
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
+                40% { transform: translateX(-5px); }
+                60% { transform: translateX(5px); }
+            }
+            
+            .growth-celebrations {
+                background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+                border: 1px solid #86efac;
+                border-radius: 12px;
+                padding: 1.5rem;
+                text-align: center;
+            }
+            
+            .celebration-item {
+                margin: 0.5rem 0;
+                font-size: 1.1rem;
+                color: #065f46;
+                animation: celebrationGlow 2s ease-in-out infinite alternate;
+            }
+            
+            @keyframes celebrationGlow {
+                from { opacity: 0.8; }
+                to { opacity: 1; }
+            }
+            
+            /* Rebalancing tips styles */
+            .rebalancing-tips {
+                background: linear-gradient(135deg, #f0fdf4 0%, #f7fee7 100%);
+                border-radius: 16px;
+                padding: 2rem;
+                margin: 2rem 0;
+                border: 1px solid #86efac;
+            }
+            
+            .tips-header {
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
+            
+            .tips-content {
+                display: grid;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .tip-item {
+                background: white;
+                padding: 1rem;
+                border-radius: 8px;
+                border-left: 4px solid #10b981;
+                box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+            }
+            
+            .tip-title {
+                font-weight: 600;
+                color: #065f46;
+                margin-bottom: 0.5rem;
+            }
+            
+            .tip-description {
+                color: #374151;
+                font-size: 0.95rem;
+            }
+            
+            .monthly-challenge {
+                background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
+                border: 1px solid #fbbf24;
+                border-radius: 12px;
+                padding: 1.5rem;
+                text-align: center;
+            }
+            
+            .monthly-challenge h4 {
+                color: #92400e;
+                margin-bottom: 1rem;
+            }
+            
+            .monthly-challenge p {
+                color: #78350f;
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
+            
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .comparison-bars {
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+                
+                .comparison-arrow {
+                    transform: rotate(90deg);
+                }
+                
+                .reflection-actions {
+                    flex-direction: column;
+                }
+                
+                .reflection-actions .button {
+                    width: 100%;
                 }
             }
         `;
